@@ -97,7 +97,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /S /I $(ProjectDir)bin\*.dll $(OutDir)*.dll</Command>
+      <Command>xcopy /S /I /Y $(ProjectDir)bin\*.dll $(OutDir)*.dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -137,7 +137,7 @@
       <AdditionalLibraryDirectories>C:\raylib\raylib\release\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /S /I $(ProjectDir)bin\*.dll $(OutDir)*.dll</Command>
+      <Command>xcopy /S /I /Y $(ProjectDir)bin\*.dll $(OutDir)*.dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -160,7 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="foosies++.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bin\ggponet.h" />

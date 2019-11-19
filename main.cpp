@@ -1,18 +1,22 @@
-﻿// foosies++.cpp : Defines the entry point for the application.
+﻿// main.cpp : Defines the entry point for the application.
 //
 
 #include "foosies++.h"
+#include "session.h"
 
 using namespace std;
+
+Game::Game()
+{
+    Game::grid = Grid();
+    Game::scene = Scene();
+    Game::gameState = GameState();
+}
 
 int Game::init()
 {
     int screenWidth = 800;
     int screenHeight = 450;
-
-    Game::grid = Grid();
-    Game::scene = Scene();
-    Game::gameState = GameState();
 
     scene.targetFPS = 60;
 
@@ -52,6 +56,19 @@ void Game::render()
     _drawUI();
 
     EndDrawing();
+}
+
+void Game::g()
+{
+    Session session;
+
+    /* Start a new session */
+    GGPOErrorCode result = ggpo_start_session(&session.ggpo, // the new session object
+                                            &session.cb,     // our callbacks
+                                            "test_app",      // application name
+                                            2,               // 2 players
+                                            sizeof(int),     // size of an input packet
+                                            8001);           // our local udp port
 }
 
 void Game::_drawScene()
