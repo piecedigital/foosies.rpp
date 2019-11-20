@@ -1,4 +1,4 @@
-#include "ggponet.h"
+#include "bin/ggponet.h"
 
 class Session
 {
@@ -7,6 +7,11 @@ public:
     GGPOSessionCallbacks cb;
 
     Session();
+
+    void endSession()
+    {
+        ggpo_close_session(ggpo);
+    }
 };
 
 bool beginGameCallback(char *game);

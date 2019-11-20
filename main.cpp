@@ -65,7 +65,7 @@ void Game::g()
     /* Start a new session */
     GGPOErrorCode result = ggpo_start_session(&session.ggpo, // the new session object
                                             &session.cb,     // our callbacks
-                                            "test_app",      // application name
+                                            (char *)"test_app",      // application name
                                             2,               // 2 players
                                             sizeof(int),     // size of an input packet
                                             8001);           // our local udp port

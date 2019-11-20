@@ -161,11 +161,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="session.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bin\ggponet.h" />
     <ClInclude Include="bin\raylib.h" />
     <ClInclude Include="foosies++.h" />
+    <ClInclude Include="session.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\ggponet.dll">
