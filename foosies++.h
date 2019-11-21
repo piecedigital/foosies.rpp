@@ -28,11 +28,12 @@ public:
     Grid grid;
     Scene scene;
     GameState gameState;
+    Session session;
     Game();
     int init();
     void update();
     void render();
-    void g();
+    void go();
 private:
     void _drawScene();
     void _drawUI();

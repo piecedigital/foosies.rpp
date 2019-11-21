@@ -58,17 +58,12 @@ void Game::render()
     EndDrawing();
 }
 
-void Game::g()
+void Game::go()
 {
-    Session session;
+    Game::session = Session();
 
     /* Start a new session */
-    GGPOErrorCode result = ggpo_start_session(&session.ggpo, // the new session object
-                                            &session.cb,     // our callbacks
-                                            (char *)"test_app",      // application name
-                                            2,               // 2 players
-                                            sizeof(int),     // size of an input packet
-                                            8001);           // our local udp port
+    GGPOErrorCode result = session.start();
 }
 
 void Game::_drawScene()

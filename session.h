@@ -5,12 +5,24 @@ class Session
 public:
     GGPOSession *ggpo;
     GGPOSessionCallbacks cb;
+    GGPOPlayerHandle playerHandles[];
 
     Session();
 
-    void endSession()
+    GGPOErrorCode start()
     {
-        ggpo_close_session(ggpo);
+        return ggpo_start_session(
+            &ggpo,              // the new session object
+            &cb,                // our callbacks
+            (char *)"test_app", // application name
+            2,                  // 2 players
+            sizeof(int),        // size of an input packet
+            8001);              // our local udp port
+    }
+
+    GGPOErrorCode end()
+    {
+        return ggpo_close_session(ggpo);
     }
 };
 
