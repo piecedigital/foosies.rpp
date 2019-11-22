@@ -36,13 +36,19 @@ GGPOErrorCode Session::synchronizeInputs()
 {
     PlayerInput *inputs[2];
     inputs[0] = &player1.input;
+    inputs[1] = &player2.input;
 
-    /* notify ggpo of the local player's inputs */
-    GGPOErrorCode result = ggpo_add_local_input(
-        ggpo,               // the session object
-        playerHandles[0],   // handle for p1
-        &inputs[0],         // p1's inputs
-        sizeof(inputs[0])); // size of p1's inputs
+    GGPOErrorCode result;
+
+    for (int i = 0; i < size(inputs); i++)
+    {
+        /* notify ggpo of the local player's inputs */
+        result = ggpo_add_local_input(
+            ggpo,               // the session object
+            playerHandles[i],   // handle for p1
+            &inputs[i],         // p1's inputs
+            sizeof(inputs[i])); // size of p1's inputs
+    }
 
     int flag;
 
@@ -54,12 +60,6 @@ GGPOErrorCode Session::synchronizeInputs()
             &inputs,          // array of inputs
             sizeof(inputs),
             &flag); // size of all inputs
-
-        if (GGPO_SUCCEEDED(result))
-        {
-            /* pass both inputs to our advance function */
-            AdvanceGameState(&inputs[0], &inputs[1], &gameState);
-        }
     }
 
     return result;
