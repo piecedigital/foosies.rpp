@@ -7,6 +7,7 @@
 #include <string>
 #include "bin/ggponet.h"
 #include "bin/raylib.h"
+#include "player.h"
 
 struct Grid {
     int hCells;
@@ -20,6 +21,7 @@ struct Scene {
 
 struct GameState
 {
+    Player players[2];
 };
 
 class Game

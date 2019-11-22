@@ -1,4 +1,5 @@
 #include "bin/ggponet.h"
+#include "player.h"
 
 class Session
 {
@@ -6,6 +7,8 @@ public:
     GGPOSession *ggpo;
     GGPOSessionCallbacks cb;
     GGPOPlayerHandle playerHandles[];
+    Player player1, player2;
+    GGPOPlayerHandle playerHandles[2];
 
     Session();
 
@@ -19,6 +22,8 @@ public:
             sizeof(int),        // size of an input packet
             8001);              // our local udp port
     }
+
+    GGPOErrorCode synchronizeInputs();
 
     GGPOErrorCode end()
     {

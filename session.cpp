@@ -20,17 +20,50 @@ Session::Session()
     cb.on_event = onEventCallback;
 
     // adds players
-    GGPOPlayer p1, p2;
-    p1.size = p2.size = sizeof(GGPOPlayer);
-    p1.type = GGPO_PLAYERTYPE_LOCAL;
-    p2.type = GGPO_PLAYERTYPE_REMOTE;
+    Session::player1 = Session::player2 = Player();
+    player1.ggpoPlayer.size = player2.ggpoPlayer.size = sizeof(GGPOPlayer);
+    player1.ggpoPlayer.type = GGPO_PLAYERTYPE_LOCAL;
+    player2.ggpoPlayer.type = GGPO_PLAYERTYPE_REMOTE;
 
-    strcpy(p2.u.remote.ip_address, "127.0.0.1");
-    p2.u.remote.port = 8002;
+    strcpy(player2.ggpoPlayer.u.remote.ip_address, "127.0.0.1");
+    player2.ggpoPlayer.u.remote.port = 8002;
 
-    GGPOErrorCode result = ggpo_add_player(ggpo, &p1, &playerHandles[0]);
-    GGPOErrorCode result = ggpo_add_player(ggpo, &p2, &playerHandles[0]);
+    GGPOErrorCode result = ggpo_add_player(ggpo, &player1.ggpoPlayer, &playerHandles[0]);
+    GGPOErrorCode result = ggpo_add_player(ggpo, &player2.ggpoPlayer, &playerHandles[1]);
 };
+
+GGPOErrorCode Session::synchronizeInputs()
+{
+    PlayerInput *inputs[2];
+    inputs[0] = &player1.input;
+
+    /* notify ggpo of the local player's inputs */
+    GGPOErrorCode result = ggpo_add_local_input(
+        ggpo,               // the session object
+        playerHandles[0],   // handle for p1
+        &inputs[0],         // p1's inputs
+        sizeof(inputs[0])); // size of p1's inputs
+
+    int flag;
+
+    /* synchronize the local and remote inputs */
+    if (GGPO_SUCCEEDED(result))
+    {
+        result = ggpo_synchronize_input(
+            ggpo,            // the session object
+            &inputs,          // array of inputs
+            sizeof(inputs),
+            &flag); // size of all inputs
+
+        if (GGPO_SUCCEEDED(result))
+        {
+            /* pass both inputs to our advance function */
+            AdvanceGameState(&inputs[0], &inputs[1], &gameState);
+        }
+    }
+
+    return result;
+}
 
 bool beginGameCallback(char *game)
 {
