@@ -24,9 +24,12 @@
     <ClCompile Include="session.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="foosies++.h">
+    <ClInclude Include="foosiespp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="bin\raylib.h">
@@ -36,6 +39,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="session.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="custom-types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

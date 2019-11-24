@@ -1,5 +1,3 @@
-#include "iostream"
-#include "cstring"
 #include "session.h"
 
 using namespace std;
@@ -8,7 +6,7 @@ Session::Session()
 {
     Session::ggpo;
     Session::cb;
-    Session::playerHandles[2];
+    Session::playerHandles;
 
     /* fill in all callback functions */
     cb.begin_game = beginGameCallback;
@@ -20,27 +18,27 @@ Session::Session()
     cb.on_event = onEventCallback;
 
     // adds players
-    Session::player1 = Session::player2 = Player();
+    Session::player1 = Session::player2 = PlayerController();
     player1.ggpoPlayer.size = player2.ggpoPlayer.size = sizeof(GGPOPlayer);
     player1.ggpoPlayer.type = GGPO_PLAYERTYPE_LOCAL;
     player2.ggpoPlayer.type = GGPO_PLAYERTYPE_REMOTE;
 
-    strcpy(player2.ggpoPlayer.u.remote.ip_address, "127.0.0.1");
+    strcpy_s(player2.ggpoPlayer.u.remote.ip_address, "127.0.0.1");
     player2.ggpoPlayer.u.remote.port = 8002;
 
-    GGPOErrorCode result = ggpo_add_player(ggpo, &player1.ggpoPlayer, &playerHandles[0]);
-    GGPOErrorCode result = ggpo_add_player(ggpo, &player2.ggpoPlayer, &playerHandles[1]);
+    GGPOErrorCode result1 = ggpo_add_player(ggpo, &player1.ggpoPlayer, &playerHandles[0]);
+    GGPOErrorCode result2 = ggpo_add_player(ggpo, &player2.ggpoPlayer, &playerHandles[1]);
 };
 
 GGPOErrorCode Session::synchronizeInputs()
 {
-    PlayerInput *inputs[2];
-    inputs[0] = &player1.input;
-    inputs[1] = &player2.input;
+    array<PlayerInput*, 2> inputs;
+    inputs[0] = &player1.pd.input;
+    inputs[1] = &player2.pd.input;
 
     GGPOErrorCode result;
 
-    for (int i = 0; i < size(inputs); i++)
+    for (size_t i = 0; i < inputs.size(); i++)
     {
         /* notify ggpo of the local player's inputs */
         result = ggpo_add_local_input(

@@ -1,19 +1,31 @@
+#pragma once
+
+#include <iostream>
+#include <cstring>
+#include <array>
 #include "bin/ggponet.h"
 #include "player.h"
+
+#ifndef SESSION_H
+#define SESSION_H
 
 class Session
 {
 public:
+    int maxPlayers;
+    int maxSpectators;
     GGPOSession *ggpo;
     GGPOSessionCallbacks cb;
-    GGPOPlayerHandle playerHandles[];
-    Player player1, player2;
-    GGPOPlayerHandle playerHandles[2];
+    PlayerController player1, player2;
+    std::array<GGPOPlayerHandle, 2> playerHandles;
 
     Session();
 
     GGPOErrorCode start()
     {
+        maxPlayers = 2;
+        maxSpectators = 0;
+
         return ggpo_start_session(
             &ggpo,              // the new session object
             &cb,                // our callbacks
@@ -38,3 +50,5 @@ bool logGameStateCallback(char *filename, unsigned char *buffer, int len);
 void freeBufferCallback(void *buffer);
 bool advanceFrameCallback(int flags);
 bool onEventCallback(GGPOEvent *info);
+
+#endif
