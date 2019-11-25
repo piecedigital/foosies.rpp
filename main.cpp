@@ -10,6 +10,7 @@ Game::Game()
     Game::grid = Grid();
     Game::scene = Scene();
     Game::gameState = GameState();
+    Game::controllers = std::vector<Controller>();
 }
 
 int Game::init()
@@ -90,107 +91,37 @@ std::vector<InputNormalization> Game::_aggregateGamepadInputs()
 {
     unsigned int maxPads = 4;
     std::vector<InputNormalization> inputList;
+    int padsAvailable = 0;
 
     for (unsigned int padId = 0; padId < maxPads; padId++)
     {
-        if(IsGamepadAvailable(padId))
+        if (IsGamepadAvailable(padId))
         {
-            inputList.push_back(_getGamepadInputs(padId));
+            padsAvailable++;
+
+            if (padId < controllers.size())
+            {
+                if (GetGamepadName(padId) != controllers.at(padId).name)
+                {
+                    controllers.erase(controllers.begin() + padId);
+                    controllers.emplace(controllers.begin() + padId, Controller(padId, GetGamepadName(padId)));
+                }
+            }
+            else
+            {
+                controllers.push_back(Controller(padId, GetGamepadName(padId)));
+            }
+
+            inputList.push_back(controllers.at(padId).getNormalizedInputs());
         }
     }
 
+    if (padsAvailable > 0)
+    {
+        controllers.erase(controllers.begin() + padsAvailable - 1, controllers.end());
+    }
+
     return inputList;
-}
-
-InputNormalization Game::_getGamepadInputs(int padId)
-{
-    InputNormalization keys = InputNormalization();
-
-    // @TODO: get axis working like "pressed"
-    // GetGamepadAxisMovement(AXIS_LEFT_V);
-
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_UP))
-    {
-        cout << "DIR_V -= 1" << endl;
-        keys.DIR_V -= 1;
-    }
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_DOWN))
-    {
-        cout << "DIR_V += 1" << endl;
-        keys.DIR_V += 1;
-    }
-
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_LEFT))
-    {
-        cout << "DIR_H -= 1" << endl;
-        keys.DIR_H -= 1;
-    }
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_RIGHT))
-    {
-        cout << "DIR_H += 1" << endl;
-        keys.DIR_H += 1;
-    }
-    // Y/Triangle
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_UP))
-    {
-        cout << "FACE_UP = true" << endl;
-        keys.FACE_UP = true;
-    }
-    // A/Cross
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_DOWN))
-    {
-        cout << "FACE_DOWN = true" << endl;
-        keys.FACE_DOWN = true;
-    }
-    // X/Square
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_LEFT))
-    {
-        cout << "FACE_LEFT = true" << endl;
-        keys.FACE_LEFT = true;
-    }
-    // B/Circle
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT))
-    {
-        cout << "FACE_RIGHT = true" << endl;
-        keys.FACE_RIGHT = true;
-    }
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_TRIGGER_1))
-    {
-        cout << "SHOULDER_L = true" << endl;
-        keys.SHOULDER_L = true;
-    }
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_TRIGGER_1))
-    {
-        cout << "SHOULDER_R = true" << endl;
-        keys.SHOULDER_R = true;
-    }
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_TRIGGER_2))
-    {
-        cout << "TRIGGER_L = true" << endl;
-        keys.TRIGGER_L = true;
-    }
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_TRIGGER_2))
-    {
-        cout << "TRIGGER_R = true" << endl;
-        keys.TRIGGER_R = true;
-    }
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_MIDDLE_LEFT))
-    {
-        cout << "SELECT = true" << endl;
-        keys.SELECT = true;
-    }
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_MIDDLE))
-    {
-        cout << "HOME = true" << endl;
-        keys.HOME = true;
-    }
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_MIDDLE_RIGHT))
-    {
-        cout << "START = true" << endl;
-        keys.START = true;
-    }
-
-    return keys;
 }
 
 int main()

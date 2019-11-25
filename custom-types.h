@@ -1,6 +1,7 @@
 #ifndef CUSTOM_TYPES_H
 #define CUSTOM_TYPES_H
 
+// structs
 struct Transform3
 {
     int x;
@@ -8,6 +9,24 @@ struct Transform3
     int z;
 };
 
+struct InputNormalization
+{
+    int DIR_H = 0;
+    int DIR_V = 0;
+    bool FACE_UP = false;
+    bool FACE_DOWN = false;
+    bool FACE_LEFT = false;
+    bool FACE_RIGHT = false;
+    bool SHOULDER_L = false;
+    bool SHOULDER_R = false;
+    bool TRIGGER_L = false;
+    bool TRIGGER_R = false;
+    bool SELECT = false;
+    bool START = false;
+    bool HOME = false;
+};
+
+// enums
 enum PlayerInput
 {
     NONE = 0,

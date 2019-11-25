@@ -160,6 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="controller.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="session.cpp" />
@@ -167,6 +168,7 @@
   <ItemGroup>
     <ClInclude Include="bin\ggponet.h" />
     <ClInclude Include="bin\raylib.h" />
+    <ClInclude Include="controller.h" />
     <ClInclude Include="custom-types.h" />
     <ClInclude Include="foosiespp.h" />
     <ClInclude Include="player.h" />
