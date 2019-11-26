@@ -31,6 +31,7 @@ public:
     GameState gameState;
     Session session;
     std::vector<Controller> controllers;
+    Controller keyboard;
 
     Game();
     int init();

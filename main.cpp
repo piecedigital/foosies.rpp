@@ -11,6 +11,7 @@ Game::Game()
     Game::scene = Scene();
     Game::gameState = GameState();
     Game::controllers = std::vector<Controller>();
+    Game::keyboard = Controller();
 }
 
 int Game::init()
@@ -21,7 +22,7 @@ int Game::init()
     scene.targetFPS = 60;
 
     scene.cam = Camera3D();
-    scene.cam.position = Vector3{0.f, 10.f, 8.f};
+    scene.cam.position = Vector3{0.f, 0.f, 8.f};
     scene.cam.target = Vector3{0.f, 0.f, 0.f};
     scene.cam.up = Vector3{0.f, 1.f, 0.f};
     scene.cam.fovy = 60.f;
@@ -72,6 +73,7 @@ void Game::_drawScene()
     BeginMode3D(scene.cam);
 
     DrawGrid(10, 1.f);
+    DrawCube({ 0, 0, 0 }, 1.f, 1.f, 1.f, RED);
 
     EndMode3D();
 }
@@ -82,6 +84,7 @@ void Game::_drawUI()
     std::string x = "This is a raylib->Foosies example, involving: ";
     std::string y = std::to_string((int)type);
     x.append(y);
+    // DrawRectangle(0, 0, 1, 1, RED);
 
     DrawText(x.c_str(), 10, 40, 20, DARKGRAY);
     DrawFPS(10, 10);
@@ -93,6 +96,10 @@ std::vector<InputNormalization> Game::_aggregateGamepadInputs()
     std::vector<InputNormalization> inputList;
     int padsAvailable = 0;
 
+    // get input for keyboard
+    inputList.push_back(keyboard.getNormalizedInputs());
+
+    // get input for gamepads
     for (unsigned int padId = 0; padId < maxPads; padId++)
     {
         if (IsGamepadAvailable(padId))

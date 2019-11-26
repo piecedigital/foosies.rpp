@@ -17,6 +17,18 @@ Controller::Controller(unsigned int padId, const char *name)
     Controller::axisChangedV = false;
 }
 
+Controller::Controller()
+{
+    Controller::padId = -1;
+    Controller::name = "Keyboard";
+    Controller::axisThresholdH = 0.5;
+    Controller::axisThresholdV = 0.5;
+    Controller::axisAbsoluteH = 0;
+    Controller::axisAbsoluteV = 0;
+    Controller::axisChangedH = false;
+    Controller::axisChangedV = false;
+}
+
 InputNormalization Controller::getNormalizedInputs()
 {
     InputNormalization keys = InputNormalization();
@@ -25,74 +37,94 @@ InputNormalization Controller::getNormalizedInputs()
     _axisRecalculate();
 
     if (
-        IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_UP) ||
-        _axisJustTilted("up"))
+        (name == "Keyboard" && _IsKeyDown(KEY_W)) ||
+        IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_FACE_UP) ||
+        _axisTilted("up"))
     {
         cout << "[" + std::to_string(padId) + "]DIR_V += 1" << endl;
         keys.DIR_V += 1;
     }
     if (
-        IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_DOWN) ||
-        _axisJustTilted("down"))
+        (name == "Keyboard" && _IsKeyDown(KEY_S)) ||
+        IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_FACE_DOWN) ||
+        _axisTilted("down"))
     {
         cout << "[" + std::to_string(padId) + "]DIR_V -= 1" << endl;
         keys.DIR_V -= 1;
     }
 
     if (
-        IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_LEFT) ||
-        _axisJustTilted("left"))
+        (name == "Keyboard" && _IsKeyDown(KEY_A)) ||
+        IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_FACE_LEFT) ||
+        _axisTilted("left"))
     {
         cout << "[" + std::to_string(padId) + "]DIR_H -= 1" << endl;
         keys.DIR_H -= 1;
     }
     if (
-        IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_RIGHT) ||
-        _axisJustTilted("right"))
+        (name == "Keyboard" && _IsKeyDown(KEY_D)) ||
+        IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_FACE_RIGHT) ||
+        _axisTilted("right"))
     {
         cout << "[" + std::to_string(padId) + "]DIR_H += 1" << endl;
         keys.DIR_H += 1;
     }
     // Y/Triangle
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_UP))
+    if (
+        (name == "Keyboard" && _IsKeyPressed(KEY_U)) ||
+        IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_UP))
     {
         cout << "[" + std::to_string(padId) + "]FACE_UP = true" << endl;
         keys.FACE_UP = true;
     }
     // A/Cross
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_DOWN))
+    if (
+        (name == "Keyboard" && _IsKeyPressed(KEY_H)) ||
+        IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_DOWN))
     {
         cout << "[" + std::to_string(padId) + "]FACE_DOWN = true" << endl;
         keys.FACE_DOWN = true;
     }
     // X/Square
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_LEFT))
+    if (
+        (name == "Keyboard" && _IsKeyPressed(KEY_Y)) ||
+        IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_LEFT))
     {
         cout << "[" + std::to_string(padId) + "]FACE_LEFT = true" << endl;
         keys.FACE_LEFT = true;
     }
     // B/Circle
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT))
+    if (
+        (name == "Keyboard" && _IsKeyPressed(KEY_J)) ||
+        IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT))
     {
         cout << "[" + std::to_string(padId) + "]FACE_RIGHT = true" << endl;
         keys.FACE_RIGHT = true;
     }
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_TRIGGER_1))
+    if (
+        (name == "Keyboard" && _IsKeyPressed(KEY_O)) ||
+        IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_TRIGGER_1))
     {
         cout << "[" + std::to_string(padId) + "]SHOULDER_L = true" << endl;
         keys.SHOULDER_L = true;
     }
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_TRIGGER_1))
+    if (
+        (name == "Keyboard" && _IsKeyPressed(KEY_I)) ||
+        IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_TRIGGER_1))
     {
         cout << "[" + std::to_string(padId) + "]SHOULDER_R = true" << endl;
         keys.SHOULDER_R = true;
     }
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_TRIGGER_2))
+    if (
+        (name == "Keyboard" && _IsKeyPressed(KEY_L)) ||
+        IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_TRIGGER_2))
     {
         cout << "[" + std::to_string(padId) + "]TRIGGER_L = true" << endl;
         keys.TRIGGER_L = true;
     }
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_TRIGGER_2))
+    if (
+        (name == "Keyboard" && _IsKeyPressed(KEY_K)) ||
+        IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_TRIGGER_2))
     {
         cout << "[" + std::to_string(padId) + "]TRIGGER_R = true" << endl;
         keys.TRIGGER_R = true;
@@ -107,7 +139,9 @@ InputNormalization Controller::getNormalizedInputs()
         cout << "[" + std::to_string(padId) + "]HOME = true" << endl;
         keys.HOME = true;
     }
-    if (IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_MIDDLE_RIGHT))
+    if (
+        (name == "Keyboard" && _IsKeyPressed(KEY_ESCAPE)) ||
+        IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_MIDDLE_RIGHT))
     {
         cout << "[" + std::to_string(padId) + "]START = true" << endl;
         keys.START = true;
@@ -143,6 +177,31 @@ void Controller::_axisRecalculate()
     }
 }
 
+bool Controller::_IsKeyDown(int key)
+{
+    // @TODO: filter through keyboard mapping
+    return IsKeyDown(key);
+};
+
+bool Controller::_IsKeyPressed(int key)
+{
+    // @TODO: filter through keyboard mapping
+    return IsKeyPressed(key);
+};
+
+bool Controller::_axisTilted(std::string direction)
+{
+    if (direction == "up")
+        return (axisAbsoluteV < 0);
+    if (direction == "down")
+        return (axisAbsoluteV < 0);
+    if (direction == "left")
+        return (axisAbsoluteH < 0);
+    if (direction == "right")
+        return (axisAbsoluteH < 0);
+    return false;
+}
+
 bool Controller::_axisJustTilted(std::string direction)
 {
     if (direction == "up")
@@ -153,4 +212,5 @@ bool Controller::_axisJustTilted(std::string direction)
         return (axisAbsoluteH < 0 && axisChangedH);
     if (direction == "right")
         return (axisAbsoluteH < 0 && axisChangedH);
+    return false;
 }

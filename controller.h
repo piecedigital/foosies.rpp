@@ -18,10 +18,14 @@ public:
     const char *name;
 
     Controller(unsigned int padId, const char *name);
+    Controller();
     InputNormalization getNormalizedInputs();
 
     void _axisRecalculate();
+    bool _axisTilted(std::string direction);
     bool _axisJustTilted(std::string direction);
+    bool _IsKeyDown(int key);
+    bool _IsKeyPressed(int key);
 };
 
 #endif
