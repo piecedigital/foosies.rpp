@@ -21,7 +21,7 @@ struct InputNormalization
     bool SHOULDER_R = false;
     bool TRIGGER_L = false;
     bool TRIGGER_R = false;
-    bool SELECT = false;
+    bool BACK = false;
     bool START = false;
     bool HOME = false;
 };

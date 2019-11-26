@@ -6,13 +6,6 @@
 
 class Controller
 {
-    float axisThresholdH;
-    float axisThresholdV;
-    float axisAbsoluteH;
-    float axisAbsoluteV;
-    float axisChangedH;
-    float axisChangedV;
-
 public:
     int padId;
     const char *name;
@@ -21,11 +14,21 @@ public:
     Controller();
     InputNormalization getNormalizedInputs();
 
+    bool _IsButtonDown(std::string button);
+    bool _IsButtonPressed(std::string button);
     void _axisRecalculate();
-    bool _axisTilted(std::string direction);
-    bool _axisJustTilted(std::string direction);
-    bool _IsKeyDown(int key);
-    bool _IsKeyPressed(int key);
+    bool _IsAxisTilted(std::string direction);
+    bool _IsAxisJustTilted(std::string direction);
+    void setPlayer(int player);
+
+private:
+    float axisThresholdH;
+    float axisThresholdV;
+    float axisAbsoluteH;
+    float axisAbsoluteV;
+    float axisChangedH;
+    float axisChangedV;
+    int player;
 };
 
 #endif
