@@ -22,36 +22,35 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
     PlayerInput playerInput = PlayerInput();
 
     if (normInput.DIR_H == -1)
-        setFlag(&playerInput, PlayerInput::DIR_BACK);
+        setFlag(playerInput, PlayerInput::DIR_BACK);
     if (normInput.DIR_H == 1)
-        setFlag(&playerInput, PlayerInput::DIR_TOWARD);
+        setFlag(playerInput, PlayerInput::DIR_TOWARD);
     if (normInput.DIR_V == -1)
-        setFlag(&playerInput, PlayerInput::DIR_DOWN);
+        setFlag(playerInput, PlayerInput::DIR_DOWN);
     if (normInput.DIR_V == 1)
-        setFlag(&playerInput, PlayerInput::DIR_UP);
-
+        setFlag(playerInput, PlayerInput::DIR_UP);
     if (normInput.FACE_UP)
-        true;
+        setFlag(playerInput, PlayerInput::BTN_STRONG);
     if (normInput.FACE_DOWN)
-        true;
+        setFlag(playerInput, PlayerInput::BTN_SHORT);
     if (normInput.FACE_LEFT)
-        true;
+        setFlag(playerInput, PlayerInput::BTN_JAB);
     if (normInput.FACE_RIGHT)
-        true;
+        setFlag(playerInput, PlayerInput::BTN_FORWARD);
     if (normInput.SHOULDER_L)
-        true;
+        setFlag(playerInput, PlayerInput::BTN_MACRO1);
     if (normInput.SHOULDER_R)
-        true;
+        setFlag(playerInput, PlayerInput::BTN_FIERCE);
     if (normInput.TRIGGER_L)
-        true;
+        setFlag(playerInput, PlayerInput::BTN_MACRO2);
     if (normInput.TRIGGER_R)
-        true;
-    if (normInput.BACK)
-        true;
-    if (normInput.START)
-        true;
-    if (normInput.HOME)
-        true;
+        setFlag(playerInput, PlayerInput::BTN_ROUNDHOUSE);
+    // if (normInput.BACK)
+    //     setFlag(playerInput, PlayerInput::BACK);
+    // if (normInput.START)
+    //     setFlag(playerInput, PlayerInput::START);
+    // if (normInput.HOME)
+    //     setFlag(playerInput, PlayerInput::HOME);
 
     setInputs(playerInput);
 };
@@ -59,4 +58,5 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 void PlayerController::setInputs(PlayerInput playerInput)
 {
     pd.input = playerInput;
+    std::cout << std::to_string((int)playerInput) << std::endl;
 }

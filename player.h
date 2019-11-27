@@ -1,6 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <string>
+#include <iostream>
 #include "bin/ggponet.h"
 #include "bin/raylib.h"
 #include "custom-types.h"

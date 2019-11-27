@@ -1,8 +1,4 @@
-#include <iostream>
-#include "bin/raylib.h"
 #include "controller.h"
-
-using namespace std;
 
 Controller::Controller(unsigned int padId, const char *name)
 {
@@ -36,78 +32,78 @@ NormalizedInput Controller::getNormalizedInputs()
 
     if (_IsInputDown("up") || _IsAxisTilted("up"))
     {
-        cout << "[" + std::to_string(padId) + "]DIR_V += 1" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]DIR_V += 1" << std::endl;
         keys.DIR_V += 1;
     }
     if (_IsInputDown("down") || _IsAxisTilted("down"))
     {
-        cout << "[" + std::to_string(padId) + "]DIR_V -= 1" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]DIR_V -= 1" << std::endl;
         keys.DIR_V -= 1;
     }
 
     if (_IsInputDown("left") || _IsAxisTilted("left"))
     {
-        cout << "[" + std::to_string(padId) + "]DIR_H -= 1" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]DIR_H -= 1" << std::endl;
         keys.DIR_H -= 1;
     }
     if (_IsInputDown("right") || _IsAxisTilted("right"))
     {
-        cout << "[" + std::to_string(padId) + "]DIR_H += 1" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]DIR_H += 1" << std::endl;
         keys.DIR_H += 1;
     }
     if (_IsInputPressed("face_up"))
     {
-        cout << "[" + std::to_string(padId) + "]FACE_UP = true" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]FACE_UP = true" << std::endl;
         keys.FACE_UP = true;
     }
     if (_IsInputPressed("face_down"))
     {
-        cout << "[" + std::to_string(padId) + "]FACE_DOWN = true" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]FACE_DOWN = true" << std::endl;
         keys.FACE_DOWN = true;
     }
     if (_IsInputPressed("face_left"))
     {
-        cout << "[" + std::to_string(padId) + "]FACE_LEFT = true" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]FACE_LEFT = true" << std::endl;
         keys.FACE_LEFT = true;
     }
     if (_IsInputPressed("face_right"))
     {
-        cout << "[" + std::to_string(padId) + "]FACE_RIGHT = true" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]FACE_RIGHT = true" << std::endl;
         keys.FACE_RIGHT = true;
     }
     if (_IsInputPressed("shoulder_left"))
     {
-        cout << "[" + std::to_string(padId) + "]SHOULDER_L = true" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]SHOULDER_L = true" << std::endl;
         keys.SHOULDER_L = true;
     }
     if (_IsInputPressed("shoulder_right"))
     {
-        cout << "[" + std::to_string(padId) + "]SHOULDER_R = true" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]SHOULDER_R = true" << std::endl;
         keys.SHOULDER_R = true;
     }
     if (_IsInputPressed("trigger_left"))
     {
-        cout << "[" + std::to_string(padId) + "]TRIGGER_L = true" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]TRIGGER_L = true" << std::endl;
         keys.TRIGGER_L = true;
     }
     if (_IsInputPressed("trigger_right"))
     {
-        cout << "[" + std::to_string(padId) + "]TRIGGER_R = true" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]TRIGGER_R = true" << std::endl;
         keys.TRIGGER_R = true;
     }
     if (_IsInputPressed("back"))
     {
-        cout << "[" + std::to_string(padId) + "]BACK = true" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]BACK = true" << std::endl;
         keys.BACK = true;
     }
     if (_IsInputPressed("home"))
     {
-        cout << "[" + std::to_string(padId) + "]HOME = true" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]HOME = true" << std::endl;
         keys.HOME = true;
     }
     if (_IsInputPressed("start"))
     {
-        cout << "[" + std::to_string(padId) + "]START = true" << endl;
+        // std::cout << "[" + std::to_string(padId) + "]START = true" << std::endl;
         keys.START = true;
     }
 

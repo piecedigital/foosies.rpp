@@ -28,6 +28,7 @@ public:
     Grid grid;
     Scene scene;
     GameState gameState;
+    PlayerController player1, player2;
     Session session;
     std::vector<Controller> controllers;
     Controller keyboard;

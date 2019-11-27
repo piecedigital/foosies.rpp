@@ -54,25 +54,25 @@ inline PlayerInput operator^(PlayerInput a, PlayerInput b) { return (PlayerInput
 
 inline PlayerInput *operator|(PlayerInput *a, PlayerInput b) { return (PlayerInput *)((int &)a | (int)b); };
 
-inline PlayerInput &operator|=(PlayerInput &a, PlayerInput b) { return (PlayerInput &)((int &)a |= (int)b); };
-inline PlayerInput *operator|=(PlayerInput *a, PlayerInput b) { return (PlayerInput *)((int &)a |= (int)b); };
-inline PlayerInput &operator&=(PlayerInput &a, PlayerInput b) { return (PlayerInput &)((int &)a &= (int)b); };
-inline PlayerInput &operator^=(PlayerInput &a, PlayerInput b) { return (PlayerInput &)((int &)a ^= (int)b); };
+inline PlayerInput &operator|=(PlayerInput const &a, PlayerInput b) { return (PlayerInput &)((int &)a |= (int)b); };
+inline PlayerInput *operator|=(PlayerInput const *a, PlayerInput b) { return (PlayerInput *)((int &)a |= (int)b); };
+inline PlayerInput &operator&=(PlayerInput const &a, PlayerInput b) { return (PlayerInput &)((int &)a &= (int)b); };
+inline PlayerInput &operator^=(PlayerInput const &a, PlayerInput b) { return (PlayerInput &)((int &)a ^= (int)b); };
 
 // functions
-inline bool hasFlag(PlayerInput v, PlayerInput flag)
+inline bool hasFlag(PlayerInput const &v, PlayerInput flag)
 {
     return (int)(v & flag) != 0;
 };
 
-inline void setFlag(PlayerInput *v, PlayerInput flag)
+inline void setFlag(PlayerInput const &v, PlayerInput flag)
 {
     v |= flag;
 };
 
-inline void clearEnum(PlayerInput *v)
+inline void clearEnum(PlayerInput &v)
 {
-    v = 0;
+    v = PlayerInput::NONE;
 };
 
 #endif

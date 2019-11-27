@@ -14,7 +14,7 @@ public:
     int maxSpectators;
     GGPOSession *ggpo;
     GGPOSessionCallbacks cb;
-    PlayerController player1, player2;
+    PlayerController *player1, *player2;
     std::array<GGPOPlayerHandle, 2> playerHandles;
 
     Session();
@@ -32,6 +32,8 @@ public:
             sizeof(int),        // size of an input packet
             8001);              // our local udp port
     }
+
+    void Session::addPlayer(PlayerController *player, GGPOPlayerType type);
 
     GGPOErrorCode synchronizeInputs();
 

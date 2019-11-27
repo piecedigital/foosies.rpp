@@ -1,7 +1,5 @@
 ﻿#include "foosiespp.h"
 
-using namespace std;
-
 Game::Game()
 {
     Game::grid = Grid();
@@ -46,11 +44,11 @@ int Game::init()
 void Game::update()
 {
     std::vector<NormalizedInput> inputList = _aggregateGamepadInputs();
-    // @TODO: have input assign to player
-    if (inputList.size() >= 2)
+    // @TODO: have input assign to playerinputList
+    for (NormalizedInput ni : inputList)
     {
-        cout << "here " + (std::to_string(inputList.size())) << endl;
-        session.player1.normalizedToPlayerInput(inputList[1]);
+        // std::cout << "here " + (std::to_string(inputList.size())) << std::endl;
+        player1.normalizedToPlayerInput(ni);
     }
 }
 

@@ -1,7 +1,5 @@
 #include "session.h"
 
-using namespace std;
-
 Session::Session()
 {
     Session::ggpo;
@@ -16,25 +14,31 @@ Session::Session()
     cb.free_buffer = freeBufferCallback;
     cb.advance_frame = advanceFrameCallback;
     cb.on_event = onEventCallback;
+};
+
+void Session::addPlayer(PlayerController *player, GGPOPlayerType type)
+{
+    int handleId = 0;
 
     // adds players
-    Session::player1 = Session::player2 = PlayerController();
-    player1.ggpoPlayer.size = player2.ggpoPlayer.size = sizeof(GGPOPlayer);
-    player1.ggpoPlayer.type = GGPO_PLAYERTYPE_LOCAL;
-    player2.ggpoPlayer.type = GGPO_PLAYERTYPE_REMOTE;
+    player->ggpoPlayer.size = player->ggpoPlayer.size = sizeof(GGPOPlayer);
+    player->ggpoPlayer.type = type;
 
-    strcpy_s(player2.ggpoPlayer.u.remote.ip_address, "127.0.0.1");
-    player2.ggpoPlayer.u.remote.port = 8002;
+    if (type == GGPO_PLAYERTYPE_LOCAL)
+    {
+        handleId = 1;
+        strcpy_s(player->ggpoPlayer.u.remote.ip_address, "127.0.0.1");
+        player->ggpoPlayer.u.remote.port = 8002;
+    }
 
-    GGPOErrorCode result1 = ggpo_add_player(ggpo, &player1.ggpoPlayer, &playerHandles[0]);
-    GGPOErrorCode result2 = ggpo_add_player(ggpo, &player2.ggpoPlayer, &playerHandles[1]);
-};
+    GGPOErrorCode result1 = ggpo_add_player(ggpo, &player->ggpoPlayer, &playerHandles[handleId]);
+}
 
 GGPOErrorCode Session::synchronizeInputs()
 {
-    array<PlayerInput*, 2> inputs;
-    inputs[0] = &player1.pd.input;
-    inputs[1] = &player2.pd.input;
+    std::array<PlayerInput*, 2> inputs;
+    inputs[0] = &player1->pd.input;
+    inputs[1] = &player2->pd.input;
 
     GGPOErrorCode result;
 
@@ -65,42 +69,42 @@ GGPOErrorCode Session::synchronizeInputs()
 
 bool beginGameCallback(char *game)
 {
-    cout << "Callback - beginGameCallback";
+    std::cout << "Callback - beginGameCallback" << std::endl;
     return true;
 };
 
 bool saveGameStateCallback(unsigned char **buffer, int *len, int *checksum, int frame)
 {
-    cout << "Callback - saveGameStateCallback";
+    std::cout << "Callback - saveGameStateCallback" << std::endl;
     return true;
 };
 
 bool loadGameStateCallback(unsigned char *buffer, int len)
 {
-    cout << "Callback - loadGameStateCallback";
+    std::cout << "Callback - loadGameStateCallback" << std::endl;
     return true;
 };
 
 bool logGameStateCallback(char *filename, unsigned char *buffer, int len)
 {
-    cout << "Callback - logGameStateCallback";
+    std::cout << "Callback - logGameStateCallback" << std::endl;
     return true;
 };
 
 void freeBufferCallback(void *buffer)
 {
-    cout << "Callback - freeBufferCallback";
+    std::cout << "Callback - freeBufferCallback" << std::endl;
     return;
 };
 
 bool advanceFrameCallback(int flags)
 {
-    cout << "Callback - advanceFrameCallback";
+    std::cout << "Callback - advanceFrameCallback" << std::endl;
     return true;
 };
 
 bool onEventCallback(GGPOEvent *info)
 {
-    cout << "Callback - onEventCallback";
+    std::cout << "Callback - onEventCallback" << std::endl;
     return true;
 };
