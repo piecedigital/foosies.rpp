@@ -5,7 +5,7 @@
 #include <cstring>
 #include <array>
 #include "bin/ggponet.h"
-#include "player.h"
+#include "player.hpp"
 
 class Session
 {
@@ -15,9 +15,11 @@ public:
     GGPOSession *ggpo;
     GGPOSessionCallbacks cb;
     PlayerController *player1, *player2;
-    std::array<GGPOPlayerHandle, 2> playerHandles;
+    // std::array<GGPOPlayerHandle, 2> playerHandles;
+    GGPOPlayerHandle playerHandles[2];
 
     Session();
+    ~Session();
 
     GGPOErrorCode start()
     {
@@ -33,7 +35,7 @@ public:
             8001);              // our local udp port
     }
 
-    void Session::addPlayer(PlayerController *player, GGPOPlayerType type);
+    void addPlayer(PlayerController *player, GGPOPlayerType type);
 
     GGPOErrorCode synchronizeInputs();
 

@@ -3,9 +3,9 @@
 #include <vector>
 #include "bin/ggponet.h"
 #include "bin/raylib.h"
-#include "controller.h"
-#include "player.h"
-#include "session.h"
+#include "controller.hpp"
+#include "player.hpp"
+#include "session.hpp"
 
 struct Grid {
     int hCells;
@@ -28,7 +28,6 @@ public:
     Grid grid;
     Scene scene;
     GameState gameState;
-    PlayerController player1, player2;
     Session session;
     std::vector<Controller> controllers;
     Controller keyboard;

@@ -5,7 +5,7 @@
 #include <iostream>
 #include "bin/ggponet.h"
 #include "bin/raylib.h"
-#include "custom-types.h"
+#include "custom-types.hpp"
 
 struct PlayerData
 {
@@ -19,6 +19,7 @@ class PlayerController
 public:
     GGPOPlayer ggpoPlayer;
     PlayerData pd;
+    Color color;
 
     PlayerController();
 

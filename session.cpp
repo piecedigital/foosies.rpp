@@ -1,11 +1,7 @@
-#include "session.h"
+#include "session.hpp"
 
 Session::Session()
 {
-    Session::ggpo;
-    Session::cb;
-    Session::playerHandles;
-
     /* fill in all callback functions */
     cb.begin_game = beginGameCallback;
     cb.save_game_state = saveGameStateCallback;
@@ -16,6 +12,13 @@ Session::Session()
     cb.on_event = onEventCallback;
 };
 
+Session::~Session()
+{
+    ggpo = NULL;
+    player1 = NULL;
+    player1 = NULL;
+};
+
 void Session::addPlayer(PlayerController *player, GGPOPlayerType type)
 {
     int handleId = 0;
@@ -24,11 +27,16 @@ void Session::addPlayer(PlayerController *player, GGPOPlayerType type)
     player->ggpoPlayer.size = player->ggpoPlayer.size = sizeof(GGPOPlayer);
     player->ggpoPlayer.type = type;
 
-    if (type == GGPO_PLAYERTYPE_LOCAL)
+    if (type == GGPO_PLAYERTYPE_REMOTE)
     {
         handleId = 1;
+        Session::player2 = player;
         strcpy_s(player->ggpoPlayer.u.remote.ip_address, "127.0.0.1");
         player->ggpoPlayer.u.remote.port = 8002;
+    }
+    else
+    {
+        Session::player1 = player;
     }
 
     GGPOErrorCode result1 = ggpo_add_player(ggpo, &player->ggpoPlayer, &playerHandles[handleId]);
@@ -67,43 +75,43 @@ GGPOErrorCode Session::synchronizeInputs()
     return result;
 }
 
-bool beginGameCallback(char *game)
+bool /*Session::*/beginGameCallback(char *game)
 {
     std::cout << "Callback - beginGameCallback" << std::endl;
     return true;
 };
 
-bool saveGameStateCallback(unsigned char **buffer, int *len, int *checksum, int frame)
+bool /*Session::*/saveGameStateCallback(unsigned char **buffer, int *len, int *checksum, int frame)
 {
     std::cout << "Callback - saveGameStateCallback" << std::endl;
     return true;
 };
 
-bool loadGameStateCallback(unsigned char *buffer, int len)
+bool /*Session::*/loadGameStateCallback(unsigned char *buffer, int len)
 {
     std::cout << "Callback - loadGameStateCallback" << std::endl;
     return true;
 };
 
-bool logGameStateCallback(char *filename, unsigned char *buffer, int len)
+bool /*Session::*/logGameStateCallback(char *filename, unsigned char *buffer, int len)
 {
     std::cout << "Callback - logGameStateCallback" << std::endl;
     return true;
 };
 
-void freeBufferCallback(void *buffer)
+void /*Session::*/freeBufferCallback(void *buffer)
 {
     std::cout << "Callback - freeBufferCallback" << std::endl;
     return;
 };
 
-bool advanceFrameCallback(int flags)
+bool /*Session::*/advanceFrameCallback(int flags)
 {
     std::cout << "Callback - advanceFrameCallback" << std::endl;
     return true;
 };
 
-bool onEventCallback(GGPOEvent *info)
+bool /*Session::*/onEventCallback(GGPOEvent *info)
 {
     std::cout << "Callback - onEventCallback" << std::endl;
     return true;

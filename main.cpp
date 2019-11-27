@@ -1,12 +1,8 @@
-﻿#include "foosiespp.h"
+﻿#include "foosiespp.hpp"
 
 Game::Game()
 {
-    Game::grid = Grid();
-    Game::scene = Scene();
-    Game::gameState = GameState();
-    Game::controllers = std::vector<Controller>();
-    Game::keyboard = Controller();
+    scene.players[0].color = BLUE;
 }
 
 int Game::init()
@@ -48,7 +44,7 @@ void Game::update()
     for (NormalizedInput ni : inputList)
     {
         // std::cout << "here " + (std::to_string(inputList.size())) << std::endl;
-        player1.normalizedToPlayerInput(ni);
+        scene.players[0].normalizedToPlayerInput(ni);
     }
 }
 
@@ -77,7 +73,10 @@ void Game::_drawScene()
     BeginMode3D(scene.cam);
 
     DrawGrid(10, 1.f);
-    DrawCube({ 0, 0, 0 }, 1.f, 1.f, 0.f, RED);
+    for (PlayerController &player : scene.players)
+    {
+        player.render();
+    }
 
     EndMode3D();
 }

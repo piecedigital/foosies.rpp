@@ -1,12 +1,8 @@
-#include "player.h"
+#include "player.hpp"
 
 PlayerController::PlayerController()
 {
-    pd.input = PlayerInput();
-    pd.transform = Transform();
-    pd.intTranslation = Transform3();
-
-    ggpoPlayer = GGPOPlayer();
+    color = RED;
 }
 
 void PlayerController::update()
@@ -15,6 +11,7 @@ void PlayerController::update()
 
 void PlayerController::render()
 {
+    DrawCube({0, 0, 0}, 1.f, 1.f, 0.f, RED);
 }
 
 void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
@@ -58,5 +55,5 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 void PlayerController::setInputs(PlayerInput playerInput)
 {
     pd.input = playerInput;
-    std::cout << std::to_string((int)playerInput) << std::endl;
+    // std::cout << std::to_string((int)playerInput) << std::endl;
 }

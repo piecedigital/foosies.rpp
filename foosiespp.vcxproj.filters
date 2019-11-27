@@ -32,25 +32,25 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="foosiespp.h">
+    <ClInclude Include="foosiespp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bin\raylib.h">
+    <ClInclude Include="bin\raylib.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bin\ggponet.h">
+    <ClInclude Include="bin\ggponet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="session.h">
+    <ClInclude Include="session.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="player.h">
+    <ClInclude Include="player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="controller.h">
+    <ClInclude Include="controller.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="custom-types.h">
+    <ClInclude Include="custom-types.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,4 +1,4 @@
-#include "controller.h"
+#include "controller.hpp"
 
 Controller::Controller(unsigned int padId, const char *name)
 {

@@ -168,13 +168,13 @@
     <ClCompile Include="session.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bin\ggponet.h" />
-    <ClInclude Include="bin\raylib.h" />
-    <ClInclude Include="controller.h" />
-    <ClInclude Include="custom-types.h" />
-    <ClInclude Include="foosiespp.h" />
-    <ClInclude Include="player.h" />
-    <ClInclude Include="session.h" />
+    <ClInclude Include="bin\ggponet.hpp" />
+    <ClInclude Include="bin\raylib.hpp" />
+    <ClInclude Include="controller.hpp" />
+    <ClInclude Include="custom-types.hpp" />
+    <ClInclude Include="foosiespp.hpp" />
+    <ClInclude Include="player.hpp" />
+    <ClInclude Include="session.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\ggponet.dll">
