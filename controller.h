@@ -1,8 +1,8 @@
-#include <string>
-#include "custom-types.h"
-
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
+
+#include <string>
+#include "custom-types.h"
 
 class Controller
 {
@@ -12,10 +12,10 @@ public:
 
     Controller(unsigned int padId, const char *name);
     Controller();
-    InputNormalization getNormalizedInputs();
+    NormalizedInput getNormalizedInputs();
 
-    bool _IsButtonDown(std::string button);
-    bool _IsButtonPressed(std::string button);
+    bool _IsInputDown(std::string button);
+    bool _IsInputPressed(std::string button);
     void _axisRecalculate();
     bool _IsAxisTilted(std::string direction);
     bool _IsAxisJustTilted(std::string direction);

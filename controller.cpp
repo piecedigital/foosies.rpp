@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include "bin/raylib.h"
 #include "controller.h"
@@ -29,84 +28,84 @@ Controller::Controller()
     Controller::axisChangedV = false;
 }
 
-InputNormalization Controller::getNormalizedInputs()
+NormalizedInput Controller::getNormalizedInputs()
 {
-    InputNormalization keys = InputNormalization();
+    NormalizedInput keys = NormalizedInput();
 
     _axisRecalculate();
 
-    if (_IsButtonDown("up") || _IsAxisTilted("up"))
+    if (_IsInputDown("up") || _IsAxisTilted("up"))
     {
         cout << "[" + std::to_string(padId) + "]DIR_V += 1" << endl;
         keys.DIR_V += 1;
     }
-    if (_IsButtonDown("down") || _IsAxisTilted("down"))
+    if (_IsInputDown("down") || _IsAxisTilted("down"))
     {
         cout << "[" + std::to_string(padId) + "]DIR_V -= 1" << endl;
         keys.DIR_V -= 1;
     }
 
-    if (_IsButtonDown("left") || _IsAxisTilted("left"))
+    if (_IsInputDown("left") || _IsAxisTilted("left"))
     {
         cout << "[" + std::to_string(padId) + "]DIR_H -= 1" << endl;
         keys.DIR_H -= 1;
     }
-    if (_IsButtonDown("right") || _IsAxisTilted("right"))
+    if (_IsInputDown("right") || _IsAxisTilted("right"))
     {
         cout << "[" + std::to_string(padId) + "]DIR_H += 1" << endl;
         keys.DIR_H += 1;
     }
-    if (_IsButtonPressed("face_up"))
+    if (_IsInputPressed("face_up"))
     {
         cout << "[" + std::to_string(padId) + "]FACE_UP = true" << endl;
         keys.FACE_UP = true;
     }
-    if (_IsButtonPressed("face_down"))
+    if (_IsInputPressed("face_down"))
     {
         cout << "[" + std::to_string(padId) + "]FACE_DOWN = true" << endl;
         keys.FACE_DOWN = true;
     }
-    if (_IsButtonPressed("face_left"))
+    if (_IsInputPressed("face_left"))
     {
         cout << "[" + std::to_string(padId) + "]FACE_LEFT = true" << endl;
         keys.FACE_LEFT = true;
     }
-    if (_IsButtonPressed("face_right"))
+    if (_IsInputPressed("face_right"))
     {
         cout << "[" + std::to_string(padId) + "]FACE_RIGHT = true" << endl;
         keys.FACE_RIGHT = true;
     }
-    if (_IsButtonPressed("shoulder_left"))
+    if (_IsInputPressed("shoulder_left"))
     {
         cout << "[" + std::to_string(padId) + "]SHOULDER_L = true" << endl;
         keys.SHOULDER_L = true;
     }
-    if (_IsButtonPressed("shoulder_right"))
+    if (_IsInputPressed("shoulder_right"))
     {
         cout << "[" + std::to_string(padId) + "]SHOULDER_R = true" << endl;
         keys.SHOULDER_R = true;
     }
-    if (_IsButtonPressed("trigger_left"))
+    if (_IsInputPressed("trigger_left"))
     {
         cout << "[" + std::to_string(padId) + "]TRIGGER_L = true" << endl;
         keys.TRIGGER_L = true;
     }
-    if (_IsButtonPressed("trigger_right"))
+    if (_IsInputPressed("trigger_right"))
     {
         cout << "[" + std::to_string(padId) + "]TRIGGER_R = true" << endl;
         keys.TRIGGER_R = true;
     }
-    if (_IsButtonPressed("back"))
+    if (_IsInputPressed("back"))
     {
         cout << "[" + std::to_string(padId) + "]BACK = true" << endl;
         keys.BACK = true;
     }
-    if (_IsButtonPressed("home"))
+    if (_IsInputPressed("home"))
     {
         cout << "[" + std::to_string(padId) + "]HOME = true" << endl;
         keys.HOME = true;
     }
-    if (_IsButtonPressed("start"))
+    if (_IsInputPressed("start"))
     {
         cout << "[" + std::to_string(padId) + "]START = true" << endl;
         keys.START = true;
@@ -115,7 +114,7 @@ InputNormalization Controller::getNormalizedInputs()
     return keys;
 }
 
-bool Controller::_IsButtonDown(std::string btn)
+bool Controller::_IsInputDown(std::string btn)
 {
     if (btn == "up")
         return (name == "Keyboard") ? IsKeyDown(KEY_W) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_FACE_UP);
@@ -150,7 +149,7 @@ bool Controller::_IsButtonDown(std::string btn)
     return false;
 }
 
-bool Controller::_IsButtonPressed(std::string btn)
+bool Controller::_IsInputPressed(std::string btn)
 {
     // @TODO: Filter these checked keys/buttons through a map
     // Map should be separated by player side and device

@@ -3,7 +3,6 @@
 #include <vector>
 #include "bin/ggponet.h"
 #include "bin/raylib.h"
-#include "custom-types.h"
 #include "controller.h"
 #include "player.h"
 #include "session.h"
@@ -41,5 +40,5 @@ public:
 private:
     void _drawScene();
     void _drawUI();
-    std::vector<InputNormalization> _aggregateGamepadInputs();
+    std::vector<NormalizedInput> _aggregateGamepadInputs();
 };

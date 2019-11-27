@@ -1,11 +1,9 @@
-#pragma once
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #include "bin/ggponet.h"
 #include "bin/raylib.h"
 #include "custom-types.h"
-
-#ifndef PLAYER_H
-#define PLAYER_H
 
 struct PlayerData
 {
@@ -24,11 +22,8 @@ public:
 
     void update();
     void render();
-
-    bool hasFlag(PlayerInput &flag)
-    {
-        return (pd.input & flag);
-    };
+    void normalizedToPlayerInput(NormalizedInput input);
+    void setInputs(PlayerInput playerInput);
 };
 
 #endif

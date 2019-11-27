@@ -1,13 +1,11 @@
-#pragma once
+#ifndef SESSIONS_H
+#define SESSIONS_H
 
 #include <iostream>
 #include <cstring>
 #include <array>
 #include "bin/ggponet.h"
 #include "player.h"
-
-#ifndef SESSION_H
-#define SESSION_H
 
 class Session
 {

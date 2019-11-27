@@ -1,7 +1,4 @@
-﻿// main.cpp : Defines the entry point for the application.
-//
-
-#include "foosiespp.h"
+﻿#include "foosiespp.h"
 
 using namespace std;
 
@@ -31,6 +28,9 @@ int Game::init()
     InitWindow(screenWidth, screenHeight, "foosiespp");
     SetTargetFPS(scene.targetFPS);
 
+    // @TODO: setup sessions correctly via user interface
+    // startMultiplayerSession();
+
     while (!WindowShouldClose())
     {
         // update the state
@@ -45,7 +45,13 @@ int Game::init()
 
 void Game::update()
 {
-    std::vector<InputNormalization> inputList = _aggregateGamepadInputs();
+    std::vector<NormalizedInput> inputList = _aggregateGamepadInputs();
+    // @TODO: have input assign to player
+    if (inputList.size() >= 2)
+    {
+        cout << "here " + (std::to_string(inputList.size())) << endl;
+        session.player1.normalizedToPlayerInput(inputList[1]);
+    }
 }
 
 void Game::render()
@@ -73,7 +79,7 @@ void Game::_drawScene()
     BeginMode3D(scene.cam);
 
     DrawGrid(10, 1.f);
-    DrawCube({ 0, 0, 0 }, 1.f, 1.f, 1.f, RED);
+    DrawCube({ 0, 0, 0 }, 1.f, 1.f, 0.f, RED);
 
     EndMode3D();
 }
@@ -90,10 +96,10 @@ void Game::_drawUI()
     DrawFPS(10, 10);
 };
 
-std::vector<InputNormalization> Game::_aggregateGamepadInputs()
+std::vector<NormalizedInput> Game::_aggregateGamepadInputs()
 {
     unsigned int maxPads = 4;
-    std::vector<InputNormalization> inputList;
+    std::vector<NormalizedInput> inputList;
     int padsAvailable = 0;
 
     // get input for keyboard

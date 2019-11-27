@@ -9,7 +9,7 @@ struct Transform3
     int z;
 };
 
-struct InputNormalization
+struct NormalizedInput
 {
     int DIR_H = 0;
     int DIR_V = 0;
@@ -34,10 +34,10 @@ enum PlayerInput
     DIR_DOWN = 1 << 2,
     DIR_BACK = 1 << 3,
     DIR_TOWARD = 1 << 4,
-    DIR_UPBACK = DIR_UP | DIR_BACK,
-    DIR_UPTOWARD = DIR_UP | DIR_TOWARD,
-    DIR_DOWNBACK = DIR_DOWN | DIR_BACK,
-    DIR_DOWNTOWARD = DIR_DOWN | DIR_TOWARD,
+    DIR_UPBACK = DIR_UP + DIR_BACK,
+    DIR_UPTOWARD = DIR_UP + DIR_TOWARD,
+    DIR_DOWNBACK = DIR_DOWN + DIR_BACK,
+    DIR_DOWNTOWARD = DIR_DOWN + DIR_TOWARD,
     BTN_JAB = 1 << 9,
     BTN_STRONG = 1 << 10,
     BTN_FIERCE = 1 << 11,
@@ -46,6 +46,33 @@ enum PlayerInput
     BTN_ROUNDHOUSE = 1 << 14,
     BTN_MACRO1 = 1 << 15,
     BTN_MACRO2 = 1 << 16,
+};
+inline PlayerInput operator~(PlayerInput a) { return (PlayerInput) ~(int)a; };
+inline PlayerInput operator|(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a | (int)b); };
+inline PlayerInput operator&(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a & (int)b); };
+inline PlayerInput operator^(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a ^ (int)b); };
+
+inline PlayerInput *operator|(PlayerInput *a, PlayerInput b) { return (PlayerInput *)((int &)a | (int)b); };
+
+inline PlayerInput &operator|=(PlayerInput &a, PlayerInput b) { return (PlayerInput &)((int &)a |= (int)b); };
+inline PlayerInput *operator|=(PlayerInput *a, PlayerInput b) { return (PlayerInput *)((int &)a |= (int)b); };
+inline PlayerInput &operator&=(PlayerInput &a, PlayerInput b) { return (PlayerInput &)((int &)a &= (int)b); };
+inline PlayerInput &operator^=(PlayerInput &a, PlayerInput b) { return (PlayerInput &)((int &)a ^= (int)b); };
+
+// functions
+inline bool hasFlag(PlayerInput v, PlayerInput flag)
+{
+    return (int)(v & flag) != 0;
+};
+
+inline void setFlag(PlayerInput *v, PlayerInput flag)
+{
+    v |= flag;
+};
+
+inline void clearEnum(PlayerInput *v)
+{
+    v = 0;
 };
 
 #endif

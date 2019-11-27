@@ -47,10 +47,10 @@
     <ClInclude Include="player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="custom-types.h">
+    <ClInclude Include="controller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="controller.h">
+    <ClInclude Include="custom-types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
