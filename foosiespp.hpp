@@ -1,4 +1,7 @@
-﻿#include <iostream>
+﻿#ifndef FOOSIESPP_H
+#define FOOSIESPP_H
+
+#include <iostream>
 #include <string>
 #include <vector>
 #include "bin/ggponet.h"
@@ -37,8 +40,12 @@ public:
     void update();
     void render();
     void startMultiplayerSession();
+
 private:
     void _drawScene();
     void _drawUI();
-    std::vector<NormalizedInput> _aggregateGamepadInputs();
+    void _aggregateGamepadInputs();
+    void _dispatchNormalizedInputs(PlayerController player);
 };
+
+#endif

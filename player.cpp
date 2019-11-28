@@ -2,6 +2,7 @@
 
 PlayerController::PlayerController()
 {
+    controllerId = -2;
     color = RED;
 }
 

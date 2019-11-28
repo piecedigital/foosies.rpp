@@ -24,90 +24,105 @@ Controller::Controller()
     Controller::axisChangedV = false;
 }
 
-NormalizedInput Controller::getNormalizedInputs()
+void Controller::_resetInputs()
 {
-    NormalizedInput keys = NormalizedInput();
+    inputs.DIR_H = 0;
+    inputs.DIR_V = 0;
+    inputs.FACE_UP = false;
+    inputs.FACE_DOWN = false;
+    inputs.FACE_LEFT = false;
+    inputs.FACE_RIGHT = false;
+    inputs.SHOULDER_L = false;
+    inputs.SHOULDER_R = false;
+    inputs.TRIGGER_L = false;
+    inputs.TRIGGER_R = false;
+    inputs.BACK = false;
+    inputs.START = false;
+    inputs.HOME = false;
+}
+
+void Controller::pollNormalizedInputs()
+{
+    _resetInputs();
 
     _axisRecalculate();
 
     if (_IsInputDown("up") || _IsAxisTilted("up"))
     {
         // std::cout << "[" + std::to_string(padId) + "]DIR_V += 1" << std::endl;
-        keys.DIR_V += 1;
+        inputs.DIR_V += 1;
     }
     if (_IsInputDown("down") || _IsAxisTilted("down"))
     {
         // std::cout << "[" + std::to_string(padId) + "]DIR_V -= 1" << std::endl;
-        keys.DIR_V -= 1;
+        inputs.DIR_V -= 1;
     }
 
     if (_IsInputDown("left") || _IsAxisTilted("left"))
     {
         // std::cout << "[" + std::to_string(padId) + "]DIR_H -= 1" << std::endl;
-        keys.DIR_H -= 1;
+        inputs.DIR_H -= 1;
     }
     if (_IsInputDown("right") || _IsAxisTilted("right"))
     {
         // std::cout << "[" + std::to_string(padId) + "]DIR_H += 1" << std::endl;
-        keys.DIR_H += 1;
+        inputs.DIR_H += 1;
     }
     if (_IsInputPressed("face_up"))
     {
         // std::cout << "[" + std::to_string(padId) + "]FACE_UP = true" << std::endl;
-        keys.FACE_UP = true;
+        inputs.FACE_UP = true;
     }
     if (_IsInputPressed("face_down"))
     {
         // std::cout << "[" + std::to_string(padId) + "]FACE_DOWN = true" << std::endl;
-        keys.FACE_DOWN = true;
+        inputs.FACE_DOWN = true;
     }
     if (_IsInputPressed("face_left"))
     {
         // std::cout << "[" + std::to_string(padId) + "]FACE_LEFT = true" << std::endl;
-        keys.FACE_LEFT = true;
+        inputs.FACE_LEFT = true;
     }
     if (_IsInputPressed("face_right"))
     {
         // std::cout << "[" + std::to_string(padId) + "]FACE_RIGHT = true" << std::endl;
-        keys.FACE_RIGHT = true;
+        inputs.FACE_RIGHT = true;
     }
     if (_IsInputPressed("shoulder_left"))
     {
         // std::cout << "[" + std::to_string(padId) + "]SHOULDER_L = true" << std::endl;
-        keys.SHOULDER_L = true;
+        inputs.SHOULDER_L = true;
     }
     if (_IsInputPressed("shoulder_right"))
     {
         // std::cout << "[" + std::to_string(padId) + "]SHOULDER_R = true" << std::endl;
-        keys.SHOULDER_R = true;
+        inputs.SHOULDER_R = true;
     }
     if (_IsInputPressed("trigger_left"))
     {
         // std::cout << "[" + std::to_string(padId) + "]TRIGGER_L = true" << std::endl;
-        keys.TRIGGER_L = true;
+        inputs.TRIGGER_L = true;
     }
     if (_IsInputPressed("trigger_right"))
     {
         // std::cout << "[" + std::to_string(padId) + "]TRIGGER_R = true" << std::endl;
-        keys.TRIGGER_R = true;
+        inputs.TRIGGER_R = true;
     }
     if (_IsInputPressed("back"))
     {
         // std::cout << "[" + std::to_string(padId) + "]BACK = true" << std::endl;
-        keys.BACK = true;
+        inputs.BACK = true;
     }
     if (_IsInputPressed("home"))
     {
         // std::cout << "[" + std::to_string(padId) + "]HOME = true" << std::endl;
-        keys.HOME = true;
+        inputs.HOME = true;
     }
     if (_IsInputPressed("start"))
     {
         // std::cout << "[" + std::to_string(padId) + "]START = true" << std::endl;
-        keys.START = true;
+        inputs.START = true;
     }
-
-    return keys;
 }
 
 bool Controller::_IsInputDown(std::string btn)
@@ -233,9 +248,4 @@ bool Controller::_IsAxisJustTilted(std::string direction)
     if (direction == "right")
         return (axisAbsoluteH < 0 && axisChangedH);
     return false;
-}
-
-void Controller::setPlayer(int player)
-{
-    Controller::player = player;
 }

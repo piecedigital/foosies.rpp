@@ -20,6 +20,13 @@ public:
     GGPOPlayer ggpoPlayer;
     PlayerData pd;
     Color color;
+    /**
+     * The id of the controller passing inputs to the player
+     * -2 is the default, meaning no controller
+     * -1 is the keyboard
+     * 0 and up is a game pad
+     */
+    int controllerId;
 
     PlayerController();
 
