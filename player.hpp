@@ -9,9 +9,12 @@
 
 struct PlayerData
 {
+    int face = 1;
+    int dizzy = 1000;
+    int vitality = 1000;
     PlayerInput input;
     Transform transform;
-    Transform3 intTranslation;
+    Physical physical;
 };
 
 class PlayerController
@@ -34,6 +37,9 @@ public:
     void render();
     void normalizedToPlayerInput(NormalizedInput input);
     void setInputs(PlayerInput playerInput);
+
+private:
+    void _convertTranslation();
 };
 
 #endif

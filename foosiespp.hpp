@@ -31,7 +31,7 @@ public:
     Grid grid;
     Scene scene;
     GameState gameState;
-    Session session;
+    Session *session;
     std::vector<Controller> controllers;
     Controller keyboard;
 
@@ -39,13 +39,13 @@ public:
     int init();
     void update();
     void render();
-    void startMultiplayerSession();
+    void createMultiplayerSession();
 
 private:
     void _drawScene();
     void _drawUI();
     void _aggregateGamepadInputs();
-    void _dispatchNormalizedInputs(PlayerController player);
+    void _dispatchNormalizedInputs(PlayerController &player);
 };
 
 #endif

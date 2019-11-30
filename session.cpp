@@ -77,42 +77,56 @@ GGPOErrorCode Session::synchronizeInputs()
 
 bool /*Session::*/beginGameCallback(char *game)
 {
+    #ifdef _DEBUG
     std::cout << "Callback - beginGameCallback" << std::endl;
+    #endif
     return true;
 };
 
 bool /*Session::*/saveGameStateCallback(unsigned char **buffer, int *len, int *checksum, int frame)
 {
+    #ifdef _DEBUG
     std::cout << "Callback - saveGameStateCallback" << std::endl;
+    #endif
     return true;
 };
 
 bool /*Session::*/loadGameStateCallback(unsigned char *buffer, int len)
 {
+    #ifdef _DEBUG
     std::cout << "Callback - loadGameStateCallback" << std::endl;
+    #endif
     return true;
 };
 
 bool /*Session::*/logGameStateCallback(char *filename, unsigned char *buffer, int len)
 {
+    #ifdef _DEBUG
     std::cout << "Callback - logGameStateCallback" << std::endl;
+    #endif
     return true;
 };
 
 void /*Session::*/freeBufferCallback(void *buffer)
 {
+    #ifdef _DEBUG
     std::cout << "Callback - freeBufferCallback" << std::endl;
+    #endif
     return;
 };
 
 bool /*Session::*/advanceFrameCallback(int flags)
 {
+    #ifdef _DEBUG
     std::cout << "Callback - advanceFrameCallback" << std::endl;
+    #endif
     return true;
 };
 
 bool /*Session::*/onEventCallback(GGPOEvent *info)
 {
+    #ifdef _DEBUG
     std::cout << "Callback - onEventCallback" << std::endl;
+    #endif
     return true;
 };

@@ -2,11 +2,17 @@
 #define CUSTOM_TYPES_H
 
 // structs
-struct Transform3
+struct Physical
 {
     int x;
     int y;
     int z;
+    int gravity = 100;
+    int drag = 10;
+    int knockback;
+    int pushback;
+    int velocityH;
+    int velocityV;
 };
 
 struct NormalizedInput
@@ -24,6 +30,14 @@ struct NormalizedInput
     bool BACK = false;
     bool START = false;
     bool HOME = false;
+};
+
+struct StatusEffect
+{
+    int wallBounce;
+    int wallSplat;
+    int groundBounce;
+    int groundSplat;
 };
 
 // enums
@@ -53,6 +67,7 @@ inline PlayerInput operator&(PlayerInput a, PlayerInput b) { return (PlayerInput
 inline PlayerInput operator^(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a ^ (int)b); };
 
 inline PlayerInput *operator|(PlayerInput *a, PlayerInput b) { return (PlayerInput *)((int &)a | (int)b); };
+inline PlayerInput *operator&(PlayerInput *a, PlayerInput b) { return (PlayerInput *)((int &)a & (int)b); };
 
 inline PlayerInput &operator|=(PlayerInput const &a, PlayerInput b) { return (PlayerInput &)((int &)a |= (int)b); };
 inline PlayerInput *operator|=(PlayerInput const *a, PlayerInput b) { return (PlayerInput *)((int &)a |= (int)b); };
@@ -60,12 +75,12 @@ inline PlayerInput &operator&=(PlayerInput const &a, PlayerInput b) { return (Pl
 inline PlayerInput &operator^=(PlayerInput const &a, PlayerInput b) { return (PlayerInput &)((int &)a ^= (int)b); };
 
 // functions
-inline bool hasFlag(PlayerInput const &v, PlayerInput flag)
+inline bool hasFlag(PlayerInput v, PlayerInput flag)
 {
     return (int)(v & flag) != 0;
 };
 
-inline void setFlag(PlayerInput const &v, PlayerInput flag)
+inline void setFlag(PlayerInput &v, PlayerInput flag)
 {
     v |= flag;
 };

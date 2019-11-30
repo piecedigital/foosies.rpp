@@ -15,7 +15,6 @@ public:
     GGPOSession *ggpo;
     GGPOSessionCallbacks cb;
     PlayerController *player1, *player2;
-    // std::array<GGPOPlayerHandle, 2> playerHandles;
     GGPOPlayerHandle playerHandles[2];
 
     Session();

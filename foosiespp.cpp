@@ -4,6 +4,8 @@
 Game::Game()
 {
     scene.players[0].color = BLUE;
+    scene.players[0].controllerId = -1;
+    scene.players[1].pd.face = -1;
 }
 
 int Game::init()
@@ -42,8 +44,7 @@ void Game::update()
 {
     _aggregateGamepadInputs();
 
-    // @TODO: have input assign to playerinputList
-    for (PlayerController player : scene.players)
+    for (PlayerController &player : scene.players)
     {
         _dispatchNormalizedInputs(player);
 
@@ -63,12 +64,12 @@ void Game::render()
     EndDrawing();
 }
 
-void Game::startMultiplayerSession()
+void Game::createMultiplayerSession()
 {
-    Game::session = Session();
+    Game::session = &Session();
 
     /* Start a new session */
-    GGPOErrorCode result = session.start();
+    // GGPOErrorCode result = session.start();
 }
 
 void Game::_drawScene()
@@ -134,7 +135,7 @@ void Game::_aggregateGamepadInputs()
     }
 }
 
-void Game::_dispatchNormalizedInputs(PlayerController player)
+void Game::_dispatchNormalizedInputs(PlayerController &player)
 {
     if (player.controllerId > -2)
     {
@@ -142,5 +143,10 @@ void Game::_dispatchNormalizedInputs(PlayerController player)
         {
             player.normalizedToPlayerInput(keyboard.inputs);
         }
+        else
+        {
+            player.normalizedToPlayerInput(controllers[player.controllerId].inputs);
+        }
+
     }
 }

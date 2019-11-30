@@ -8,11 +8,27 @@ PlayerController::PlayerController()
 
 void PlayerController::update()
 {
+
+    if (hasFlag(pd.input, PlayerInput::DIR_TOWARD))
+    {
+        pd.physical.velocityH = 100 * pd.face;
+    }
+    else if (hasFlag(pd.input, PlayerInput::DIR_BACK))
+    {
+        pd.physical.velocityH = 100 * (pd.face * -1);
+    }
+    else
+    {
+        pd.physical.velocityH = 0;
+    }
+
+    pd.physical.x += pd.physical.velocityH / pd.physical.drag;
 }
 
 void PlayerController::render()
 {
-    DrawCube({0, 0, 0}, 1.f, 1.f, 0.f, RED);
+    _convertTranslation();
+    DrawCube(pd.transform.translation, 1.f, 1.f, 0.f, color);
 }
 
 void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
@@ -20,9 +36,11 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
     PlayerInput playerInput = PlayerInput();
 
     if (normInput.DIR_H == -1)
-        setFlag(playerInput, PlayerInput::DIR_BACK);
+        setFlag(playerInput, pd.face == 1 ? PlayerInput::DIR_BACK
+                : PlayerInput::DIR_TOWARD);
     if (normInput.DIR_H == 1)
-        setFlag(playerInput, PlayerInput::DIR_TOWARD);
+        setFlag(playerInput, pd.face == 1 ? PlayerInput::DIR_TOWARD
+                : PlayerInput::DIR_BACK);
     if (normInput.DIR_V == -1)
         setFlag(playerInput, PlayerInput::DIR_DOWN);
     if (normInput.DIR_V == 1)
@@ -56,5 +74,13 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 void PlayerController::setInputs(PlayerInput playerInput)
 {
     pd.input = playerInput;
-    // std::cout << std::to_string((int)playerInput) << std::endl;
+}
+
+void PlayerController::_convertTranslation()
+{
+    pd.transform.translation = Vector3{
+        ((float)pd.physical.x) / 100,
+        ((float)pd.physical.y) / 100,
+        ((float)pd.physical.z) / 100,
+    };
 }
