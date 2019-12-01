@@ -15,6 +15,7 @@ public:
 
     Controller(unsigned int padId, const char *name);
     Controller();
+    ~Controller();
     void pollNormalizedInputs();
 
     bool _IsInputDown(std::string button);

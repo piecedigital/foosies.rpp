@@ -6,6 +6,7 @@
 #include <vector>
 #include "bin/ggponet.h"
 #include "bin/raylib.h"
+#include "button.hpp"
 #include "controller.hpp"
 #include "player.hpp"
 #include "session.hpp"
@@ -19,10 +20,14 @@ struct Scene {
     int targetFPS;
     Camera3D cam;
     PlayerController players[2];
+    Button _makeGameStateBufferBtn;
+    Button _loadGameStateBtn;
 };
 
 struct GameState
 {
+    int gameTimer = 90;
+    PlayerData *playerData[2];
 };
 
 class Game
@@ -36,6 +41,7 @@ public:
     Controller keyboard;
 
     Game();
+    ~Game();
     int init();
     void update();
     void render();
@@ -47,5 +53,8 @@ private:
     void _aggregateGamepadInputs();
     void _dispatchNormalizedInputs(PlayerController &player);
 };
+
+void _makeGameStateBuffer();
+void _loadGameState();
 
 #endif

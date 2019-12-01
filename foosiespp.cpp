@@ -1,12 +1,34 @@
 ﻿
 #include "foosiespp.hpp"
 
+GameState *tempState;
+
 Game::Game()
 {
+    tempState = &gameState;
     scene.players[0].color = BLUE;
     scene.players[0].color = Color{50, 50, 50, 255};
     scene.players[0].controllerId = -1;
     scene.players[1].pd.face = -1;
+
+    scene._makeGameStateBufferBtn.init("Save State", {100.f, 100, 0});
+    scene._makeGameStateBufferBtn.callbacks.onClick = _makeGameStateBuffer;
+    scene._loadGameStateBtn.init("Load State", {200.f, 100, 0});
+    scene._loadGameStateBtn.callbacks.onClick = _loadGameState;
+}
+
+Game::~Game()
+{
+    if (session != NULL)
+    {
+        for (PlayerData *pd : gameState.playerData)
+        {
+            delete &pd;
+            pd = NULL;
+        }
+        delete &session;
+        session = NULL;
+    }
 }
 
 int Game::init()
@@ -27,8 +49,8 @@ int Game::init()
     InitWindow(screenWidth, screenHeight, "foosiespp");
     SetTargetFPS(scene.targetFPS);
 
-    // @TODO: setup sessions correctly via user interface
-    // startMultiplayerSession();
+    // Session s;
+    // session = &s;
 
     while (!WindowShouldClose())
     {
@@ -93,10 +115,11 @@ void Game::_drawUI()
     std::string x = "This is a raylib->Foosies example, involving: ";
     std::string y = std::to_string((int)type);
     x.append(y);
-    // DrawRectangle(0, 0, 1, 1, RED);
 
     DrawText(x.c_str(), 10, 40, 20, DARKGRAY);
     DrawFPS(10, 10);
+    scene._loadGameStateBtn.render();
+    scene._makeGameStateBufferBtn.render();
 };
 
 void Game::_aggregateGamepadInputs()
@@ -151,4 +174,28 @@ void Game::_dispatchNormalizedInputs(PlayerController &player)
         }
 
     }
+}
+
+// TEST CODE
+
+int len = 0;
+unsigned char * buffer = (unsigned char *)"";
+
+void _makeGameStateBuffer()
+{
+    len = sizeof(tempState);
+    unsigned char *buffer = (unsigned char *)malloc(len);
+    if (!*buffer)
+    {
+        return;
+    }
+    memcpy(buffer, &tempState, len);
+
+    len = len;
+    buffer = buffer;
+}
+
+void _loadGameState()
+{
+    memcpy(&tempState, buffer, len);
 }

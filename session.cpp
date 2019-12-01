@@ -14,7 +14,6 @@ Session::Session()
 
 Session::~Session()
 {
-    ggpo = NULL;
     player1 = NULL;
     player1 = NULL;
 };

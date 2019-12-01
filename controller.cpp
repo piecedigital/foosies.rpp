@@ -24,6 +24,11 @@ Controller::Controller()
     Controller::axisChangedV = false;
 }
 
+Controller::~Controller()
+{
+    name = NULL;
+}
+
 void Controller::_resetInputs()
 {
     inputs.DIR_H = 0;

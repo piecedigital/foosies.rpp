@@ -39,6 +39,7 @@ public:
     void render();
     void normalizedToPlayerInput(NormalizedInput input);
     void setInputs(PlayerInput playerInput);
+    void unload();
 
 private:
     void _convertTranslation();

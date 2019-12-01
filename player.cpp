@@ -20,7 +20,6 @@ PlayerController::PlayerController()
 
 PlayerController::~PlayerController()
 {
-    UnloadModel(model);
 }
 
 void PlayerController::update()
@@ -80,6 +79,11 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 void PlayerController::setInputs(PlayerInput playerInput)
 {
     pd.input = playerInput;
+}
+
+void PlayerController::unload()
+{
+    UnloadModel(model);
 }
 
 void PlayerController::_convertTranslation()

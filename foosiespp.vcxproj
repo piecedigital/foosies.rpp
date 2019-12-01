@@ -162,6 +162,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="button.cpp" />
     <ClCompile Include="controller.cpp" />
     <ClCompile Include="foosiespp.cpp" />
     <ClCompile Include="main.cpp" />
@@ -171,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="bin\ggponet.hpp" />
     <ClInclude Include="bin\raylib.hpp" />
+    <ClInclude Include="button.hpp" />
     <ClInclude Include="controller.hpp" />
     <ClInclude Include="custom-types.hpp" />
     <ClInclude Include="foosiespp.hpp" />
