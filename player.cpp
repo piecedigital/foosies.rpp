@@ -3,7 +3,7 @@
 PlayerController::PlayerController()
 {
     controllerId = -2;
-    color = RED;
+    color = BLACK;
     // try
     // {
     //    model = LoadModel("assets/models/characters/d-func/d-func FIX [EX].gltf");

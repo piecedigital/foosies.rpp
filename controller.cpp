@@ -257,25 +257,25 @@ void Controller::_axisRecalculate()
 bool Controller::_IsAxisTilted(std::string direction)
 {
     if (direction == "up")
-        return (axisAbsoluteV < 0);
+        return (axisAbsoluteV < -axisThresholdV);
     if (direction == "down")
-        return (axisAbsoluteV < 0);
+        return (axisAbsoluteV > axisThresholdV);
     if (direction == "left")
-        return (axisAbsoluteH < 0);
+        return (axisAbsoluteH < -axisThresholdH);
     if (direction == "right")
-        return (axisAbsoluteH < 0);
+        return (axisAbsoluteH > axisThresholdH);
     return false;
 }
 
 bool Controller::_IsAxisJustTilted(std::string direction)
 {
     if (direction == "up")
-        return (axisAbsoluteV < 0 && axisChangedV);
+        return (axisAbsoluteV < -axisThresholdV && axisChangedV);
     if (direction == "down")
-        return (axisAbsoluteV < 0 && axisChangedV);
+        return (axisAbsoluteV > axisThresholdV && axisChangedV);
     if (direction == "left")
-        return (axisAbsoluteH < 0 && axisChangedH);
+        return (axisAbsoluteH < -axisThresholdH && axisChangedH);
     if (direction == "right")
-        return (axisAbsoluteH < 0 && axisChangedH);
+        return (axisAbsoluteH > axisThresholdH && axisChangedH);
     return false;
 }
