@@ -189,7 +189,6 @@ unsigned char * buffer;
 
 void _saveGameState()
 {
-    tempState->gameTimer--;
     std::cout << "Clicked: Save State" << std::endl;
     len = sizeof(tempState);
     buffer = (unsigned char *)malloc(len);
@@ -198,6 +197,8 @@ void _saveGameState()
         return;
     }
     memcpy(buffer, tempState, len);
+    tempState->gameTimer--;
+    std::cout << tempState->gameTimer << std::endl;
 }
 
 void _loadGameState()
@@ -205,4 +206,5 @@ void _loadGameState()
     // tempState->gameTimer++;
     std::cout << "Clicked: Load State" << std::endl;
     memcpy(tempState, buffer, len);
+    std::cout << tempState->gameTimer << std::endl;
 }
