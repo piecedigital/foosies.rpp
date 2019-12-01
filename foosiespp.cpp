@@ -12,7 +12,7 @@ Game::Game()
     scene.players[1].pd.face = -1;
 
     scene._makeGameStateBufferBtn.init("Save State", {100.f, 100});
-    scene._makeGameStateBufferBtn.callbacks.onClick = _makeGameStateBuffer;
+    scene._makeGameStateBufferBtn.callbacks.onClick = _saveGameState;
     scene._loadGameStateBtn.init("Load State", {200.f, 100});
     scene._loadGameStateBtn.callbacks.onClick = _loadGameState;
 }
@@ -118,8 +118,11 @@ void Game::_drawUI()
     std::string x = "This is a raylib->Foosies example, involving: ";
     std::string y = std::to_string((int)type);
     x.append(y);
+    std::string z = "State loads performed: ";
+    z.append(std::to_string(gameState.gameTimer));
 
     DrawText(x.c_str(), 10, 40, 20, DARKGRAY);
+    DrawText(z.c_str(), 10, 56, 20, DARKGRAY);
     DrawFPS(10, 10);
     scene._makeGameStateBufferBtn.render();
     scene._loadGameStateBtn.render();
@@ -181,26 +184,25 @@ void Game::_dispatchNormalizedInputs(PlayerController &player)
 
 // TEST CODE
 
-int len = 0;
-unsigned char * buffer = (unsigned char *)"";
+int len;
+unsigned char * buffer;
 
-void _makeGameStateBuffer()
+void _saveGameState()
 {
+    tempState->gameTimer--;
     std::cout << "Clicked: Save State" << std::endl;
     len = sizeof(tempState);
-    unsigned char *buffer = (unsigned char *)malloc(len);
+    buffer = (unsigned char *)malloc(len);
     if (!*buffer)
     {
         return;
     }
-    memcpy(buffer, &tempState, len);
-
-    len = len;
-    buffer = buffer;
+    memcpy(buffer, tempState, len);
 }
 
 void _loadGameState()
 {
+    // tempState->gameTimer++;
     std::cout << "Clicked: Load State" << std::endl;
-    memcpy(&tempState, buffer, len);
+    memcpy(tempState, buffer, len);
 }

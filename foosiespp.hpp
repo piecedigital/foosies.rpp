@@ -54,7 +54,7 @@ private:
     void _dispatchNormalizedInputs(PlayerController &player);
 };
 
-void _makeGameStateBuffer();
+void _saveGameState();
 void _loadGameState();
 
 #endif
