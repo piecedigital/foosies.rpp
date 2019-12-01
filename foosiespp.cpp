@@ -3,7 +3,8 @@
 
 Game::Game()
 {
-    scene.players[0].color = Color{50, 50, 255};
+    scene.players[0].color = BLUE;
+    scene.players[0].color = Color{50, 50, 50, 255};
     scene.players[0].controllerId = -1;
     scene.players[1].pd.face = -1;
 }
