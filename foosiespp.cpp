@@ -11,9 +11,9 @@ Game::Game()
     scene.players[0].controllerId = -1;
     scene.players[1].pd.face = -1;
 
-    scene._makeGameStateBufferBtn.init("Save State", {100.f, 100, 0});
+    scene._makeGameStateBufferBtn.init("Save State", {100.f, 100});
     scene._makeGameStateBufferBtn.callbacks.onClick = _makeGameStateBuffer;
-    scene._loadGameStateBtn.init("Load State", {200.f, 100, 0});
+    scene._loadGameStateBtn.init("Load State", {200.f, 100});
     scene._loadGameStateBtn.callbacks.onClick = _loadGameState;
 }
 
@@ -74,6 +74,9 @@ void Game::update()
 
         player.update();
     }
+
+    scene._makeGameStateBufferBtn.update();
+    scene._loadGameStateBtn.update();
 }
 
 void Game::render()
@@ -118,8 +121,8 @@ void Game::_drawUI()
 
     DrawText(x.c_str(), 10, 40, 20, DARKGRAY);
     DrawFPS(10, 10);
-    scene._loadGameStateBtn.render();
     scene._makeGameStateBufferBtn.render();
+    scene._loadGameStateBtn.render();
 };
 
 void Game::_aggregateGamepadInputs()
@@ -183,6 +186,7 @@ unsigned char * buffer = (unsigned char *)"";
 
 void _makeGameStateBuffer()
 {
+    std::cout << "Clicked: Save State" << std::endl;
     len = sizeof(tempState);
     unsigned char *buffer = (unsigned char *)malloc(len);
     if (!*buffer)
@@ -197,5 +201,6 @@ void _makeGameStateBuffer()
 
 void _loadGameState()
 {
+    std::cout << "Clicked: Load State" << std::endl;
     memcpy(&tempState, buffer, len);
 }

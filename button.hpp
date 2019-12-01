@@ -14,13 +14,18 @@ class Button
 public:
     const char *title;
     ButtonCallbacks callbacks;
-    Transform transform;
+    Rectangle rectangle;
+    Color backgroundColor = RED;
+    Color textColor = WHITE;
 
     Button();
     ~Button();
 
-    void init(const char *title, Vector3 position);
+    void init(const char *title, Vector2 position);
+    void update();
     void render();
+private:
+    void clicked();
 };
 
 #endif

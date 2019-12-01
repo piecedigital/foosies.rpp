@@ -1,3 +1,4 @@
+#include <iostream>
 #include "button.hpp"
 
 Button::Button()
@@ -9,10 +10,38 @@ Button::~Button()
     callbacks.onClick = NULL;
 }
 
-void Button::init(const char *title, Vector3 position)
+void Button::init(const char *title, Vector2 position)
 {
     Button::title = title;
-    transform.translation = position;
+    rectangle.x = position.x;
+    rectangle.y = position.y;
+}
+
+void Button::update()
+{
+    backgroundColor = RED;
+    textColor = WHITE;
+
+    bool inBox = CheckCollisionPointRec(
+        GetMousePosition(),
+        rectangle
+        );
+    if (inBox)
+    {
+        backgroundColor = BLACK;
+        textColor = RED;
+
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        {
+            clicked();
+        }
+    }
+}
+
+void Button::clicked()
+{
+    if (callbacks.onClick != NULL)
+        callbacks.onClick();
 }
 
 void Button::render()
@@ -26,18 +55,20 @@ void Button::render()
     //     (int)(width.y + 10),
     //     RED);
     int width = MeasureText(title, 16);
+    rectangle.width = (int)(width + 10);
+    rectangle.height = (int)(26);
 
     DrawRectangle(
-        (int)transform.translation.x,
-        (int)transform.translation.y,
-        (int)(width + 10),
-        (int)(26),
-        RED);
+        (int)rectangle.x,
+        (int)rectangle.y,
+        rectangle.width,
+        rectangle.height,
+        backgroundColor);
 
     DrawText(
         title,
-        (int)transform.translation.x + 5,
-        (int)transform.translation.y + 5,
+        (int)rectangle.x + 5,
+        (int)rectangle.y + 5,
         16,
-        WHITE);
+        textColor);
 }
