@@ -23,6 +23,7 @@ public:
     GGPOPlayer ggpoPlayer;
     PlayerData pd;
     Color color;
+    Model model;
     /**
      * The id of the controller passing inputs to the player
      * -2 is the default, meaning no controller
@@ -32,6 +33,7 @@ public:
     int controllerId;
 
     PlayerController();
+    ~PlayerController();
 
     void update();
     void render();
@@ -40,6 +42,9 @@ public:
 
 private:
     void _convertTranslation();
+    void _calcForces();
+    void _applyForces();
+    bool _isGrounded();
 };
 
 #endif

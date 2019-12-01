@@ -4,31 +4,37 @@ PlayerController::PlayerController()
 {
     controllerId = -2;
     color = RED;
+    // try
+    // {
+    //    model = LoadModel("assets/models/characters/d-func/d-func FIX [EX].gltf");
+    // }
+    // catch(const std::exception& e)
+    // {
+    //     std::cerr << e.what() << ". Opting for backup" << std::endl;
+    //     Mesh mesh = GenMeshSphere(1.f, 1.f, 1.f);
+    //     model = LoadModelFromMesh(mesh);
+    // model.materials[0] = LoadMaterialDefault();
+    // }
+
+}
+
+PlayerController::~PlayerController()
+{
+    UnloadModel(model);
 }
 
 void PlayerController::update()
 {
-
-    if (hasFlag(pd.input, PlayerInput::DIR_TOWARD))
-    {
-        pd.physical.velocityH = 100 * pd.face;
-    }
-    else if (hasFlag(pd.input, PlayerInput::DIR_BACK))
-    {
-        pd.physical.velocityH = 100 * (pd.face * -1);
-    }
-    else
-    {
-        pd.physical.velocityH = 0;
-    }
-
-    pd.physical.x += pd.physical.velocityH / pd.physical.drag;
+    _calcForces();
+    _applyForces();
 }
 
 void PlayerController::render()
 {
     _convertTranslation();
-    DrawCube(pd.transform.translation, 1.f, 1.f, 0.f, color);
+    pd.transform.translation.y += 1.f;
+    DrawCube(pd.transform.translation, 1.f, 2.f, 0.f, color);
+    // DrawModel(model, pd.transform.translation, 1.f, color);
 }
 
 void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
@@ -83,4 +89,50 @@ void PlayerController::_convertTranslation()
         ((float)pd.physical.y) / 100,
         ((float)pd.physical.z) / 100,
     };
+}
+
+void PlayerController::_calcForces()
+{
+    if (hasFlag(pd.input, PlayerInput::DIR_TOWARD))
+    {
+        pd.physical.velocityH = 15 * pd.face;
+    }
+    else if (hasFlag(pd.input, PlayerInput::DIR_BACK))
+    {
+        pd.physical.velocityH = 10 * (pd.face * -1);
+    }
+    else
+    {
+        pd.physical.velocityH = 0;
+    }
+
+    if (_isGrounded() && hasFlag(pd.input, PlayerInput::DIR_UP))
+    {
+        pd.physical.velocityV = pd.physical.jumpSpeed;
+    }
+}
+
+void PlayerController::_applyForces()
+{
+    pd.physical.x += pd.physical.velocityH;
+    pd.physical.y += pd.physical.velocityV;
+
+    if (!_isGrounded())
+    {
+        pd.physical.velocityV -= pd.physical.gravity / pd.physical.drag;
+        if (pd.physical.velocityV < -pd.physical.jumpSpeed)
+        {
+            pd.physical.velocityV = pd.physical.jumpSpeed;
+        }
+    }
+    else
+    {
+        pd.physical.velocityV = 0;
+        pd.physical.y = 0;
+    }
+}
+
+bool PlayerController::_isGrounded()
+{
+    return pd.physical.y <= 0;
 }

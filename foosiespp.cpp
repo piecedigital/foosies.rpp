@@ -16,11 +16,12 @@ int Game::init()
     scene.targetFPS = 60;
 
     scene.cam = Camera3D();
-    scene.cam.position = Vector3{0.f, 0.f, 8.f};
-    scene.cam.target = Vector3{0.f, 0.f, 0.f};
+    scene.cam.position = Vector3{0.f, 4.f, 1.f};
+    scene.cam.target = Vector3{0.f, 4.f, 0.f};
     scene.cam.up = Vector3{0.f, 1.f, 0.f};
-    scene.cam.fovy = 60.f;
-    scene.cam.type = CAMERA_PERSPECTIVE;
+    scene.cam.fovy = 10.f;
+    // scene.cam.type = CAMERA_PERSPECTIVE;
+    scene.cam.type = CAMERA_ORTHOGRAPHIC;
 
     InitWindow(screenWidth, screenHeight, "foosiespp");
     SetTargetFPS(scene.targetFPS);

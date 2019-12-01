@@ -8,7 +8,8 @@ struct Physical
     int y;
     int z;
     int gravity = 100;
-    int drag = 10;
+    int drag = 50;
+    int jumpSpeed = 40;
     int knockback;
     int pushback;
     int velocityH;
