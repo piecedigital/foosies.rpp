@@ -1,7 +1,32 @@
 ﻿
 #include "foosiespp.hpp"
 
+// TEST CODE
+
+int len;
+unsigned char *buffer;
 GameState *tempState;
+
+void _saveGameState()
+{
+    std::cout << "Clicked: Save State" << std::endl;
+    len = sizeof(*tempState);
+    buffer = (unsigned char *)malloc(len);
+    if (!*buffer)
+    {
+        return;
+    }
+    memcpy(buffer, tempState, len);
+    tempState->playerData[0].vitality -= 10;
+    std::cout << tempState->playerData[0].vitality << std::endl;
+}
+
+void _loadGameState()
+{
+    std::cout << "Clicked: Load State" << std::endl;
+    memcpy(tempState, buffer, len);
+    std::cout << tempState->playerData[0].vitality << std::endl;
+}
 
 Game::Game()
 {
@@ -18,6 +43,8 @@ Game::Game()
     scene._makeGameStateBufferBtn.callbacks.onClick = _saveGameState;
     scene._loadGameStateBtn.init("Load State", {200.f, 100});
     scene._loadGameStateBtn.callbacks.onClick = _loadGameState;
+
+    // _saveGameState();
 }
 
 Game::~Game()
@@ -116,8 +143,8 @@ void Game::_drawUI()
     std::string x = "This is a raylib->Foosies example, involving: ";
     std::string y = std::to_string((int)type);
     x.append(y);
-    std::string z = "State loads performed: ";
-    z.append(std::to_string(gameState.gameTimer));
+    std::string z = "Player 1 Vitality: ";
+    z.append(std::to_string(gameState.playerData[0].vitality));
 
     DrawText(x.c_str(), 10, 40, 20, DARKGRAY);
     DrawText(z.c_str(), 10, 56, 20, DARKGRAY);
@@ -178,31 +205,4 @@ void Game::_dispatchNormalizedInputs(PlayerController &player)
         }
 
     }
-}
-
-// TEST CODE
-
-int len;
-unsigned char * buffer;
-
-void _saveGameState()
-{
-    std::cout << "Clicked: Save State" << std::endl;
-    len = sizeof(tempState);
-    buffer = (unsigned char *)malloc(len);
-    if (!*buffer)
-    {
-        return;
-    }
-    memcpy(buffer, tempState, len);
-    tempState->gameTimer--;
-    std::cout << tempState->gameTimer << std::endl;
-}
-
-void _loadGameState()
-{
-    // tempState->gameTimer++;
-    std::cout << "Clicked: Load State" << std::endl;
-    memcpy(tempState, buffer, len);
-    std::cout << tempState->gameTimer << std::endl;
 }
