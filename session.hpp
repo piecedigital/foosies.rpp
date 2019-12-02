@@ -17,24 +17,12 @@ public:
     PlayerController *player1, *player2;
     GGPOPlayerHandle playerHandles[2];
 
-    Session();
+    Session(GameState *gameStateRef);
     ~Session();
 
-    GGPOErrorCode start()
-    {
-        maxPlayers = 2;
-        maxSpectators = 0;
+    GGPOErrorCode start();
 
-        return ggpo_start_session(
-            &ggpo,              // the new session object
-            &cb,                // our callbacks
-            (char *)"test_app", // application name
-            2,                  // 2 players
-            sizeof(int),        // size of an input packet
-            8001);              // our local udp port
-    }
-
-    void addPlayer(PlayerController *player, GGPOPlayerType type);
+    GGPOErrorCode addPlayer(PlayerController *player, GGPOPlayerType type);
 
     GGPOErrorCode synchronizeInputs();
 

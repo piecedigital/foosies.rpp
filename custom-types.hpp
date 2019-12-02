@@ -1,6 +1,8 @@
 #ifndef CUSTOM_TYPES_H
 #define CUSTOM_TYPES_H
 
+#include "bin/raylib.h"
+
 // structs
 struct Physical
 {
@@ -89,6 +91,22 @@ inline void setFlag(PlayerInput &v, PlayerInput flag)
 inline void clearEnum(PlayerInput &v)
 {
     v = PlayerInput::NONE;
+};
+
+struct PlayerData
+{
+    int face = 1;
+    int dizzy = 1000;
+    int vitality = 1000;
+    PlayerInput input;
+    Transform transform;
+    Physical physical;
+};
+
+struct GameState
+{
+    int gameTimer = 90;
+    PlayerData playerData[2];
 };
 
 #endif

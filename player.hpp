@@ -7,16 +7,6 @@
 #include "bin/raylib.h"
 #include "custom-types.hpp"
 
-struct PlayerData
-{
-    int face = 1;
-    int dizzy = 1000;
-    int vitality = 1000;
-    PlayerInput input;
-    Transform transform;
-    Physical physical;
-};
-
 class PlayerController
 {
 public:

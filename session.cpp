@@ -1,7 +1,10 @@
 #include "session.hpp"
 
-Session::Session()
+GameState *gs;
+
+Session::Session(GameState *gameStateRef)
 {
+    gs = gameStateRef;
     /* fill in all callback functions */
     cb.begin_game = beginGameCallback;
     cb.save_game_state = saveGameStateCallback;
@@ -14,11 +17,25 @@ Session::Session()
 
 Session::~Session()
 {
+    if (ggpo != NULL)
+    {
+        ggpo_close_session(ggpo);
+    }
+
+    if (player1 != NULL)
+    {
+        delete player1;
+    }
+
     player1 = NULL;
-    player1 = NULL;
+    if (player2 != NULL)
+    {
+        delete player2;
+    }
+    player2 = NULL;
 };
 
-void Session::addPlayer(PlayerController *player, GGPOPlayerType type)
+GGPOErrorCode Session::addPlayer(PlayerController *player, GGPOPlayerType type)
 {
     int handleId = 0;
 
@@ -38,7 +55,21 @@ void Session::addPlayer(PlayerController *player, GGPOPlayerType type)
         Session::player1 = player;
     }
 
-    GGPOErrorCode result1 = ggpo_add_player(ggpo, &player->ggpoPlayer, &playerHandles[handleId]);
+    return ggpo_add_player(ggpo, &player->ggpoPlayer, &playerHandles[handleId]);
+}
+
+GGPOErrorCode Session::start()
+{
+    maxPlayers = 2;
+    maxSpectators = 0;
+
+    return ggpo_start_session(
+        &ggpo,              // the new session object
+        &cb,                // our callbacks
+        (char *)"test_app", // application name
+        2,                  // 2 players
+        sizeof(int),        // size of an input packet
+        8001);              // our local udp port
 }
 
 GGPOErrorCode Session::synchronizeInputs()
@@ -87,6 +118,16 @@ bool /*Session::*/saveGameStateCallback(unsigned char **buffer, int *len, int *c
     #ifdef _DEBUG
     std::cout << "Callback - saveGameStateCallback" << std::endl;
     #endif
+
+    std::cout << "Clicked: Save State" << std::endl;
+    *len = (int)sizeof(*gs);
+    *buffer = (unsigned char *)malloc(*len);
+    if (!*buffer)
+    {
+        return false;
+    }
+    memcpy(&buffer, gs, *len);
+
     return true;
 };
 
@@ -95,6 +136,10 @@ bool /*Session::*/loadGameStateCallback(unsigned char *buffer, int len)
     #ifdef _DEBUG
     std::cout << "Callback - loadGameStateCallback" << std::endl;
     #endif
+
+    std::cout << "Clicked: Load State" << std::endl;
+    memcpy(gs, buffer, len);
+
     return true;
 };
 

@@ -18,15 +18,15 @@ void _saveGameState()
     }
     memcpy(buffer, tempState, len);
     tempState->playerData[0].vitality -= 10;
-    std::cout << tempState->playerData[0].vitality << std::endl;
 }
 
 void _loadGameState()
 {
     std::cout << "Clicked: Load State" << std::endl;
     memcpy(tempState, buffer, len);
-    std::cout << tempState->playerData[0].vitality << std::endl;
 }
+
+// END TEST CODE
 
 Game::Game()
 {
@@ -39,9 +39,11 @@ Game::Game()
     scene.players[0].controllerId = -1;
     scene.players[1].pd->face = -1;
 
-    scene._makeGameStateBufferBtn.init("Save State", {100.f, 100});
+    int screenWidth = GetScreenWidth();
+    int screenHeight = GetScreenHeight();
+    scene._makeGameStateBufferBtn.init("Save State", {(float)((screenWidth / 2) - 100), (float)(screenHeight - 40)});
     scene._makeGameStateBufferBtn.callbacks.onClick = _saveGameState;
-    scene._loadGameStateBtn.init("Load State", {200.f, 100});
+    scene._loadGameStateBtn.init("Load State", {(float)((screenWidth / 2) + 5), (float)(screenHeight - 40)});
     scene._loadGameStateBtn.callbacks.onClick = _loadGameState;
 
     // _saveGameState();
@@ -58,9 +60,6 @@ Game::~Game()
 
 int Game::init()
 {
-    int screenWidth = 800;
-    int screenHeight = 450;
-
     scene.targetFPS = 60;
 
     scene.cam = Camera3D();
@@ -71,11 +70,7 @@ int Game::init()
     // scene.cam.type = CAMERA_PERSPECTIVE;
     scene.cam.type = CAMERA_ORTHOGRAPHIC;
 
-    InitWindow(screenWidth, screenHeight, "foosiespp");
     SetTargetFPS(scene.targetFPS);
-
-    // Session s;
-    // session = &s;
 
     while (!WindowShouldClose())
     {
@@ -118,7 +113,7 @@ void Game::render()
 
 void Game::createMultiplayerSession()
 {
-    Game::session = &Session();
+    session = new Session(&gameState);
 
     /* Start a new session */
     // GGPOErrorCode result = session.start();
@@ -143,8 +138,18 @@ void Game::_drawUI()
     std::string x = "This is a raylib->Foosies example, involving: ";
     std::string y = std::to_string((int)type);
     x.append(y);
-    std::string z = "Player 1 Vitality: ";
-    z.append(std::to_string(gameState.playerData[0].vitality));
+    std::string z = "Player 1: ";
+    z.append("- Vitality: ")
+        .append(std::to_string(gameState.playerData[0].vitality))
+        .append("\n");
+    z.append("- Position: ")
+        .append("\n")
+        .append("  - X: ")
+        .append(std::to_string(gameState.playerData[0].physical.x))
+        .append("\n")
+        .append("  - Y: ")
+        .append(std::to_string(gameState.playerData[0].physical.x))
+        .append("\n");
 
     DrawText(x.c_str(), 10, 40, 20, DARKGRAY);
     DrawText(z.c_str(), 10, 56, 20, DARKGRAY);

@@ -18,39 +18,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="session.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="controller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="foosiespp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="foosiespp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="bin\raylib.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="bin\ggponet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="session.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="player.hpp">
+    <ClInclude Include="button.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="controller.hpp">
@@ -59,7 +33,13 @@
     <ClInclude Include="custom-types.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="button.hpp">
+    <ClInclude Include="foosiespp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="player.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="session.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -78,5 +58,25 @@
     <Library Include="bin\libraylib.dll.a">
       <Filter>Source Files\bin</Filter>
     </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="foosiespp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="session.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

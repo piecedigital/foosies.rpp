@@ -162,14 +162,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="button.cpp" />
-    <ClCompile Include="controller.cpp" />
-    <ClCompile Include="foosiespp.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="player.cpp" />
-    <ClCompile Include="session.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="bin\ggponet.hpp" />
     <ClInclude Include="bin\raylib.hpp" />
     <ClInclude Include="button.hpp" />
@@ -192,6 +184,14 @@
   <ItemGroup>
     <Library Include="bin\ggponet.lib" />
     <Library Include="bin\libraylib.dll.a" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="button.cpp" />
+    <ClCompile Include="controller.cpp" />
+    <ClCompile Include="foosiespp.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="session.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
