@@ -27,7 +27,7 @@ struct Scene {
 struct GameState
 {
     int gameTimer = 90;
-    PlayerData *playerData[2];
+    PlayerData playerData[2];
 };
 
 class Game

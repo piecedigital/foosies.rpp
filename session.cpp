@@ -44,8 +44,8 @@ void Session::addPlayer(PlayerController *player, GGPOPlayerType type)
 GGPOErrorCode Session::synchronizeInputs()
 {
     std::array<PlayerInput*, 2> inputs;
-    inputs[0] = &player1->pd.input;
-    inputs[1] = &player2->pd.input;
+    inputs[0] = &player1->pd->input;
+    inputs[1] = &player2->pd->input;
 
     GGPOErrorCode result;
 

@@ -21,7 +21,7 @@ class PlayerController
 {
 public:
     GGPOPlayer ggpoPlayer;
-    PlayerData pd;
+    PlayerData *pd;
     Color color;
     Model model;
     /**

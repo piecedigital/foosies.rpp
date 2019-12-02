@@ -6,10 +6,13 @@ GameState *tempState;
 Game::Game()
 {
     tempState = &gameState;
+    scene.players[0].pd = &gameState.playerData[0];
+    scene.players[1].pd = &gameState.playerData[1];
+
     scene.players[0].color = BLUE;
     scene.players[0].color = Color{50, 50, 50, 255};
     scene.players[0].controllerId = -1;
-    scene.players[1].pd.face = -1;
+    scene.players[1].pd->face = -1;
 
     scene._makeGameStateBufferBtn.init("Save State", {100.f, 100});
     scene._makeGameStateBufferBtn.callbacks.onClick = _saveGameState;
@@ -21,11 +24,6 @@ Game::~Game()
 {
     if (session != NULL)
     {
-        for (PlayerData *pd : gameState.playerData)
-        {
-            delete &pd;
-            pd = NULL;
-        }
         delete &session;
         session = NULL;
     }

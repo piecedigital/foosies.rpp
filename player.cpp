@@ -31,9 +31,9 @@ void PlayerController::update()
 void PlayerController::render()
 {
     _convertTranslation();
-    pd.transform.translation.y += 1.f;
-    DrawCube(pd.transform.translation, 1.f, 2.f, 0.f, color);
-    // DrawModel(model, pd.transform.translation, 1.f, color);
+    pd->transform.translation.y += 1.f;
+    DrawCube(pd->transform.translation, 1.f, 2.f, 0.f, color);
+    // DrawModel(model, pd->transform.translation, 1.f, color);
 }
 
 void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
@@ -41,10 +41,10 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
     PlayerInput playerInput = PlayerInput();
 
     if (normInput.DIR_H == -1)
-        setFlag(playerInput, pd.face == 1 ? PlayerInput::DIR_BACK
+        setFlag(playerInput, pd->face == 1 ? PlayerInput::DIR_BACK
                 : PlayerInput::DIR_TOWARD);
     if (normInput.DIR_H == 1)
-        setFlag(playerInput, pd.face == 1 ? PlayerInput::DIR_TOWARD
+        setFlag(playerInput, pd->face == 1 ? PlayerInput::DIR_TOWARD
                 : PlayerInput::DIR_BACK);
     if (normInput.DIR_V == -1)
         setFlag(playerInput, PlayerInput::DIR_DOWN);
@@ -78,7 +78,7 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 
 void PlayerController::setInputs(PlayerInput playerInput)
 {
-    pd.input = playerInput;
+    pd->input = playerInput;
 }
 
 void PlayerController::unload()
@@ -88,55 +88,55 @@ void PlayerController::unload()
 
 void PlayerController::_convertTranslation()
 {
-    pd.transform.translation = Vector3{
-        ((float)pd.physical.x) / 100,
-        ((float)pd.physical.y) / 100,
-        ((float)pd.physical.z) / 100,
+    pd->transform.translation = Vector3{
+        ((float)pd->physical.x) / 100,
+        ((float)pd->physical.y) / 100,
+        ((float)pd->physical.z) / 100,
     };
 }
 
 void PlayerController::_calcForces()
 {
-    if (hasFlag(pd.input, PlayerInput::DIR_TOWARD))
+    if (hasFlag(pd->input, PlayerInput::DIR_TOWARD))
     {
-        pd.physical.velocityH = 15 * pd.face;
+        pd->physical.velocityH = 15 * pd->face;
     }
-    else if (hasFlag(pd.input, PlayerInput::DIR_BACK))
+    else if (hasFlag(pd->input, PlayerInput::DIR_BACK))
     {
-        pd.physical.velocityH = 10 * (pd.face * -1);
+        pd->physical.velocityH = 10 * (pd->face * -1);
     }
     else
     {
-        pd.physical.velocityH = 0;
+        pd->physical.velocityH = 0;
     }
 
-    if (_isGrounded() && hasFlag(pd.input, PlayerInput::DIR_UP))
+    if (_isGrounded() && hasFlag(pd->input, PlayerInput::DIR_UP))
     {
-        pd.physical.velocityV = pd.physical.jumpSpeed;
+        pd->physical.velocityV = pd->physical.jumpSpeed;
     }
 }
 
 void PlayerController::_applyForces()
 {
-    pd.physical.x += pd.physical.velocityH;
-    pd.physical.y += pd.physical.velocityV;
+    pd->physical.x += pd->physical.velocityH;
+    pd->physical.y += pd->physical.velocityV;
 
     if (!_isGrounded())
     {
-        pd.physical.velocityV -= pd.physical.gravity / pd.physical.drag;
-        if (pd.physical.velocityV < -pd.physical.jumpSpeed)
+        pd->physical.velocityV -= pd->physical.gravity / pd->physical.drag;
+        if (pd->physical.velocityV < -pd->physical.jumpSpeed)
         {
-            pd.physical.velocityV = pd.physical.jumpSpeed;
+            pd->physical.velocityV = pd->physical.jumpSpeed;
         }
     }
     else
     {
-        pd.physical.velocityV = 0;
-        pd.physical.y = 0;
+        pd->physical.velocityV = 0;
+        pd->physical.y = 0;
     }
 }
 
 bool PlayerController::_isGrounded()
 {
-    return pd.physical.y <= 0;
+    return pd->physical.y <= 0;
 }
