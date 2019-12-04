@@ -63,12 +63,19 @@ int Game::init()
     scene.targetFPS = 60;
 
     scene.cam = Camera3D();
+    scene.cam.up = Vector3{0.f, 1.f, 0.f};
+    // SetCameraMode(scene.cam, CAMERA_FREE);
+    // SetCameraMoveControls(KEY_UP, KEY_DOWN, KEY_RIGHT, KEY_LEFT, KEY_PAGE_UP, KEY_PAGE_DOWN);
+
     scene.cam.position = Vector3{0.f, 4.f, 1.f};
     scene.cam.target = Vector3{0.f, 4.f, 0.f};
-    scene.cam.up = Vector3{0.f, 1.f, 0.f};
-    scene.cam.fovy = 10.f;
-    // scene.cam.type = CAMERA_PERSPECTIVE;
+    scene.cam.fovy = 40.f;
     scene.cam.type = CAMERA_ORTHOGRAPHIC;
+
+    // scene.cam.position = Vector3{0.f, 4.f, 80.f};
+    // scene.cam.target = Vector3{0.f, 4.f, 0.f};
+    // scene.cam.fovy = 10.f;
+    // scene.cam.type = CAMERA_PERSPECTIVE;
 
     SetTargetFPS(scene.targetFPS);
 
@@ -116,11 +123,13 @@ void Game::createMultiplayerSession()
     session = new Session(&gameState);
 
     /* Start a new session */
-    // GGPOErrorCode result = session.start();
+    GGPOErrorCode result = session->start();
 }
 
 void Game::_drawScene()
 {
+    UpdateCamera(&scene.cam);
+
     BeginMode3D(scene.cam);
 
     DrawGrid(10, 1.f);
@@ -135,10 +144,9 @@ void Game::_drawScene()
 void Game::_drawUI()
 {
     GGPOPlayerType type = GGPOPlayerType::GGPO_PLAYERTYPE_REMOTE;
-    std::string x = "This is a raylib->Foosies example, involving: ";
-    std::string y = std::to_string((int)type);
-    x.append(y);
+    std::string x = "This is a raylib->Foosies example";
     std::string z = "Player 1: ";
+    z.append("\n");
     z.append("- Vitality: ")
         .append(std::to_string(gameState.playerData[0].vitality))
         .append("\n");

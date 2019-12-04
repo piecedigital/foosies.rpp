@@ -96,6 +96,7 @@ inline void clearEnum(PlayerInput &v)
 struct PlayerData
 {
     int face = 1;
+    int actionFace = 1;
     int dizzy = 1000;
     int vitality = 1000;
     PlayerInput input;

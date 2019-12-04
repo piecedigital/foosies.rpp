@@ -4,11 +4,9 @@ PlayerController::PlayerController()
 {
     controllerId = -2;
     color = BLACK;
-    // model = LoadModel("assets/models/characters/d-func/d-func.obj");
-
-    // Mesh mesh = GenMeshCube(1.f, 2.f, 0.f);
+    model = LoadModel("assets/models/characters/d-func/d-func.obj");
+    // Mesh mesh = GenMeshCube(1.f, 2.f, 0.2f);
     // model = LoadModelFromMesh(mesh);
-    // model.materials[0] = LoadMaterialDefault();
 }
 
 PlayerController::~PlayerController()
@@ -19,14 +17,33 @@ void PlayerController::update()
 {
     _calcForces();
     _applyForces();
+
+    /** @TODO: collisions
+     * Push to respective sides of colliding
+     * e.g., p1.x = 1 and p2.x = 0, p1 should be pushed to right side
+     * This is regardless of grounded or air positioning
+     *
+     * But what if they occupy the same space, the same X coord? This situation would happen in the corner often
+     * To start, if they're facing different directions, push one towards the direction they're facing
+     * There should be two different kinds of "facing": the original face set based on player side, and another face that stays static when the player jumps
+     * This is so special moves don't swap direction when jumping
+     * All call these:
+     * - face
+     * - actionFace
+     *
+     * Pushback should be exchanged based on h.speed (i.e., the faster player gives the most push back)
+     *
+     * Calculate the initial pushback required to move a player (shared or not)
+     * After that, if there's no room remaining for a player if they're in the corner, apply the remainder to the opponent
+     */
 }
 
 void PlayerController::render()
 {
     _convertTranslation();
     pd->transform.translation.y += 1.f;
-    DrawCube(pd->transform.translation, 1.f, 2.f, 0.f, color);
-    // DrawModel(model, pd->transform.translation, 0.25f, WHITE);
+    DrawModel(model, pd->transform.translation, 1.f, color);
+    DrawModelWiresEx(model, pd->transform.translation, {1.f, 0.f, 0.f}, 0.f, {1.f, 1.f, 1.f}, BLACK);
 }
 
 void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
