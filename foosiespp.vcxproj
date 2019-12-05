@@ -168,6 +168,7 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets
   <ItemGroup>
     <ClInclude Include="bin\ggponet.hpp" />
     <ClInclude Include="bin\raylib.hpp" />
+    <ClInclude Include="box.hpp" />
     <ClInclude Include="button.hpp" />
     <ClInclude Include="controller.hpp" />
     <ClInclude Include="custom-types.hpp" />

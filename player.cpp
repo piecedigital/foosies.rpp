@@ -4,9 +4,12 @@ PlayerController::PlayerController()
 {
     controllerId = -2;
     color = BLACK;
-    model = LoadModel("assets/models/characters/d-func/d-func.obj");
-    // Mesh mesh = GenMeshCube(1.f, 2.f, 0.2f);
-    // model = LoadModelFromMesh(mesh);
+    // model = LoadModel("assets/models/characters/d-func/d-func.obj");
+    // model = LoadModel("assets/models/castle.obj");
+    // Texture2D texture = LoadTexture("assets/models/castle_diffuse.png"); // Load model texture
+    // model.materials[0].maps[MAP_DIFFUSE].texture = texture;                 // Set map diffuse texture
+    Mesh mesh = GenMeshCube(1.f, 2.f, 0.2f);
+    model = LoadModelFromMesh(mesh);
 }
 
 PlayerController::~PlayerController()
@@ -42,7 +45,11 @@ void PlayerController::render()
 {
     _convertTranslation();
     pd->transform.translation.y += 1.f;
-    DrawModel(model, pd->transform.translation, 1.f, color);
+    DrawCube({pd->transform.translation.x + 0.3f,
+              pd->transform.translation.y + 0.8f,
+              0},
+             0.4f, 0.2f, 0.3f, GREEN);
+    DrawModelEx(model, pd->transform.translation, {1.f, 0.f, 0.f}, 0.f, {1.f, 1.f, 1.f}, color);
     DrawModelWiresEx(model, pd->transform.translation, {1.f, 0.f, 0.f}, 0.f, {1.f, 1.f, 1.f}, BLACK);
 }
 

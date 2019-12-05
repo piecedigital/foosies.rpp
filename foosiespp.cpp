@@ -64,17 +64,15 @@ int Game::init()
 
     scene.cam = Camera3D();
     scene.cam.up = Vector3{0.f, 1.f, 0.f};
-    // SetCameraMode(scene.cam, CAMERA_FREE);
-    // SetCameraMoveControls(KEY_UP, KEY_DOWN, KEY_RIGHT, KEY_LEFT, KEY_PAGE_UP, KEY_PAGE_DOWN);
 
     scene.cam.position = Vector3{0.f, 4.f, 1.f};
     scene.cam.target = Vector3{0.f, 4.f, 0.f};
-    scene.cam.fovy = 40.f;
+    scene.cam.fovy = 10.f;
     scene.cam.type = CAMERA_ORTHOGRAPHIC;
 
     // scene.cam.position = Vector3{0.f, 4.f, 80.f};
     // scene.cam.target = Vector3{0.f, 4.f, 0.f};
-    // scene.cam.fovy = 10.f;
+    // scene.cam.fovy = 40.f;
     // scene.cam.type = CAMERA_PERSPECTIVE;
 
     SetTargetFPS(scene.targetFPS);
@@ -144,7 +142,7 @@ void Game::_drawScene()
 void Game::_drawUI()
 {
     GGPOPlayerType type = GGPOPlayerType::GGPO_PLAYERTYPE_REMOTE;
-    std::string x = "This is a raylib->Foosies example";
+    std::string x = "Raylib->Foosies";
     std::string z = "Player 1: ";
     z.append("\n");
     z.append("- Vitality: ")
