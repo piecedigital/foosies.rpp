@@ -55,14 +55,14 @@ void Button::render()
     //     (int)(width.y + 10),
     //     RED);
     int width = MeasureText(title, 16);
-    rectangle.width = (int)(width + 10);
-    rectangle.height = (int)(26);
+    rectangle.width = (float)(width + 10);
+    rectangle.height = (float)(26);
 
     DrawRectangle(
         (int)rectangle.x,
         (int)rectangle.y,
-        rectangle.width,
-        rectangle.height,
+        (int)rectangle.width,
+        (int)rectangle.height,
         backgroundColor);
 
     DrawText(

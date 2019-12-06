@@ -5,6 +5,7 @@
 #include <iostream>
 #include "bin/ggponet.h"
 #include "bin/raylib.h"
+#include "character.hpp"
 #include "custom-types.hpp"
 
 class PlayerController
@@ -13,8 +14,8 @@ public:
     GGPOPlayer ggpoPlayer;
     PlayerData *pd;
     NormalizedInput normalizedInput;
-    Color color;
-    Model model;
+    Character charMan[1];
+
     /**
      * The id of the controller passing inputs to the player
      * -2 is the default, meaning no controller
@@ -27,13 +28,10 @@ public:
     ~PlayerController();
 
     void update(PlayerController &otherPlayer);
-    void render();
     void normalizedToPlayerInput(NormalizedInput input);
     void setInputs(PlayerInput playerInput);
-    void unload();
 
 private:
-    void _convertTranslation();
     void _calcForces();
     void _applyForces();
     bool _isGrounded();

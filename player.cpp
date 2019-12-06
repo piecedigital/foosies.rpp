@@ -3,13 +3,7 @@
 PlayerController::PlayerController()
 {
     controllerId = -2;
-    color = BLACK;
-    model = LoadModel("assets/models/characters/d-func/d-func.obj");
-    // model = LoadModel("assets/models/castle.obj");
-    // Texture2D texture = LoadTexture("assets/models/castle_diffuse.png"); // Load model texture
-    // model.materials[0].maps[MAP_DIFFUSE].texture = texture;                 // Set map diffuse texture
-    // Mesh mesh = GenMeshCube(1.f, 2.f, 0.2f);
-    // model = LoadModelFromMesh(mesh);
+    charMan[0].pd = &pd;
 }
 
 PlayerController::~PlayerController()
@@ -45,19 +39,6 @@ void PlayerController::update(PlayerController &otherPlayer)
      * Calculate the initial pushback required to move a player (shared or not)
      * After that, if there's no room remaining for a player if they're in the corner, apply the remainder to the opponent
      */
-}
-
-void PlayerController::render()
-{
-    _convertTranslation();
-    DrawCube({
-                 pd->transform.translation.x,
-                 pd->transform.translation.y + 1.f,
-                 pd->transform.translation.z - 1.f,
-             },
-             1.f, 2.f, 0.1f, BLUE);
-    DrawModelEx(model, pd->transform.translation, {0.f, 1.f, 0.f}, (90.f * pd->actionFace), {1.f, 1.f, 1.f}, color);
-    DrawModelWiresEx(model, pd->transform.translation, {0.f, 1.f, 0.f}, (90.f * pd->actionFace), {1.f, 1.f, 1.f}, BLACK);
 }
 
 void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
@@ -104,20 +85,6 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 void PlayerController::setInputs(PlayerInput playerInput)
 {
     pd->input = playerInput;
-}
-
-void PlayerController::unload()
-{
-    UnloadModel(model);
-}
-
-void PlayerController::_convertTranslation()
-{
-    pd->transform.translation = Vector3{
-        ((float)pd->physical.x) / 100,
-        ((float)pd->physical.y) / 100,
-        ((float)pd->physical.z) / 100,
-    };
 }
 
 void PlayerController::_calcForces()

@@ -34,8 +34,8 @@ Game::Game()
     scene.players[0].pd = &gameState.playerData[0];
     scene.players[1].pd = &gameState.playerData[1];
 
-    scene.players[0].color = BLUE;
-    scene.players[0].color = Color{50, 50, 50, 255};
+    scene.players[0].charMan[0].color = BLUE;
+    scene.players[0].charMan[0].color = Color{50, 50, 50, 255};
     scene.players[0].controllerId = -1;
     scene.players[1].pd->face = -1;
 
@@ -132,7 +132,7 @@ void Game::_drawScene()
     DrawGrid(10, 1.f);
     for (PlayerController &player : scene.players)
     {
-        player.render();
+        player.charMan[0].render();
     }
 
     EndMode3D();
