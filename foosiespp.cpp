@@ -65,9 +65,9 @@ int Game::init()
     scene.cam = Camera3D();
     scene.cam.up = Vector3{0.f, 1.f, 0.f};
 
-    scene.cam.position = Vector3{0.f, 4.f, 1.f};
-    scene.cam.target = Vector3{0.f, 4.f, 0.f};
-    scene.cam.fovy = 10.f;
+    scene.cam.position = Vector3{0.f, 3.f, 1.f};
+    scene.cam.target = Vector3{0.f, 3.f, 0.f};
+    scene.cam.fovy = 8.f;
     scene.cam.type = CAMERA_ORTHOGRAPHIC;
 
     // scene.cam.position = Vector3{0.f, 4.f, 80.f};
@@ -93,12 +93,11 @@ void Game::update()
 {
     _aggregateGamepadInputs();
 
-    for (PlayerController &player : scene.players)
-    {
-        _dispatchNormalizedInputs(player);
+    _dispatchNormalizedInputs(scene.players[0]);
+    scene.players[0].update(scene.players[1]);
 
-        player.update();
-    }
+    _dispatchNormalizedInputs(scene.players[1]);
+    scene.players[1].update(scene.players[0]);
 
     scene._makeGameStateBufferBtn.update();
     scene._loadGameStateBtn.update();

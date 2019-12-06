@@ -4,20 +4,26 @@ PlayerController::PlayerController()
 {
     controllerId = -2;
     color = BLACK;
-    // model = LoadModel("assets/models/characters/d-func/d-func.obj");
+    model = LoadModel("assets/models/characters/d-func/d-func.obj");
     // model = LoadModel("assets/models/castle.obj");
     // Texture2D texture = LoadTexture("assets/models/castle_diffuse.png"); // Load model texture
     // model.materials[0].maps[MAP_DIFFUSE].texture = texture;                 // Set map diffuse texture
-    Mesh mesh = GenMeshCube(1.f, 2.f, 0.2f);
-    model = LoadModelFromMesh(mesh);
+    // Mesh mesh = GenMeshCube(1.f, 2.f, 0.2f);
+    // model = LoadModelFromMesh(mesh);
 }
 
 PlayerController::~PlayerController()
 {
 }
 
-void PlayerController::update()
+void PlayerController::update(PlayerController &otherPlayer)
 {
+    pd->face = (otherPlayer.pd->physical.x < pd->physical.x) ? -1 : 1;
+    if (_isGrounded())
+    {
+        pd->actionFace = (otherPlayer.pd->physical.x < pd->physical.x) ? -1 : 1;
+    }
+
     _calcForces();
     _applyForces();
 
@@ -44,53 +50,55 @@ void PlayerController::update()
 void PlayerController::render()
 {
     _convertTranslation();
-    pd->transform.translation.y += 1.f;
-    DrawCube({pd->transform.translation.x + 0.3f,
-              pd->transform.translation.y + 0.8f,
-              0},
-             0.4f, 0.2f, 0.3f, GREEN);
-    DrawModelEx(model, pd->transform.translation, {1.f, 0.f, 0.f}, 0.f, {1.f, 1.f, 1.f}, color);
-    DrawModelWiresEx(model, pd->transform.translation, {1.f, 0.f, 0.f}, 0.f, {1.f, 1.f, 1.f}, BLACK);
+    DrawCube({
+                 pd->transform.translation.x,
+                 pd->transform.translation.y + 1.f,
+                 pd->transform.translation.z - 1.f,
+             },
+             1.f, 2.f, 0.1f, BLUE);
+    DrawModelEx(model, pd->transform.translation, {0.f, 1.f, 0.f}, (90.f * pd->actionFace), {1.f, 1.f, 1.f}, color);
+    DrawModelWiresEx(model, pd->transform.translation, {0.f, 1.f, 0.f}, (90.f * pd->actionFace), {1.f, 1.f, 1.f}, BLACK);
 }
 
 void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 {
-    PlayerInput playerInput = PlayerInput();
+    normalizedInput = normInput;
+    // PlayerInput playerInput = PlayerInput();
+    PlayerInput *playerInput = &pd->input;
+    *playerInput = PlayerInput::NONE;
 
     if (normInput.DIR_H == -1)
-        setFlag(playerInput, pd->face == 1 ? PlayerInput::DIR_BACK
+        setFlag(*playerInput, pd->actionFace == 1 ? PlayerInput::DIR_BACK
                 : PlayerInput::DIR_TOWARD);
     if (normInput.DIR_H == 1)
-        setFlag(playerInput, pd->face == 1 ? PlayerInput::DIR_TOWARD
+        setFlag(*playerInput, pd->actionFace == 1 ? PlayerInput::DIR_TOWARD
                 : PlayerInput::DIR_BACK);
     if (normInput.DIR_V == -1)
-        setFlag(playerInput, PlayerInput::DIR_DOWN);
+        setFlag(*playerInput, PlayerInput::DIR_DOWN);
     if (normInput.DIR_V == 1)
-        setFlag(playerInput, PlayerInput::DIR_UP);
+        setFlag(*playerInput, PlayerInput::DIR_UP);
     if (normInput.FACE_UP)
-        setFlag(playerInput, PlayerInput::BTN_STRONG);
+        setFlag(*playerInput, PlayerInput::BTN_STRONG);
     if (normInput.FACE_DOWN)
-        setFlag(playerInput, PlayerInput::BTN_SHORT);
+        setFlag(*playerInput, PlayerInput::BTN_SHORT);
     if (normInput.FACE_LEFT)
-        setFlag(playerInput, PlayerInput::BTN_JAB);
+        setFlag(*playerInput, PlayerInput::BTN_JAB);
     if (normInput.FACE_RIGHT)
-        setFlag(playerInput, PlayerInput::BTN_FORWARD);
+        setFlag(*playerInput, PlayerInput::BTN_FORWARD);
     if (normInput.SHOULDER_L)
-        setFlag(playerInput, PlayerInput::BTN_MACRO1);
+        setFlag(*playerInput, PlayerInput::BTN_MACRO1);
     if (normInput.SHOULDER_R)
-        setFlag(playerInput, PlayerInput::BTN_FIERCE);
+        setFlag(*playerInput, PlayerInput::BTN_FIERCE);
     if (normInput.TRIGGER_L)
-        setFlag(playerInput, PlayerInput::BTN_MACRO2);
+        setFlag(*playerInput, PlayerInput::BTN_MACRO2);
     if (normInput.TRIGGER_R)
-        setFlag(playerInput, PlayerInput::BTN_ROUNDHOUSE);
+        setFlag(*playerInput, PlayerInput::BTN_ROUNDHOUSE);
     // if (normInput.BACK)
-    //     setFlag(playerInput, PlayerInput::BACK);
+    //     setFlag(*playerInput, PlayerInput::BACK);
     // if (normInput.START)
-    //     setFlag(playerInput, PlayerInput::START);
+    //     setFlag(*playerInput, PlayerInput::START);
     // if (normInput.HOME)
-    //     setFlag(playerInput, PlayerInput::HOME);
-
-    setInputs(playerInput);
+    //     setFlag(*playerInput, PlayerInput::HOME);
 };
 
 void PlayerController::setInputs(PlayerInput playerInput)
@@ -114,22 +122,25 @@ void PlayerController::_convertTranslation()
 
 void PlayerController::_calcForces()
 {
-    if (hasFlag(pd->input, PlayerInput::DIR_TOWARD))
+    if (_isGrounded())
     {
-        pd->physical.velocityH = 15 * pd->face;
-    }
-    else if (hasFlag(pd->input, PlayerInput::DIR_BACK))
-    {
-        pd->physical.velocityH = 10 * (pd->face * -1);
-    }
-    else
-    {
-        pd->physical.velocityH = 0;
-    }
+        if (hasFlag(pd->input, PlayerInput::DIR_TOWARD))
+        {
+            pd->physical.velocityH = 10 * normalizedInput.DIR_H;
+        }
+        else if (hasFlag(pd->input, PlayerInput::DIR_BACK))
+        {
+            pd->physical.velocityH = 6 * normalizedInput.DIR_H;
+        }
+        else
+        {
+            pd->physical.velocityH = 0;
+        }
 
-    if (_isGrounded() && hasFlag(pd->input, PlayerInput::DIR_UP))
-    {
-        pd->physical.velocityV = pd->physical.jumpSpeed;
+        if (hasFlag(pd->input, PlayerInput::DIR_UP))
+        {
+            pd->physical.velocityV = pd->physical.jumpSpeed;
+        }
     }
 }
 

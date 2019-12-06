@@ -12,6 +12,7 @@ class PlayerController
 public:
     GGPOPlayer ggpoPlayer;
     PlayerData *pd;
+    NormalizedInput normalizedInput;
     Color color;
     Model model;
     /**
@@ -25,7 +26,7 @@ public:
     PlayerController();
     ~PlayerController();
 
-    void update();
+    void update(PlayerController &otherPlayer);
     void render();
     void normalizedToPlayerInput(NormalizedInput input);
     void setInputs(PlayerInput playerInput);
