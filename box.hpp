@@ -25,6 +25,7 @@ class Box
 public:
     Rectangle rect;
     BoxType type;
+    Model model;
 
     Box();
 
@@ -35,6 +36,7 @@ public:
     void render();
 private:
     Color _getBoxColor();
+    Color _getBoxColor(float opacity);
 };
 
 #endif

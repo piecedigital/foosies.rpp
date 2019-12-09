@@ -3,7 +3,10 @@
 #include "bin/raylib.h"
 
 Box::Box()
-{}
+{
+    Mesh mesh = GenMeshCube(1.f, 1.f, 1.f);
+    model = LoadModelFromMesh(mesh);
+}
 
 bool Box::isColliding(Box box)
 {
@@ -28,28 +31,50 @@ void Box::updateBoxShape(Vector3 vect, float width, float height)
 
 void Box::render()
 {
-    DrawCube({
-        rect.x,
-        rect.y,
-        1.f
-    },
-    rect.width,
-    rect.height,
-    0.5f,
-    _getBoxColor());
+    // std::cout
+    //     << "X: " << rect.x
+    //     << "Y: " << rect.y
+    //     << std::endl;
+    // DrawCube({
+    //     rect.x,
+    //     rect.y,
+    //     1.f
+    // },
+    // rect.width,
+    // rect.height,
+    // 0.5f,
+    // _getBoxColor(.5));
+
+    DrawModelEx(model, Vector3{rect.x, rect.y, 1.f}, {0.f, 1.f, 0.f}, 0.f, Vector3{rect.width, rect.height, 0.5f}, _getBoxColor(.5));
+}
+
+Color Box::_getBoxColor(float opacity)
+{
+    Color color = BLACK;
+    if (opacity < 0.f)
+        opacity = 0.f;
+    if (opacity > 1.f)
+        opacity = 1.f;
+
+    unsigned int alpha = 255 * opacity;
+
+    if (type == BoxType::BOX_PUSH)
+        color = PUSH_BOX_COLOR;
+    if (type == BoxType::BOX_GRAB)
+        color = GRAB_BOX_COLOR;
+    if (type == BoxType::BOX_HIT)
+        color = HIT_BOX_COLOR;
+    if (type == BoxType::BOX_HURT)
+        color = HURT_BOX_COLOR;
+    if (type == BoxType::BOX_PROXIMITY)
+        color = PROXIMITY_BOX_COLOR;
+
+    color.a = alpha;
+
+    return color;
 }
 
 Color Box::_getBoxColor()
 {
-    if (type == BoxType::BOX_PUSH)
-        return PUSH_BOX_COLOR;
-    if (type == BoxType::BOX_GRAB)
-        return GRAB_BOX_COLOR;
-    if (type == BoxType::BOX_HIT)
-        return HIT_BOX_COLOR;
-    if (type == BoxType::BOX_HURT)
-        return HURT_BOX_COLOR;
-    if (type == BoxType::BOX_PROXIMITY)
-        return PROXIMITY_BOX_COLOR;
-    return BLACK;
+    return _getBoxColor(1);
 }

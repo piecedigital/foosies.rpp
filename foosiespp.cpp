@@ -34,10 +34,10 @@ Game::Game()
     scene.players[0].init(&gameState.playerData[0], &gameState.playerBoxes[0]);
     scene.players[1].init(&gameState.playerData[1], &gameState.playerBoxes[1]);
 
-    scene.players[0].charMan[0].color = BLUE;
     scene.players[0].charMan[0].color = Color{50, 50, 50, 255};
     scene.players[0].controllerId = -1;
     scene.players[1].playerData->sideFace = -1;
+    scene.players[1].playerData->actionFace = -1;
 
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
@@ -62,7 +62,7 @@ int Game::init()
     scene.cam = Camera3D();
     scene.cam.up = Vector3{0.f, 1.f, 0.f};
 
-    scene.cam.position = Vector3{0.f, 3.f, 1.f};
+    scene.cam.position = Vector3{0.f, 3.f, 2.f};
     scene.cam.target = Vector3{0.f, 3.f, 0.f};
     scene.cam.fovy = 8.f;
     scene.cam.type = CAMERA_ORTHOGRAPHIC;
