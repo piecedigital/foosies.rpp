@@ -3,19 +3,48 @@
 PlayerController::PlayerController()
 {
     controllerId = -2;
-    charMan[0].pd = &pd;
 }
 
 PlayerController::~PlayerController()
 {
+    playerData = NULL;
+}
+
+void PlayerController::init(PlayerData *pd, PlayerBoxes *pb)
+{
+    playerData = pd;
+    playerBoxes = pb;
+
+    charMan[0].playerData = &playerData;
+    charMan[0].playerBoxes = &playerBoxes;
+
+    playerBoxes->pushBoxSize = 1;
+    playerBoxes->grabBoxesSize = 0;
+    playerBoxes->hitBoxesSize = 0;
+    playerBoxes->hurtBoxesSize = 0;
+    playerBoxes->proximityBoxesSize = 0;
+
+    playerBoxes->pushBoxArray = new Box[playerBoxes->pushBoxSize];
+    playerBoxes->grabBoxesArray = new Box[playerBoxes->grabBoxesSize];
+    playerBoxes->hitBoxesArray = new Box[playerBoxes->hitBoxesSize];
+    playerBoxes->hurtBoxesArray = new Box[playerBoxes->hurtBoxesSize];
+    playerBoxes->proximityBoxesArray = new Box[playerBoxes->proximityBoxesSize];
+
+    playerBoxes->pushBoxArray[0].type = BoxType::BOX_PUSH;
+    playerBoxes->pushBoxArray[0].updateBoxShape(
+        playerData->transform.translation.x,
+        playerData->transform.translation.y + 1.f,
+        1.f,
+        2.f
+    );
 }
 
 void PlayerController::update(PlayerController &otherPlayer)
 {
-    pd->face = (otherPlayer.pd->physical.x < pd->physical.x) ? -1 : 1;
+    playerData->sideFace = (otherPlayer.playerData->physical.x < playerData->physical.x) ? -1 : 1;
     if (_isGrounded())
     {
-        pd->actionFace = (otherPlayer.pd->physical.x < pd->physical.x) ? -1 : 1;
+        playerData->actionFace = (otherPlayer.playerData->physical.x < playerData->physical.x) ? -1 : 1;
     }
 
     _calcForces();
@@ -43,17 +72,22 @@ void PlayerController::update(PlayerController &otherPlayer)
 
 void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 {
-    normalizedInput = normInput;
     // PlayerInput playerInput = PlayerInput();
-    PlayerInput *playerInput = &pd->input;
+    PlayerInput *playerInput = &playerData->input;
     *playerInput = PlayerInput::NONE;
 
     if (normInput.DIR_H == -1)
-        setFlag(*playerInput, pd->actionFace == 1 ? PlayerInput::DIR_BACK
+    {
+        setFlag(*playerInput, playerData->actionFace == 1 ? PlayerInput::DIR_BACK
                 : PlayerInput::DIR_TOWARD);
+        setFlag(*playerInput, PlayerInput::DIR_LEFT);
+    }
     if (normInput.DIR_H == 1)
-        setFlag(*playerInput, pd->actionFace == 1 ? PlayerInput::DIR_TOWARD
+    {
+        setFlag(*playerInput, playerData->actionFace == 1 ? PlayerInput::DIR_TOWARD
                 : PlayerInput::DIR_BACK);
+        setFlag(*playerInput, PlayerInput::DIR_RIGHT);
+    }
     if (normInput.DIR_V == -1)
         setFlag(*playerInput, PlayerInput::DIR_DOWN);
     if (normInput.DIR_V == 1)
@@ -84,54 +118,56 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 
 void PlayerController::setInputs(PlayerInput playerInput)
 {
-    pd->input = playerInput;
+    playerData->input = playerInput;
 }
 
 void PlayerController::_calcForces()
 {
     if (_isGrounded())
     {
-        if (hasFlag(pd->input, PlayerInput::DIR_TOWARD))
+        int directionSign = (hasFlag(playerData->input, PlayerInput::DIR_LEFT) ? -1 : 1);
+
+        if (hasFlag(playerData->input, PlayerInput::DIR_TOWARD))
         {
-            pd->physical.velocityH = 10 * normalizedInput.DIR_H;
+            playerData->physical.velocityH = 10 * directionSign;
         }
-        else if (hasFlag(pd->input, PlayerInput::DIR_BACK))
+        else if (hasFlag(playerData->input, PlayerInput::DIR_BACK))
         {
-            pd->physical.velocityH = 6 * normalizedInput.DIR_H;
+            playerData->physical.velocityH = 6 * directionSign;
         }
         else
         {
-            pd->physical.velocityH = 0;
+            playerData->physical.velocityH = 0;
         }
 
-        if (hasFlag(pd->input, PlayerInput::DIR_UP))
+        if (hasFlag(playerData->input, PlayerInput::DIR_UP))
         {
-            pd->physical.velocityV = pd->physical.jumpSpeed;
+            playerData->physical.velocityV = playerData->physical.jumpSpeed;
         }
     }
 }
 
 void PlayerController::_applyForces()
 {
-    pd->physical.x += pd->physical.velocityH;
-    pd->physical.y += pd->physical.velocityV;
+    playerData->physical.x += playerData->physical.velocityH;
+    playerData->physical.y += playerData->physical.velocityV;
 
     if (!_isGrounded())
     {
-        pd->physical.velocityV -= pd->physical.gravity / pd->physical.drag;
-        if (pd->physical.velocityV < -pd->physical.jumpSpeed)
+        playerData->physical.velocityV -= playerData->physical.gravity / playerData->physical.drag;
+        if (playerData->physical.velocityV < -playerData->physical.jumpSpeed)
         {
-            pd->physical.velocityV = pd->physical.jumpSpeed;
+            playerData->physical.velocityV = playerData->physical.jumpSpeed;
         }
     }
     else
     {
-        pd->physical.velocityV = 0;
-        pd->physical.y = 0;
+        playerData->physical.velocityV = 0;
+        playerData->physical.y = 0;
     }
 }
 
 bool PlayerController::_isGrounded()
 {
-    return pd->physical.y <= 0;
+    return playerData->physical.y <= 0;
 }

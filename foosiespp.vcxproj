@@ -192,6 +192,7 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets
     <Library Include="bin\libraylib.dll.a" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="box.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="controller.cpp" />

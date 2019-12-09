@@ -12,8 +12,8 @@ class PlayerController
 {
 public:
     GGPOPlayer ggpoPlayer;
-    PlayerData *pd;
-    NormalizedInput normalizedInput;
+    PlayerData *playerData;
+    PlayerBoxes *playerBoxes;
     Character charMan[1];
 
     /**
@@ -27,6 +27,7 @@ public:
     PlayerController();
     ~PlayerController();
 
+    void init(PlayerData *pd, PlayerBoxes *pb);
     void update(PlayerController &otherPlayer);
     void normalizedToPlayerInput(NormalizedInput input);
     void setInputs(PlayerInput playerInput);

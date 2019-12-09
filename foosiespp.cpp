@@ -31,13 +31,13 @@ void _loadGameState()
 Game::Game()
 {
     tempState = &gameState;
-    scene.players[0].pd = &gameState.playerData[0];
-    scene.players[1].pd = &gameState.playerData[1];
+    scene.players[0].init(&gameState.playerData[0], &gameState.playerBoxes[0]);
+    scene.players[1].init(&gameState.playerData[1], &gameState.playerBoxes[1]);
 
     scene.players[0].charMan[0].color = BLUE;
     scene.players[0].charMan[0].color = Color{50, 50, 50, 255};
     scene.players[0].controllerId = -1;
-    scene.players[1].pd->face = -1;
+    scene.players[1].playerData->sideFace = -1;
 
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
@@ -51,11 +51,8 @@ Game::Game()
 
 Game::~Game()
 {
-    if (session != NULL)
-    {
-        delete &session;
-        session = NULL;
-    }
+    deleteSession();
+    // delete gameState.playerData;
 }
 
 int Game::init()
@@ -117,10 +114,20 @@ void Game::render()
 
 void Game::createMultiplayerSession()
 {
+    deleteSession();
     session = new Session(&gameState);
 
     /* Start a new session */
     GGPOErrorCode result = session->start();
+}
+
+void Game::deleteSession()
+{
+    if (session != NULL)
+    {
+        delete &session;
+        session = NULL;
+    }
 }
 
 void Game::_drawScene()

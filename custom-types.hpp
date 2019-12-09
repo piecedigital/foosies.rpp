@@ -2,6 +2,7 @@
 #define CUSTOM_TYPES_H
 
 #include "bin/raylib.h"
+#include "box.hpp"
 
 // structs
 struct Physical
@@ -41,6 +42,8 @@ struct StatusEffect
     int wallSplat;
     int groundBounce;
     int groundSplat;
+    int knockdownHard;
+    int knockdownSoft;
 };
 
 // enums
@@ -55,14 +58,16 @@ enum PlayerInput
     DIR_UPTOWARD = DIR_UP + DIR_TOWARD,
     DIR_DOWNBACK = DIR_DOWN + DIR_BACK,
     DIR_DOWNTOWARD = DIR_DOWN + DIR_TOWARD,
-    BTN_JAB = 1 << 9,
-    BTN_STRONG = 1 << 10,
-    BTN_FIERCE = 1 << 11,
-    BTN_SHORT = 1 << 12,
-    BTN_FORWARD = 1 << 13,
-    BTN_ROUNDHOUSE = 1 << 14,
-    BTN_MACRO1 = 1 << 15,
-    BTN_MACRO2 = 1 << 16,
+    DIR_LEFT = 1 << 9,
+    DIR_RIGHT = 1 << 10,
+    BTN_JAB = 1 << 11,
+    BTN_STRONG = 1 << 12,
+    BTN_FIERCE = 1 << 13,
+    BTN_SHORT = 1 << 14,
+    BTN_FORWARD = 1 << 15,
+    BTN_ROUNDHOUSE = 1 << 16,
+    BTN_MACRO1 = 1 << 17,
+    BTN_MACRO2 = 1 << 18,
 };
 inline PlayerInput operator~(PlayerInput a) { return (PlayerInput) ~(int)a; };
 inline PlayerInput operator|(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a | (int)b); };
@@ -95,19 +100,35 @@ inline void clearEnum(PlayerInput &v)
 
 struct PlayerData
 {
-    int face = 1;
+    int sideFace = 1;
     int actionFace = 1;
     int dizzy = 1000;
     int vitality = 1000;
     PlayerInput input;
     Transform transform;
     Physical physical;
+    StatusEffect statusEffect;
+};
+
+struct PlayerBoxes
+{
+    Box *pushBoxArray;
+    int pushBoxSize;
+    Box *grabBoxesArray;
+    int grabBoxesSize;
+    Box *hitBoxesArray;
+    int hitBoxesSize;
+    Box *hurtBoxesArray;
+    int hurtBoxesSize;
+    Box *proximityBoxesArray;
+    int proximityBoxesSize;
 };
 
 struct GameState
 {
     int gameTimer = 90;
     PlayerData playerData[2];
+    PlayerBoxes playerBoxes[2];
 };
 
 #endif

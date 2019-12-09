@@ -41,6 +41,7 @@ public:
     void update();
     void render();
     void createMultiplayerSession();
+    void deleteSession();
 
 private:
     void _drawScene();
