@@ -6,7 +6,7 @@
 #include "bin/ggponet.h"
 #include "bin/raylib.h"
 #include "character.hpp"
-#include "custom-types.hpp"
+#include "globals.hpp"
 
 class PlayerController
 {

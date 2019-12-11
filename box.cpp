@@ -34,16 +34,15 @@ void Box::render()
     // std::cout
     //     << "X: " << rect.x
     //     << "Y: " << rect.y
+    //     << "Width: " << rect.width
+    //     << "Height: " << rect.height
     //     << std::endl;
-    // DrawCube({
-    //     rect.x,
-    //     rect.y,
-    //     1.f
-    // },
-    // rect.width,
-    // rect.height,
-    // 0.5f,
-    // _getBoxColor(.5));
+    std::string s;
+    s.append("X: ").append(std::to_string(rect.x)).append("\n")
+        .append("Y: ").append(std::to_string(rect.y)).append("\n")
+        .append("Width: ").append(std::to_string(rect.width)).append("\n")
+        .append("Height: ").append(std::to_string(rect.height)).append("\n");
+    DrawText(s.c_str(), 50, 20, 20, DARKGRAY);
 
     DrawModelEx(model, Vector3{rect.x, rect.y, 1.f}, {0.f, 1.f, 0.f}, 0.f, Vector3{rect.width, rect.height, 0.5f}, _getBoxColor(.5));
 }

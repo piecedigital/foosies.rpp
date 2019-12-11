@@ -76,6 +76,8 @@ int Game::init()
 
     while (!WindowShouldClose())
     {
+        _aggregateGamepadInputs();
+
         // update the state
         update();
         // draw the state
@@ -88,8 +90,6 @@ int Game::init()
 
 void Game::update()
 {
-    _aggregateGamepadInputs();
-
     _dispatchNormalizedInputs(scene.players[0]);
     scene.players[0].update(scene.players[1]);
 

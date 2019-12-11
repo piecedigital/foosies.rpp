@@ -72,6 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -99,8 +101,7 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy /S /I /Y $(ProjectDir)bin\*.dll $(OutDir)*.dll
-xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets
-</Command>
+xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -112,11 +113,16 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /S /I /Y $(ProjectDir)bin\*.dll $(OutDir)*.dll
+xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -142,8 +148,7 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets
     </Link>
     <PostBuildEvent>
       <Command>xcopy /S /I /Y $(ProjectDir)bin\*.dll $(OutDir)*.dll
-xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets
-</Command>
+xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -164,15 +169,21 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /S /I /Y $(ProjectDir)bin\*.dll $(OutDir)*.dll
+xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="bin\ggponet.h" />
     <ClInclude Include="bin\ggponet.hpp" />
+    <ClInclude Include="bin\raylib.h" />
     <ClInclude Include="bin\raylib.hpp" />
     <ClInclude Include="box.hpp" />
     <ClInclude Include="button.hpp" />
     <ClInclude Include="character.hpp" />
     <ClInclude Include="controller.hpp" />
-    <ClInclude Include="custom-types.hpp" />
+    <ClInclude Include="globals.hpp" />
     <ClInclude Include="foosiespp.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="session.hpp" />

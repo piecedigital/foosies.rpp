@@ -30,7 +30,7 @@
     <ClInclude Include="controller.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="custom-types.hpp">
+    <ClInclude Include="globals.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="foosiespp.hpp">
@@ -46,6 +46,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="character.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bin\ggponet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bin\raylib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

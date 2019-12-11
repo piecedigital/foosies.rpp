@@ -6,7 +6,7 @@
 #include <vector>
 #include "bin/ggponet.h"
 #include "bin/raylib.h"
-#include "custom-types.hpp"
+#include "globals.hpp"
 #include "button.hpp"
 #include "controller.hpp"
 #include "player.hpp"

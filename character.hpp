@@ -5,7 +5,7 @@
 #include <iostream>
 #include "bin/raylib.h"
 #include "box.hpp"
-#include "custom-types.hpp"
+#include "globals.hpp"
 
 class Character
 {

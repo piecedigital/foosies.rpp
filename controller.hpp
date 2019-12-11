@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include "bin/raylib.h"
-#include "custom-types.hpp"
+#include "globals.hpp"
 
 class Controller
 {
