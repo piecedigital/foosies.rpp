@@ -3,8 +3,8 @@
 
 #include <string>
 #include <iostream>
-#include "bin/ggponet.h"
-#include "bin/raylib.h"
+#include "../bin/ggponet.h"
+#include "../bin/raylib.h"
 #include "character.hpp"
 #include "globals.hpp"
 

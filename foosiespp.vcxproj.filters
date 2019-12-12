@@ -24,34 +24,37 @@
     <ClInclude Include="bin\ggponet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="button.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="controller.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="globals.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="foosiespp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="player.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="session.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="box.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="character.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="bin\ggponet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="bin\raylib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\box.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\button.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\character.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\controller.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\foosiespp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\globals.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\player.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\session.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -72,28 +75,28 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="button.cpp">
+    <ClCompile Include="src\box.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="controller.cpp">
+    <ClCompile Include="src\button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="foosiespp.cpp">
+    <ClCompile Include="src\character.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
+    <ClCompile Include="src\foosiespp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="session.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="character.cpp">
+    <ClCompile Include="src\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="box.cpp">
+    <ClCompile Include="src\session.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -7,8 +7,6 @@
 #include "bin/ggponet.h"
 #include "player.hpp"
 
-class Game;
-
 class Session
 {
 public:

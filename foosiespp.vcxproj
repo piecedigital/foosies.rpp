@@ -179,14 +179,15 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
     <ClInclude Include="bin\ggponet.hpp" />
     <ClInclude Include="bin\raylib.h" />
     <ClInclude Include="bin\raylib.hpp" />
-    <ClInclude Include="box.hpp" />
-    <ClInclude Include="button.hpp" />
-    <ClInclude Include="character.hpp" />
-    <ClInclude Include="controller.hpp" />
-    <ClInclude Include="globals.hpp" />
-    <ClInclude Include="foosiespp.hpp" />
-    <ClInclude Include="player.hpp" />
-    <ClInclude Include="session.hpp" />
+    <ClInclude Include="src\box.hpp" />
+    <ClInclude Include="src\button.hpp" />
+    <ClInclude Include="src\character.hpp" />
+    <ClInclude Include="src\controller.hpp" />
+    <ClInclude Include="src\game.hpp" />
+    <ClInclude Include="src\globals.hpp" />
+    <ClInclude Include="src\foosiespp.hpp" />
+    <ClInclude Include="src\player.hpp" />
+    <ClInclude Include="src\session.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\ggponet.dll">
@@ -203,14 +204,14 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
     <Library Include="bin\libraylib.dll.a" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="box.cpp" />
-    <ClCompile Include="button.cpp" />
-    <ClCompile Include="character.cpp" />
-    <ClCompile Include="controller.cpp" />
-    <ClCompile Include="foosiespp.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="player.cpp" />
-    <ClCompile Include="session.cpp" />
+    <ClCompile Include="src\box.cpp" />
+    <ClCompile Include="src\button.cpp" />
+    <ClCompile Include="src\character.cpp" />
+    <ClCompile Include="src\controller.cpp" />
+    <ClCompile Include="src\foosiespp.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\session.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,10 +1,16 @@
 #ifndef CUSTOM_TYPES_H
 #define CUSTOM_TYPES_H
 
-#include "bin/raylib.h"
+#include "../bin/raylib.h"
 #include "box.hpp"
 
 // structs
+struct Grid
+{
+    int hCells;
+    int vCells;
+};
+
 struct Physical
 {
     int x;

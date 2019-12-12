@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include "bin/raylib.h"
+#include "../bin/raylib.h"
 #include "globals.hpp"
 
 class Controller

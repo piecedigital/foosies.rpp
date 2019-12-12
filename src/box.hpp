@@ -2,13 +2,21 @@
 #define BOX_H
 
 #include <iostream>
-#include "bin/raylib.h"
+#include "../bin/raylib.h"
 
 #define PUSH_BOX_COLOR Color{253, 249, 0, 255};
 #define GRAB_BOX_COLOR Color{0, 121, 241, 255};
 #define HIT_BOX_COLOR Color{230, 41, 55, 255};
 #define HURT_BOX_COLOR Color{0, 228, 48, 255};
 #define PROXIMITY_BOX_COLOR Color{253, 249, 100, 255};
+
+struct DrawTransform
+{
+    float x;
+    float y;
+    float width;
+    float height;
+};
 
 enum BoxType
 {
@@ -23,20 +31,23 @@ enum BoxType
 class Box
 {
 public:
-    Rectangle rect;
     BoxType type;
     Model model;
+    int x;
+    int y;
+    int width;
+    int height;
 
     Box();
 
-    void updateBoxShape(float x, float y, float width, float height);
-    void updateBoxShape(Vector3 vect, float width, float height);
+    void updateBoxShape(int x, int y, int width, int height);
 
     bool isColliding(Box box);
     void render();
 private:
     Color _getBoxColor();
     Color _getBoxColor(float opacity);
+    DrawTransform _getDrawTransform();
 };
 
 #endif
