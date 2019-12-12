@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "bin/ggponet.h"
-#include "bin/raylib.h"
+#include "../bin/ggponet.h"
+#include "../bin/raylib.h"
 #include "globals.hpp"
 #include "button.hpp"
 #include "controller.hpp"

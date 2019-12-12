@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cstring>
 #include <array>
-#include "bin/ggponet.h"
+#include "../bin/ggponet.h"
 #include "player.hpp"
 
 class Session
