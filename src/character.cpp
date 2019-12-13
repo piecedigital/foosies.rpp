@@ -1,8 +1,9 @@
 #include <vector>
 #include "character.hpp"
 
-Character::Character()
+CharacterController::init()
 {
+    Character character;
     color = BLACK;
     model = LoadModel("assets/models/characters/d-func/d-func.obj");
 
@@ -24,12 +25,13 @@ Character::Character()
 
     // model.materials[0] = mat;
 }
-Character::~Character()
+
+void CharacterController::unload()
 {
-    unload();
+    UnloadModel(model);
 }
 
-void Character::render()
+void CharacterController::render()
 {
     if (*playerData != NULL)
     {
@@ -69,12 +71,7 @@ void Character::render()
     }
 }
 
-void Character::unload()
-{
-    UnloadModel(model);
-}
-
-void Character::_convertTranslation()
+void CharacterController::_convertTranslation()
 {
     if ((*playerData) == NULL)
         return;
@@ -85,7 +82,7 @@ void Character::_convertTranslation()
     };
 }
 
-void Character::_renderBox(Box box)
+void CharacterController::_renderBox(Box box)
 {
     box.updateBoxShape((*playerData)->transform.translation.x, (*playerData)->transform.translation.y + 1.f, 1.f, 2.f);
     box.render();

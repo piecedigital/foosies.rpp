@@ -7,21 +7,23 @@
 #include "box.hpp"
 #include "globals.hpp"
 
-class Character
+namespace CharacterController
 {
-public:
-    Color color;
-    Model model;
-    ModelAnimation anim;
-    PlayerData **playerData;
-    PlayerBoxes **playerBoxes;
 
-    Character();
-    ~Character();
 
-    void render();
+    struct Character
+    {
+        Color color;
+        Model model;
+        ModelAnimation anim;
+        PlayerData **playerData;
+        PlayerBoxes **playerBoxes;
+    };
+
+    void init();
     void unload();
-private:
+    void render();
+
     void _convertTranslation();
     void _renderBox(Box box);
 };

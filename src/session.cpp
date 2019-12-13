@@ -1,11 +1,8 @@
 #include "session.hpp"
+#include "game.hpp"
 
-GameState *gs;
-
-Session::Session(Game *game)
+Session::Session()
 {
-    // gs = game;
-    this->game = game;
     /* fill in all callback functions */
     cb.begin_game = beginGameCallback;
     cb.save_game_state = saveGameStateCallback;
@@ -139,7 +136,7 @@ bool /*Session::*/loadGameStateCallback(unsigned char *buffer, int len)
     #endif
 
     std::cout << "Clicked: Load State" << std::endl;
-    memcpy(gs, buffer, len);
+    memcpy(Game::gameState, buffer, len);
 
     return true;
 };

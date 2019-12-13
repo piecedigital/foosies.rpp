@@ -12,13 +12,12 @@ class Session
 public:
     int maxPlayers;
     int maxSpectators;
-    Game *game;
     GGPOSession *ggpo;
     GGPOSessionCallbacks cb;
     PlayerController *player1, *player2;
     GGPOPlayerHandle playerHandles[2];
 
-    Session(Game *game);
+    Session();
     ~Session();
 
     GGPOErrorCode start();

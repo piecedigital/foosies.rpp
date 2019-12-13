@@ -1,5 +1,5 @@
 ﻿
-#include "foosiespp.hpp"
+#include "game.hpp"
 
 // TEST CODE
 
@@ -28,7 +28,7 @@ void _loadGameState()
 
 // END TEST CODE
 
-Game::Game()
+void Game::init()
 {
     tempState = &gameState;
     scene.players[0].init(&gameState.playerData[0], &gameState.playerBoxes[0]);
@@ -47,16 +47,7 @@ Game::Game()
     scene._loadGameStateBtn.callbacks.onClick = _loadGameState;
 
     // _saveGameState();
-}
 
-Game::~Game()
-{
-    deleteSession();
-    // delete gameState.playerData;
-}
-
-int Game::init()
-{
     scene.targetFPS = 60;
 
     scene.cam = Camera3D();
@@ -73,7 +64,11 @@ int Game::init()
     // scene.cam.type = CAMERA_PERSPECTIVE;
 
     SetTargetFPS(scene.targetFPS);
+    startLoop();
+}
 
+void Game::startLoop()
+{
     while (!WindowShouldClose())
     {
         _aggregateGamepadInputs();
@@ -85,7 +80,6 @@ int Game::init()
     }
 
     CloseWindow();
-    return 0;
 }
 
 void Game::update()
@@ -115,7 +109,7 @@ void Game::render()
 void Game::createMultiplayerSession()
 {
     deleteSession();
-    session = new Session(&*this);
+    session = new Session();
 
     /* Start a new session */
     GGPOErrorCode result = session->start();

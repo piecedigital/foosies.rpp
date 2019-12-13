@@ -12,22 +12,21 @@
 #include "player.hpp"
 #include "session.hpp"
 
-struct Grid {
-    int hCells;
-    int vCells;
-};
-
-struct Scene {
-    int targetFPS;
-    Camera3D cam;
-    PlayerController players[2];
-    Button _makeGameStateBufferBtn;
-    Button _loadGameStateBtn;
-};
-
-class Game
+namespace Game
 {
-public:
+    struct Grid {
+        int hCells;
+        int vCells;
+    };
+
+    struct Scene {
+        int targetFPS;
+        Camera3D cam;
+        PlayerController players[2];
+        Button _makeGameStateBufferBtn;
+        Button _loadGameStateBtn;
+    };
+
     Grid grid;
     Scene scene;
     GameState gameState;
@@ -35,15 +34,15 @@ public:
     std::vector<Controller> controllers;
     Controller keyboard;
 
-    Game();
-    ~Game();
-    int init();
+    void init();
+    void unload();
+
+    void startLoop();
     void update();
     void render();
     void createMultiplayerSession();
     void deleteSession();
 
-private:
     void _drawScene();
     void _drawUI();
     void _aggregateGamepadInputs();

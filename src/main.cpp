@@ -1,4 +1,4 @@
-#include "foosiespp.hpp"
+#include "game.hpp"
 
 int main()
 {
@@ -6,6 +6,7 @@ int main()
     int screenHeight = 450;
     InitWindow(screenWidth, screenHeight, "foosiespp");
 
-    Game game = Game();
-    return game.init();
+    Game::init();
+
+    return 0;
 }

@@ -8,13 +8,12 @@
 #include "character.hpp"
 #include "globals.hpp"
 
-class PlayerController
+namespace PlayerController
 {
-public:
     GGPOPlayer ggpoPlayer;
     PlayerData *playerData;
     PlayerBoxes *playerBoxes;
-    Character charMan[1];
+    CharacterController::Character charMan[1];
 
     /**
      * The id of the controller passing inputs to the player
@@ -24,15 +23,12 @@ public:
      */
     int controllerId;
 
-    PlayerController();
-    ~PlayerController();
-
     void init(PlayerData *pd, PlayerBoxes *pb);
+    void unload();
     void update(PlayerController &otherPlayer);
     void normalizedToPlayerInput(NormalizedInput input);
     void setInputs(PlayerInput playerInput);
 
-private:
     void _calcForces();
     void _applyForces();
     bool _isGrounded();
