@@ -1,60 +1,56 @@
 #include "player.hpp"
 
-PlayerController::PlayerController()
+void PlayerController::init(Player *player, PlayerData *pd, PlayerBoxes *pb)
 {
-    controllerId = -2;
-}
+    player->controllerId = -2;
+    player->playerData = pd;
+    player->playerBoxes = pb;
 
-PlayerController::~PlayerController()
-{
-    playerData = NULL;
-}
+    player->charMan[0].playerData = &player->playerData;
+    player->charMan[0].playerBoxes = &player->playerBoxes;
 
-void PlayerController::init(PlayerData *pd, PlayerBoxes *pb)
-{
-    playerData = pd;
-    playerBoxes = pb;
+    player->playerBoxes->pushBoxSize = 1;
+    player->playerBoxes->grabBoxesSize = 0;
+    player->playerBoxes->hitBoxesSize = 0;
+    player->playerBoxes->hurtBoxesSize = 0;
+    player->playerBoxes->proximityBoxesSize = 0;
 
-    charMan[0].playerData = &playerData;
-    charMan[0].playerBoxes = &playerBoxes;
+    player->playerBoxes->pushBoxArray = new Box[player->playerBoxes->pushBoxSize];
+    player->playerBoxes->grabBoxesArray = new Box[player->playerBoxes->grabBoxesSize];
+    player->playerBoxes->hitBoxesArray = new Box[player->playerBoxes->hitBoxesSize];
+    player->playerBoxes->hurtBoxesArray = new Box[player->playerBoxes->hurtBoxesSize];
+    player->playerBoxes->proximityBoxesArray = new Box[player->playerBoxes->proximityBoxesSize];
 
-    playerBoxes->pushBoxSize = 1;
-    playerBoxes->grabBoxesSize = 0;
-    playerBoxes->hitBoxesSize = 0;
-    playerBoxes->hurtBoxesSize = 0;
-    playerBoxes->proximityBoxesSize = 0;
-
-    playerBoxes->pushBoxArray = new Box[playerBoxes->pushBoxSize];
-    playerBoxes->grabBoxesArray = new Box[playerBoxes->grabBoxesSize];
-    playerBoxes->hitBoxesArray = new Box[playerBoxes->hitBoxesSize];
-    playerBoxes->hurtBoxesArray = new Box[playerBoxes->hurtBoxesSize];
-    playerBoxes->proximityBoxesArray = new Box[playerBoxes->proximityBoxesSize];
-
-    playerBoxes->pushBoxArray[0].type = BoxType::BOX_PUSH;
-    playerBoxes->pushBoxArray[0].updateBoxShape(
-        playerData->transform.translation.x,
-        playerData->transform.translation.y + 1.f,
+    player->playerBoxes->pushBoxArray[0].type = BoxType::BOX_PUSH;
+    player->playerBoxes->pushBoxArray[0].updateBoxShape(
+        player->playerData->transform.translation.x,
+        player->playerData->transform.translation.y + 1.f,
         1.f,
         2.f
     );
 }
 
-void PlayerController::update(PlayerController &otherPlayer)
+void PlayerController::unload(Player *player)
 {
-    playerData->sideFace = (otherPlayer.playerData->physical.x < playerData->physical.x) ? -1 : 1;
+    player->playerData = NULL;
+}
+
+void PlayerController::update(Player *player, Player &otherPlayer)
+{
+    player->playerData->sideFace = (otherPlayer.playerData->physical.x < player->playerData->physical.x) ? -1 : 1;
     if (_isGrounded())
     {
-        playerData->actionFace = (otherPlayer.playerData->physical.x < playerData->physical.x) ? -1 : 1;
+        player->playerData->actionFace = (otherPlayer.playerData->physical.x < player->playerData->physical.x) ? -1 : 1;
     }
 
-    if (playerBoxes->pushBoxArray[0].isColliding(otherPlayer.playerBoxes->pushBoxArray[0]))
+    if (player->playerBoxes->pushBoxArray[0].isColliding(otherPlayer.playerBoxes->pushBoxArray[0]))
     {
         int dirModifier = 0;
-        if (otherPlayer.playerData->physical.x == playerData->physical.x)
+        if (otherPlayer.playerData->physical.x == player->playerData->physical.x)
         {
             dirModifier = otherPlayer.playerData->sideFace;
         }
-        else if (otherPlayer.playerData->physical.x > playerData->physical.x)
+        else if (otherPlayer.playerData->physical.x > player->playerData->physical.x)
         {
             dirModifier = 1;
         }

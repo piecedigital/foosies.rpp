@@ -10,22 +10,24 @@
 
 namespace PlayerController
 {
-    GGPOPlayer ggpoPlayer;
-    PlayerData *playerData;
-    PlayerBoxes *playerBoxes;
-    CharacterController::Character charMan[1];
+    struct Player
+    {
+        /**
+         * The id of the controller passing inputs to the player
+         * -2 is the default, meaning no controller
+         * -1 is the keyboard
+         * 0 and up is a game pad
+         */
+        int controllerId;
+        GGPOPlayer ggpoPlayer;
+        PlayerData *playerData;
+        PlayerBoxes *playerBoxes;
+        CharacterController::Character charMan[1];
+    };
 
-    /**
-     * The id of the controller passing inputs to the player
-     * -2 is the default, meaning no controller
-     * -1 is the keyboard
-     * 0 and up is a game pad
-     */
-    int controllerId;
-
-    void init(PlayerData *pd, PlayerBoxes *pb);
-    void unload();
-    void update(PlayerController &otherPlayer);
+    void init(Player *player, PlayerData *pd, PlayerBoxes *pb);
+    void unload(Player *player);
+    void update(Player *player, Player &otherPlayer);
     void normalizedToPlayerInput(NormalizedInput input);
     void setInputs(PlayerInput playerInput);
 
