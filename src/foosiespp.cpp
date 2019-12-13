@@ -202,7 +202,7 @@ void Game::_aggregateGamepadInputs()
     }
 }
 
-void Game::_dispatchNormalizedInputs(PlayerController &player)
+void Game::_dispatchNormalizedInputs(Player &player)
 {
     if (player.controllerId > -2)
     {

@@ -1,10 +1,13 @@
 #include "player.hpp"
+#include "game.hpp"
 
-void PlayerController::init(Player *player, PlayerData *pd, PlayerBoxes *pb)
+void PlayerController::init(int playerId)
 {
+    Player *player = &Game::scene.players[playerId];
+
     player->controllerId = -2;
-    player->playerData = pd;
-    player->playerBoxes = pb;
+    player->playerData = Game::gameState.playerData[playerId];
+    player->playerBoxes = Game::gameState.playerBoxes[playerId];
 
     player->charMan[0].playerData = &player->playerData;
     player->charMan[0].playerBoxes = &player->playerBoxes;
@@ -30,27 +33,32 @@ void PlayerController::init(Player *player, PlayerData *pd, PlayerBoxes *pb)
     );
 }
 
-void PlayerController::unload(Player *player)
+void PlayerController::unload(int playerId)
 {
+    Player *player = &Game::scene.players[playerId];
+
     player->playerData = NULL;
 }
 
-void PlayerController::update(Player *player, Player &otherPlayer)
+void PlayerController::update(int playerId, int otherPlayerId)
 {
-    player->playerData->sideFace = (otherPlayer.playerData->physical.x < player->playerData->physical.x) ? -1 : 1;
+    Player *player = &Game::scene.players[playerId];
+    Player *otherPlayer = &Game::scene.players[otherPlayerId];
+
+    player->playerData->sideFace = (otherPlayer->playerData->physical.x < player->playerData->physical.x) ? -1 : 1;
     if (_isGrounded())
     {
-        player->playerData->actionFace = (otherPlayer.playerData->physical.x < player->playerData->physical.x) ? -1 : 1;
+        player->playerData->actionFace = (otherPlayer->playerData->physical.x < player->playerData->physical.x) ? -1 : 1;
     }
 
-    if (player->playerBoxes->pushBoxArray[0].isColliding(otherPlayer.playerBoxes->pushBoxArray[0]))
+    if (player->playerBoxes->pushBoxArray[0].isColliding(otherPlayer->playerBoxes->pushBoxArray[0]))
     {
         int dirModifier = 0;
-        if (otherPlayer.playerData->physical.x == player->playerData->physical.x)
+        if (otherPlayer->playerData->physical.x == player->playerData->physical.x)
         {
-            dirModifier = otherPlayer.playerData->sideFace;
+            dirModifier = otherPlayer->playerData->sideFace;
         }
-        else if (otherPlayer.playerData->physical.x > player->playerData->physical.x)
+        else if (otherPlayer->playerData->physical.x > player->playerData->physical.x)
         {
             dirModifier = 1;
         }
@@ -59,7 +67,7 @@ void PlayerController::update(Player *player, Player &otherPlayer)
             dirModifier = -1;
         }
 
-        otherPlayer.playerData->physical.velocityH = 10 * dirModifier;
+        otherPlayer->playerData->physical.velocityH = 10 * dirModifier;
     }
 
         /** @TODO: collisions
@@ -81,7 +89,7 @@ void PlayerController::update(Player *player, Player &otherPlayer)
      * After that, if there's no room remaining for a player if they're in the corner, apply the remainder to the opponent
      */
 
-        _calcForces();
+    _calcForces();
     _applyForces();
 }
 

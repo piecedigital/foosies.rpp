@@ -25,9 +25,9 @@ namespace PlayerController
         CharacterController::Character charMan[1];
     };
 
-    void init(Player *player, PlayerData *pd, PlayerBoxes *pb);
-    void unload(Player *player);
-    void update(Player *player, Player &otherPlayer);
+    void init(int playerId);
+    void unload(int playerId);
+    void update(int playerId, int otherPlayerId);
     void normalizedToPlayerInput(NormalizedInput input);
     void setInputs(PlayerInput playerInput);
 

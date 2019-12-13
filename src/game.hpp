@@ -22,14 +22,14 @@ namespace Game
     struct Scene {
         int targetFPS;
         Camera3D cam;
-        PlayerController players[2];
+        PlayerController::Player players[2];
         Button _makeGameStateBufferBtn;
         Button _loadGameStateBtn;
     };
 
     Grid grid;
-    Scene scene;
-    GameState gameState;
+    extern Scene scene;
+    extern GameState gameState;
     Session *session;
     std::vector<Controller> controllers;
     Controller keyboard;
@@ -46,7 +46,7 @@ namespace Game
     void _drawScene();
     void _drawUI();
     void _aggregateGamepadInputs();
-    void _dispatchNormalizedInputs(PlayerController &player);
+    void _dispatchNormalizedInputs(PlayerController::Player &player);
 };
 
 void _saveGameState();
