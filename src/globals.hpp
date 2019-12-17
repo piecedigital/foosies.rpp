@@ -5,12 +5,6 @@
 #include "box.hpp"
 
 // structs
-struct Grid
-{
-    int hCells;
-    int vCells;
-};
-
 struct Physical
 {
     int x;

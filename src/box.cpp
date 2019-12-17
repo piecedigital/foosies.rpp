@@ -28,21 +28,21 @@ bool Box::isColliding(Box box)
 
 void Box::updateBoxShape(int x, int y, int width, int height)
 {
-    x = x;
-    y = y;
-    width = width;
-    height = height;
+    this->x = x;
+    this->y = y;
+    this->width = width;
+    this->height = height;
 }
 
 void Box::render()
 {
-    // std::cout
-    //     << "X: " << rect.x
-    //     << "Y: " << rect.y
-    //     << "Width: " << rect.width
-    //     << "Height: " << rect.height
-    //     << std::endl;
     DrawTransform dt = _getDrawTransform();
+    // std::cout
+    //     << "X: " << dt.x
+    //     << "Y: " << dt.y
+    //     << "Width: " << dt.width
+    //     << "Height: " << dt.height
+    //     << std::endl;
 
     std::string s;
     s.append("X: ").append(std::to_string(dt.x)).append("\n")
@@ -87,11 +87,9 @@ Color Box::_getBoxColor()
 
 DrawTransform Box::_getDrawTransform()
 {
-    return
-    {
+    return {
         (float)x / 100,
         (float)y / 100,
-        (float)width / 100,
-        (float)height / 100
-    };
+        (float)width,
+        (float)height};
 }

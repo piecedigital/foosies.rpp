@@ -115,7 +115,7 @@ void Game::render()
 void Game::createMultiplayerSession()
 {
     deleteSession();
-    session = new Session(&*this);
+    session = new Session();
 
     /* Start a new session */
     GGPOErrorCode result = session->start();

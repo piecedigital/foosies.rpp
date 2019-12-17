@@ -30,6 +30,9 @@
     <ClInclude Include="bin\raylib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\game.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\box.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -52,9 +55,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\session.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

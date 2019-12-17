@@ -2,10 +2,9 @@
 
 GameState *gs;
 
-Session::Session(Game *game)
+Session::Session()
 {
     // gs = game;
-    this->game = game;
     /* fill in all callback functions */
     cb.begin_game = beginGameCallback;
     cb.save_game_state = saveGameStateCallback;

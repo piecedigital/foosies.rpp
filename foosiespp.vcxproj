@@ -183,9 +183,9 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
     <ClInclude Include="src\button.hpp" />
     <ClInclude Include="src\character.hpp" />
     <ClInclude Include="src\controller.hpp" />
+    <ClInclude Include="src\foosiespp.hpp" />
     <ClInclude Include="src\game.hpp" />
     <ClInclude Include="src\globals.hpp" />
-    <ClInclude Include="src\foosiespp.hpp" />
     <ClInclude Include="src\player.hpp" />
     <ClInclude Include="src\session.hpp" />
   </ItemGroup>

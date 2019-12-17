@@ -32,8 +32,8 @@ void PlayerController::init(PlayerData *pd, PlayerBoxes *pb)
 
     playerBoxes->pushBoxArray[0].type = BoxType::BOX_PUSH;
     playerBoxes->pushBoxArray[0].updateBoxShape(
-        playerData->transform.translation.x,
-        playerData->transform.translation.y + 1.f,
+        playerData->physical.x,
+        playerData->physical.y + 1.f,
         1.f,
         2.f
     );
