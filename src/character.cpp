@@ -63,10 +63,6 @@ void Character::render()
             _renderBox(box->proximityBoxesArray[i]);
         }
     }
-    else
-    {
-        std::cout << "it's all null" << std::endl;
-    }
 }
 
 void Character::unload()

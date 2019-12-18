@@ -39,22 +39,22 @@ void PlayerController::init(PlayerData *pd, PlayerBoxes *pb)
     );
 }
 
-void PlayerController::update(PlayerController &otherPlayer)
+void PlayerController::update(PlayerController *otherPlayer)
 {
-    playerData->sideFace = (otherPlayer.playerData->physical.x < playerData->physical.x) ? -1 : 1;
+    playerData->sideFace = (otherPlayer->playerData->physical.x < playerData->physical.x) ? -1 : 1;
     if (_isGrounded())
     {
-        playerData->actionFace = (otherPlayer.playerData->physical.x < playerData->physical.x) ? -1 : 1;
+        playerData->actionFace = (otherPlayer->playerData->physical.x < playerData->physical.x) ? -1 : 1;
     }
 
-    if (playerBoxes->pushBoxArray[0].isColliding(otherPlayer.playerBoxes->pushBoxArray[0]))
+    if (playerBoxes->pushBoxArray[0].isColliding(otherPlayer->playerBoxes->pushBoxArray[0]))
     {
         int dirModifier = 0;
-        if (otherPlayer.playerData->physical.x == playerData->physical.x)
+        if (otherPlayer->playerData->physical.x == playerData->physical.x)
         {
-            dirModifier = otherPlayer.playerData->sideFace;
+            dirModifier = otherPlayer->playerData->sideFace;
         }
-        else if (otherPlayer.playerData->physical.x > playerData->physical.x)
+        else if (otherPlayer->playerData->physical.x > playerData->physical.x)
         {
             dirModifier = 1;
         }
@@ -63,7 +63,7 @@ void PlayerController::update(PlayerController &otherPlayer)
             dirModifier = -1;
         }
 
-        otherPlayer.playerData->physical.velocityH = 10 * dirModifier;
+        otherPlayer->playerData->physical.velocityH = 10 * dirModifier;
     }
 
         /** @TODO: collisions

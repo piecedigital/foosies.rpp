@@ -28,7 +28,7 @@ public:
     ~PlayerController();
 
     void init(PlayerData *pd, PlayerBoxes *pb);
-    void update(PlayerController &otherPlayer);
+    void update(PlayerController *otherPlayer);
     void normalizedToPlayerInput(NormalizedInput input);
     void setInputs(PlayerInput playerInput);
 

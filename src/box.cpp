@@ -20,10 +20,16 @@ bool Box::isColliding(Box box)
     float otherBoxTop = (float)box.y + (float)box.height / 2;
     float otherBoxBottom = (float)box.y - (float)box.height / 2;
 
-    return selfBoxLeft <= otherBoxRight
+    bool clash = selfBoxLeft <= otherBoxRight
         && selfBoxRight >= otherBoxLeft
         && selfBoxTop >= otherBoxBottom
         && selfBoxBottom <= otherBoxTop;
+
+    std::cout << selfBoxLeft << "|" << selfBoxRight << "|" << selfBoxTop << "|" << selfBoxBottom << std::endl;
+    std::cout << otherBoxLeft << "|" << otherBoxRight << "|" << otherBoxTop << "|" << otherBoxBottom << std::endl;
+    std::cout << "Clash: " << clash << std::endl;
+
+    return false;
 }
 
 void Box::updateBoxShape(int x, int y, int width, int height)

@@ -91,10 +91,10 @@ int Game::init()
 void Game::update()
 {
     _dispatchNormalizedInputs(scene.players[0]);
-    scene.players[0].update(scene.players[1]);
+    scene.players[0].update(&scene.players[1]);
 
     _dispatchNormalizedInputs(scene.players[1]);
-    scene.players[1].update(scene.players[0]);
+    scene.players[1].update(&scene.players[0]);
 
     scene._makeGameStateBufferBtn.update();
     scene._loadGameStateBtn.update();
@@ -220,6 +220,5 @@ void Game::_dispatchNormalizedInputs(PlayerController &player)
         {
             player.normalizedToPlayerInput(controllers[player.controllerId].inputs);
         }
-
     }
 }
