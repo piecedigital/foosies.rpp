@@ -83,6 +83,5 @@ void Character::_convertTranslation()
 
 void Character::_renderBox(Box box)
 {
-    box.updateBoxShape((*playerData)->physical.x, (*playerData)->physical.y + 100.f, 1.f, 2.f);
     box.render();
 }

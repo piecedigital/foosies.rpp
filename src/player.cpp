@@ -31,17 +31,23 @@ void PlayerController::init(PlayerData *pd, PlayerBoxes *pb)
     playerBoxes->proximityBoxesArray = new Box[playerBoxes->proximityBoxesSize];
 
     playerBoxes->pushBoxArray[0].type = BoxType::BOX_PUSH;
-    playerBoxes->pushBoxArray[0].updateBoxShape(
+    playerBoxes->pushBoxArray[0].updateBox(
         playerData->physical.x,
-        playerData->physical.y + 1.f,
-        1.f,
-        2.f
+        playerData->physical.y + 100,
+        100,
+        200
     );
 }
 
-void PlayerController::update(PlayerController *otherPlayer)
+void PlayerController::updateBoxes(PlayerController *otherPlayer)
+{
+    playerBoxes->pushBoxArray[0].updateBox(playerData->physical.x, playerData->physical.y + 100, 100, 200);
+}
+
+void PlayerController::checkCollisions(PlayerController *otherPlayer)
 {
     playerData->sideFace = (otherPlayer->playerData->physical.x < playerData->physical.x) ? -1 : 1;
+
     if (_isGrounded())
     {
         playerData->actionFace = (otherPlayer->playerData->physical.x < playerData->physical.x) ? -1 : 1;
@@ -66,7 +72,7 @@ void PlayerController::update(PlayerController *otherPlayer)
         otherPlayer->playerData->physical.velocityH = 10 * dirModifier;
     }
 
-        /** @TODO: collisions
+    /** @TODO: collisions
      * Push to respective sides of colliding
      * e.g., p1.x = 1 and p2.x = 0, p1 should be pushed to right side
      * This is regardless of grounded or air positioning
@@ -84,8 +90,11 @@ void PlayerController::update(PlayerController *otherPlayer)
      * Calculate the initial pushback required to move a player (shared or not)
      * After that, if there's no room remaining for a player if they're in the corner, apply the remainder to the opponent
      */
+}
 
-        _calcForces();
+void PlayerController::updatePhysics(PlayerController *otherPlayer)
+{
+    _calcForces();
     _applyForces();
 }
 

@@ -40,7 +40,7 @@ public:
 
     Box();
 
-    void updateBoxShape(int x, int y, int width, int height);
+    void updateBox(int x, int y, int width, int height);
 
     bool isColliding(Box box);
     void render();

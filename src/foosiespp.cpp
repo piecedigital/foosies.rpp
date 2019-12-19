@@ -91,10 +91,16 @@ int Game::init()
 void Game::update()
 {
     _dispatchNormalizedInputs(scene.players[0]);
-    scene.players[0].update(&scene.players[1]);
-
     _dispatchNormalizedInputs(scene.players[1]);
-    scene.players[1].update(&scene.players[0]);
+
+    scene.players[0].updateBoxes(&scene.players[1]);
+    scene.players[1].updateBoxes(&scene.players[0]);
+
+    scene.players[0].checkCollisions(&scene.players[1]);
+    scene.players[1].checkCollisions(&scene.players[0]);
+
+    scene.players[0].updatePhysics(&scene.players[1]);
+    scene.players[1].updatePhysics(&scene.players[0]);
 
     scene._makeGameStateBufferBtn.update();
     scene._loadGameStateBtn.update();
@@ -160,7 +166,7 @@ void Game::_drawUI()
         .append(std::to_string(gameState.playerData[0].physical.x))
         .append("\n")
         .append("  - Y: ")
-        .append(std::to_string(gameState.playerData[0].physical.x))
+        .append(std::to_string(gameState.playerData[0].physical.y))
         .append("\n");
 
     DrawText(x.c_str(), 10, 40, 20, DARKGRAY);

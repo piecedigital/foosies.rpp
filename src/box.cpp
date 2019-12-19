@@ -32,7 +32,7 @@ bool Box::isColliding(Box box)
     return false;
 }
 
-void Box::updateBoxShape(int x, int y, int width, int height)
+void Box::updateBox(int x, int y, int width, int height)
 {
     this->x = x;
     this->y = y;
@@ -49,13 +49,6 @@ void Box::render()
     //     << "Width: " << dt.width
     //     << "Height: " << dt.height
     //     << std::endl;
-
-    std::string s;
-    s.append("X: ").append(std::to_string(dt.x)).append("\n")
-        .append("Y: ").append(std::to_string(dt.y)).append("\n")
-        .append("Width: ").append(std::to_string(dt.width)).append("\n")
-        .append("Height: ").append(std::to_string(dt.height)).append("\n");
-    DrawText(s.c_str(), 50, 20, 20, DARKGRAY);
 
     DrawModelEx(model, Vector3{dt.x, dt.y, 1.f}, {0.f, 1.f, 0.f}, 0.f, Vector3{dt.width, dt.height, 0.5f}, _getBoxColor(.5));
 }
@@ -96,6 +89,6 @@ DrawTransform Box::_getDrawTransform()
     return {
         (float)x / 100,
         (float)y / 100,
-        (float)width,
-        (float)height};
+        (float)width / 100,
+        (float)height / 100};
 }

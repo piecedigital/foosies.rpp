@@ -28,7 +28,9 @@ public:
     ~PlayerController();
 
     void init(PlayerData *pd, PlayerBoxes *pb);
-    void update(PlayerController *otherPlayer);
+    void updateBoxes(PlayerController *otherPlayer);
+    void checkCollisions(PlayerController *otherPlayer);
+    void updatePhysics(PlayerController *otherPlayer);
     void normalizedToPlayerInput(NormalizedInput input);
     void setInputs(PlayerInput playerInput);
 
