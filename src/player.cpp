@@ -58,18 +58,18 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer)
         int dirModifier = 0;
         if (otherPlayer->playerData->physical.x == playerData->physical.x)
         {
-            dirModifier = otherPlayer->playerData->sideFace;
+            dirModifier = playerData->sideFace;
         }
         else if (otherPlayer->playerData->physical.x > playerData->physical.x)
         {
-            dirModifier = 1;
+            dirModifier = -1;
         }
         else
         {
-            dirModifier = -1;
+            dirModifier = 1;
         }
 
-        otherPlayer->playerData->physical.velocityH = 10 * dirModifier;
+        playerData->physical.velocityH = 10 * dirModifier;
     }
 
     /** @TODO: collisions
@@ -165,7 +165,7 @@ void PlayerController::_calcForces()
         }
         else
         {
-            playerData->physical.velocityH = 0;
+            // playerData->physical.velocityH = 0;
         }
 
         if (hasFlag(playerData->input, PlayerInput::DIR_UP))

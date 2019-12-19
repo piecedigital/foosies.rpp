@@ -25,10 +25,6 @@ bool Box::isColliding(Box box)
         && selfBoxTop >= otherBoxBottom
         && selfBoxBottom <= otherBoxTop;
 
-    std::cout << selfBoxLeft << "|" << selfBoxRight << "|" << selfBoxTop << "|" << selfBoxBottom << std::endl;
-    std::cout << otherBoxLeft << "|" << otherBoxRight << "|" << otherBoxTop << "|" << otherBoxBottom << std::endl;
-    std::cout << "Clash: " << clash << std::endl;
-
     return false;
 }
 
@@ -43,12 +39,6 @@ void Box::updateBox(int x, int y, int width, int height)
 void Box::render()
 {
     DrawTransform dt = _getDrawTransform();
-    // std::cout
-    //     << "X: " << dt.x
-    //     << "Y: " << dt.y
-    //     << "Width: " << dt.width
-    //     << "Height: " << dt.height
-    //     << std::endl;
 
     DrawModelEx(model, Vector3{dt.x, dt.y, 1.f}, {0.f, 1.f, 0.f}, 0.f, Vector3{dt.width, dt.height, 0.5f}, _getBoxColor(.5));
 }
