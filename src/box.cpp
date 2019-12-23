@@ -25,7 +25,7 @@ bool Box::isColliding(Box box)
         && selfBoxTop >= otherBoxBottom
         && selfBoxBottom <= otherBoxTop;
 
-    return false;
+    return clash;
 }
 
 void Box::updateBox(int x, int y, int width, int height)
@@ -40,7 +40,7 @@ void Box::render()
 {
     DrawTransform dt = _getDrawTransform();
 
-    DrawModelEx(model, Vector3{dt.x, dt.y, 1.f}, {0.f, 1.f, 0.f}, 0.f, Vector3{dt.width, dt.height, 0.5f}, _getBoxColor(.5));
+    DrawModelEx(model, Vector3{dt.x, dt.y, 1.f}, {0.f, 1.f, 0.f}, 0.f, Vector3{dt.width, dt.height, 0.5f}, _getBoxColor(.2));
 }
 
 Color Box::_getBoxColor(float opacity)

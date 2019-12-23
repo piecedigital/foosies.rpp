@@ -6,6 +6,6 @@ int main()
     int screenHeight = 450;
     InitWindow(screenWidth, screenHeight, "foosiespp");
 
-    Game game = Game();
+    Game game;
     return game.init();
 }

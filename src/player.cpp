@@ -46,11 +46,15 @@ void PlayerController::updateBoxes(PlayerController *otherPlayer)
 
 void PlayerController::checkCollisions(PlayerController *otherPlayer)
 {
-    playerData->sideFace = (otherPlayer->playerData->physical.x < playerData->physical.x) ? -1 : 1;
+    playerData->sideFace = (otherPlayer->playerData->physical.x < playerData->physical.x) ? -1
+        : (otherPlayer->playerData->physical.x > playerData->physical.x) ? 1
+        : playerData->sideFace;
 
     if (_isGrounded())
     {
-        playerData->actionFace = (otherPlayer->playerData->physical.x < playerData->physical.x) ? -1 : 1;
+        playerData->actionFace = (otherPlayer->playerData->physical.x < playerData->physical.x) ? -1
+            : (otherPlayer->playerData->physical.x > playerData->physical.x) ? 1
+            : playerData->sideFace;
     }
 
     if (playerBoxes->pushBoxArray[0].isColliding(otherPlayer->playerBoxes->pushBoxArray[0]))
@@ -69,7 +73,7 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer)
             dirModifier = 1;
         }
 
-        playerData->physical.velocityH = 10 * dirModifier;
+        playerData->physical.pushback = 10 * dirModifier;
     }
 
     /** @TODO: collisions
@@ -165,7 +169,7 @@ void PlayerController::_calcForces()
         }
         else
         {
-            // playerData->physical.velocityH = 0;
+            playerData->physical.velocityH = 0;
         }
 
         if (hasFlag(playerData->input, PlayerInput::DIR_UP))
@@ -173,11 +177,37 @@ void PlayerController::_calcForces()
             playerData->physical.velocityV = playerData->physical.jumpSpeed;
         }
     }
+
+    if (playerData->physical.pushback != 0)
+    {
+        int sign = playerData->physical.pushback < 0 ? 1 : -1;
+
+        int decrement = 2 * sign;
+        if (std::abs(decrement) > std::abs(playerData->physical.pushback))
+        {
+            decrement = playerData->physical.pushback * -1;
+        }
+
+        playerData->physical.pushback += decrement;
+    }
 }
 
 void PlayerController::_applyForces()
 {
-    playerData->physical.x += playerData->physical.velocityH;
+    // if knockback value is non-zero, apply knockback
+    if (playerData->physical.knockback != 0)
+    {
+    }
+    // if pushback value is present, apply pushback
+    else if (playerData->physical.pushback != 0)
+    {
+        playerData->physical.x += playerData->physical.pushback;
+    }
+    else
+    {
+        playerData->physical.x += playerData->physical.velocityH;
+    }
+
     playerData->physical.y += playerData->physical.velocityV;
 
     if (!_isGrounded())

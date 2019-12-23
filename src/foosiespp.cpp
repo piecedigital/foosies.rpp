@@ -155,22 +155,60 @@ void Game::_drawUI()
 {
     GGPOPlayerType type = GGPOPlayerType::GGPO_PLAYERTYPE_REMOTE;
     std::string x = "Raylib->Foosies";
-    std::string z = "Player 1: ";
-    z.append("\n");
-    z.append("- Vitality: ")
+    std::string player1Info = "Player 1: ";
+    player1Info.append("\n");
+
+    player1Info.append("- Face: ")
+        .append("\n")
+        .append("  - Action: ")
+        .append(std::to_string(gameState.playerData[0].actionFace))
+        .append("\n")
+        .append("  - Side: ")
+        .append(std::to_string(gameState.playerData[0].sideFace))
+        .append("\n");
+    player1Info.append("- Vitality: ")
         .append(std::to_string(gameState.playerData[0].vitality))
         .append("\n");
-    z.append("- Position: ")
+    player1Info.append("- Position: ")
         .append("\n")
         .append("  - X: ")
         .append(std::to_string(gameState.playerData[0].physical.x))
         .append("\n")
         .append("  - Y: ")
         .append(std::to_string(gameState.playerData[0].physical.y))
+        .append("\n")
+        .append("  - HSpeed: ")
+        .append(std::to_string(gameState.playerData[0].physical.velocityH))
+        .append("\n");
+
+    std::string player2Info = "Player 1: ";
+    player2Info.append("\n");
+    player2Info.append("- Face: ")
+        .append("\n")
+        .append("  - Action: ")
+        .append(std::to_string(gameState.playerData[1].actionFace))
+        .append("\n")
+        .append("  - Side: ")
+        .append(std::to_string(gameState.playerData[1].sideFace))
+        .append("\n");
+    player2Info.append("- Vitality: ")
+        .append(std::to_string(gameState.playerData[1].vitality))
+        .append("\n");
+    player2Info.append("- Position: ")
+        .append("\n")
+        .append("  - X: ")
+        .append(std::to_string(gameState.playerData[1].physical.x))
+        .append("\n")
+        .append("  - Y: ")
+        .append(std::to_string(gameState.playerData[1].physical.y))
+        .append("\n")
+        .append("  - HSpeed: ")
+        .append(std::to_string(gameState.playerData[1].physical.velocityH))
         .append("\n");
 
     DrawText(x.c_str(), 10, 40, 20, DARKGRAY);
-    DrawText(z.c_str(), 10, 56, 20, DARKGRAY);
+    DrawText(player1Info.c_str(), 10, 56, 20, DARKGRAY);
+    DrawText(player2Info.c_str(), 400, 56, 20, DARKGRAY);
     DrawFPS(10, 10);
     scene._makeGameStateBufferBtn.render();
     scene._loadGameStateBtn.render();
