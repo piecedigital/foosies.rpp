@@ -28,6 +28,43 @@ bool Box::isColliding(Box box)
     return clash;
 }
 
+BoxIntersection Box::getIntersections(Box otherBox, int sideFace)
+{
+    float selfBoxLeft = (float)x - (float)width / 2;
+    float selfBoxRight = (float)x + (float)width / 2;
+    float selfBoxTop = (float)y + (float)height / 2;
+    float selfBoxBottom = (float)y - (float)height / 2;
+
+    float otherBoxLeft = (float)otherBox.x - (float)otherBox.width / 2;
+    float otherBoxRight = (float)otherBox.x + (float)otherBox.width / 2;
+    float otherBoxTop = (float)otherBox.y + (float)otherBox.height / 2;
+    float otherBoxBottom = (float)otherBox.y - (float)otherBox.height / 2;
+
+    BoxIntersection intersection = {0};
+
+    if (x < otherBox.x || (x == otherBox.x && sideFace == 1))
+    {
+        intersection.x = std::abs(otherBoxLeft - selfBoxRight);
+    }
+    else if (x > otherBox.x || (x == otherBox.x && sideFace == -1))
+    {
+        intersection.x = std::abs(selfBoxLeft - otherBoxRight);
+    }
+
+    /*
+    if (y < otherBox.y)
+    {
+        intersection.y = std::abs(otherBoxBottom - selfBoxTop);
+    }
+    else if (y > otherBox.y)
+    {
+        intersection.y = std::abs(selfBoxBottom - otherBoxTop);
+    }
+    */
+
+    return intersection;
+}
+
 void Box::updateBox(int x, int y, int width, int height)
 {
     this->x = x;

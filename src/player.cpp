@@ -59,6 +59,8 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer)
 
     if (playerBoxes->pushBoxArray[0].isColliding(otherPlayer->playerBoxes->pushBoxArray[0]))
     {
+        BoxIntersection intersection = playerBoxes->pushBoxArray[0].getIntersections(otherPlayer->playerBoxes->pushBoxArray[0], playerData->sideFace);
+
         int dirModifier = 0;
         if (otherPlayer->playerData->physical.x == playerData->physical.x)
         {
@@ -73,7 +75,9 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer)
             dirModifier = 1;
         }
 
-        playerData->physical.pushback = 10 * dirModifier;
+        int distance = 10 > intersection.x/2 ? intersection.x/2 : 10;
+
+        playerData->physical.pushback = distance * dirModifier;
     }
 
     /** @TODO: collisions
@@ -202,6 +206,7 @@ void PlayerController::_applyForces()
     else if (playerData->physical.pushback != 0)
     {
         playerData->physical.x += playerData->physical.pushback;
+        playerData->physical.pushback -= 5 * (playerData->sideFace * -1);
     }
     else
     {

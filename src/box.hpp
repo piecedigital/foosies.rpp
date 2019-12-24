@@ -18,6 +18,12 @@ struct DrawTransform
     float height;
 };
 
+struct BoxIntersection
+{
+    int x;
+    // int y;
+};
+
 enum BoxType
 {
     BOX_NONE = 0,
@@ -43,6 +49,7 @@ public:
     void updateBox(int x, int y, int width, int height);
 
     bool isColliding(Box box);
+    BoxIntersection getIntersections(Box otherBox, int sideFace);
     void render();
 private:
     Color _getBoxColor();
