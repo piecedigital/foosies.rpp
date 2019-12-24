@@ -222,7 +222,12 @@ void PlayerController::_applyForces()
     else if (playerData->physical.pushback != 0)
     {
         playerData->physical.x += playerData->physical.pushback;
-        playerData->physical.pushback -= 5 * (playerData->sideFace * -1);
+        int decrement = 5;
+        if (decrement > std::abs(playerData->physical.pushback))
+        {
+            decrement = std::abs(playerData->physical.pushback);
+        }
+        playerData->physical.pushback -= decrement * (playerData->physical.pushback > 0 ? 1 : -1);
     }
     else
     {
