@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "player.hpp"
 
 PlayerController::PlayerController()
@@ -75,7 +76,12 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer)
             dirModifier = 1;
         }
 
-        int distance = 10 > intersection.x/2 ? intersection.x/2 : 10;
+        float share = 2.f;
+        if (playerData->physical.velocityH != 0 && otherPlayer->playerData->physical.velocityH != 0)
+        {
+            int highestVelocity = std::max<int>(std::abs(playerData->physical.velocityH), std::abs(otherPlayer->playerData->physical.velocityH));
+        }
+        int distance = 10 > intersection.x/share ? intersection.x/share : 10;
 
         playerData->physical.pushback = distance * dirModifier;
     }
