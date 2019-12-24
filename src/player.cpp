@@ -223,9 +223,10 @@ void PlayerController::_applyForces()
     {
         playerData->physical.x += playerData->physical.pushback;
         int decrement = 5;
-        if (decrement > std::abs(playerData->physical.pushback))
+        int pushbackAbs = std::abs(playerData->physical.pushback);
+        if (decrement > pushbackAbs)
         {
-            decrement = std::abs(playerData->physical.pushback);
+            decrement = pushbackAbs;
         }
         playerData->physical.pushback -= decrement * (playerData->physical.pushback > 0 ? 1 : -1);
     }
