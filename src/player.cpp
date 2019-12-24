@@ -76,12 +76,22 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer)
             dirModifier = 1;
         }
 
-        float share = 2.f;
-        if (playerData->physical.velocityH != 0 && otherPlayer->playerData->physical.velocityH != 0)
+        int distance = 12 > intersection.x / 2 ? intersection.x / 2 : 12;
+        if (playerData->physical.velocityH != 0 || otherPlayer->playerData->physical.velocityH != 0)
         {
-            int highestVelocity = std::max<int>(std::abs(playerData->physical.velocityH), std::abs(otherPlayer->playerData->physical.velocityH));
+            int selfVelocityH = std::abs(playerData->physical.velocityH);
+            int otherVelocityH = std::abs(otherPlayer->playerData->physical.velocityH);
+            int highestVelocity = std::max<int>(selfVelocityH, otherVelocityH);
+
+            float selfPercentageOfHighest = selfVelocityH == 0 ? 0.f : (float)highestVelocity / (float)selfVelocityH;
+            float otherPercentageOfHighest = otherVelocityH == 0 ? 0.f : (float)highestVelocity / (float)otherVelocityH;
+
+            float multiplier = otherPercentageOfHighest - selfPercentageOfHighest;
+
+            std::cout << "Distance before(" << controllerId <<"): " << distance << std::endl;
+            distance += distance * multiplier;
+            std::cout << "Distance After(" << controllerId <<"): " << distance << std::endl;
         }
-        int distance = 10 > intersection.x/share ? intersection.x/share : 10;
 
         playerData->physical.pushback = distance * dirModifier;
     }
