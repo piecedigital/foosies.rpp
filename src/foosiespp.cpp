@@ -31,8 +31,8 @@ void _loadGameState()
 Game::Game()
 {
     tempState = &gameState;
-    scene.players[0].init(&gameState.playerData[0], &gameState.playerBoxes[0]);
-    scene.players[1].init(&gameState.playerData[1], &gameState.playerBoxes[1]);
+    scene.players[0].init(&gameState.playerData[0], &gameState.playerBoxes[0], &gameState.playerProjectiles[0]);
+    scene.players[1].init(&gameState.playerData[1], &gameState.playerBoxes[1], &gameState.playerProjectiles[1]);
 
     scene.players[0].charMan[0].color = Color{50, 50, 50, 255};
     scene.players[0].controllerId = -1;
@@ -90,17 +90,23 @@ int Game::init()
 
 void Game::update()
 {
+    scene.players[0].updateFacing(&scene.players[1]);
+    scene.players[1].updateFacing(&scene.players[0]);
+
     _dispatchNormalizedInputs(scene.players[0]);
     _dispatchNormalizedInputs(scene.players[1]);
 
-    scene.players[0].updateBoxes(&scene.players[1]);
-    scene.players[1].updateBoxes(&scene.players[0]);
+    scene.players[0].processInputs();
+    scene.players[1].processInputs();
+
+    scene.players[0].updateBoxes();
+    scene.players[1].updateBoxes();
 
     scene.players[0].checkCollisions(&scene.players[1]);
     scene.players[1].checkCollisions(&scene.players[0]);
 
-    scene.players[0].updatePhysics(&scene.players[1]);
-    scene.players[1].updatePhysics(&scene.players[0]);
+    scene.players[0].updatePhysics();
+    scene.players[1].updatePhysics();
 
     scene._makeGameStateBufferBtn.update();
     scene._loadGameStateBtn.update();
@@ -133,6 +139,59 @@ void Game::deleteSession()
     {
         delete &session;
         session = NULL;
+    }
+}
+
+void Game::_aggregateGamepadInputs()
+{
+    unsigned int maxPads = 4;
+    int padsAvailable = 0;
+
+    // get input for keyboard
+    keyboard.pollNormalizedInputs();
+
+    // get input for gamepads
+    for (unsigned int padId = 0; padId < maxPads; padId++)
+    {
+        if (IsGamepadAvailable(padId))
+        {
+            padsAvailable++;
+
+            if (padId < controllers.size())
+            {
+                if (GetGamepadName(padId) != controllers.at(padId).name)
+                {
+                    controllers.erase(controllers.begin() + padId);
+                    controllers.emplace(controllers.begin() + padId, Controller(padId, GetGamepadName(padId)));
+                }
+            }
+            else
+            {
+                controllers.push_back(Controller(padId, GetGamepadName(padId)));
+            }
+
+            controllers.at(padId).pollNormalizedInputs();
+        }
+    }
+
+    if (padsAvailable > 0)
+    {
+        controllers.erase(controllers.begin() + padsAvailable - 1, controllers.end());
+    }
+}
+
+void Game::_dispatchNormalizedInputs(PlayerController &player)
+{
+    if (player.controllerId > -2)
+    {
+        if (player.controllerId == -1)
+        {
+            player.normalizedToPlayerInput(keyboard.inputs);
+        }
+        else
+        {
+            player.normalizedToPlayerInput(controllers[player.controllerId].inputs);
+        }
     }
 }
 
@@ -213,56 +272,3 @@ void Game::_drawUI()
     scene._makeGameStateBufferBtn.render();
     scene._loadGameStateBtn.render();
 };
-
-void Game::_aggregateGamepadInputs()
-{
-    unsigned int maxPads = 4;
-    int padsAvailable = 0;
-
-    // get input for keyboard
-    keyboard.pollNormalizedInputs();
-
-    // get input for gamepads
-    for (unsigned int padId = 0; padId < maxPads; padId++)
-    {
-        if (IsGamepadAvailable(padId))
-        {
-            padsAvailable++;
-
-            if (padId < controllers.size())
-            {
-                if (GetGamepadName(padId) != controllers.at(padId).name)
-                {
-                    controllers.erase(controllers.begin() + padId);
-                    controllers.emplace(controllers.begin() + padId, Controller(padId, GetGamepadName(padId)));
-                }
-            }
-            else
-            {
-                controllers.push_back(Controller(padId, GetGamepadName(padId)));
-            }
-
-            controllers.at(padId).pollNormalizedInputs();
-        }
-    }
-
-    if (padsAvailable > 0)
-    {
-        controllers.erase(controllers.begin() + padsAvailable - 1, controllers.end());
-    }
-}
-
-void Game::_dispatchNormalizedInputs(PlayerController &player)
-{
-    if (player.controllerId > -2)
-    {
-        if (player.controllerId == -1)
-        {
-            player.normalizedToPlayerInput(keyboard.inputs);
-        }
-        else
-        {
-            player.normalizedToPlayerInput(controllers[player.controllerId].inputs);
-        }
-    }
-}

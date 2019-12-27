@@ -19,6 +19,7 @@ struct Grid {
 
 struct Scene {
     int targetFPS;
+    int stageHalfWidth = 700;
     Camera3D cam;
     PlayerController players[2];
     Button _makeGameStateBufferBtn;
@@ -44,10 +45,10 @@ public:
     void deleteSession();
 
 private:
-    void _drawScene();
-    void _drawUI();
     void _aggregateGamepadInputs();
     void _dispatchNormalizedInputs(PlayerController &player);
+    void _drawScene();
+    void _drawUI();
 };
 
 void _saveGameState();

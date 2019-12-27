@@ -54,20 +54,24 @@ enum PlayerInput
     DIR_DOWN = 1 << 2,
     DIR_BACK = 1 << 3,
     DIR_TOWARD = 1 << 4,
-    DIR_UPBACK = DIR_UP + DIR_BACK,
-    DIR_UPTOWARD = DIR_UP + DIR_TOWARD,
-    DIR_DOWNBACK = DIR_DOWN + DIR_BACK,
-    DIR_DOWNTOWARD = DIR_DOWN + DIR_TOWARD,
-    DIR_LEFT = 1 << 9,
-    DIR_RIGHT = 1 << 10,
-    BTN_JAB = 1 << 11,
-    BTN_STRONG = 1 << 12,
-    BTN_FIERCE = 1 << 13,
-    BTN_SHORT = 1 << 14,
-    BTN_FORWARD = 1 << 15,
-    BTN_ROUNDHOUSE = 1 << 16,
-    BTN_MACRO1 = 1 << 17,
-    BTN_MACRO2 = 1 << 18,
+    DIR_UPBACK = 1 << 5,
+    DIR_UPTOWARD = 1 << 6,
+    DIR_DOWNBACK = 1 << 7,
+    DIR_DOWNTOWARD = 1 << 8,
+    DIR_ANY_UP = 1 << 9,
+    DIR_ANY_DOWN = 1 << 10,
+    DIR_ANY_BACK = 1 << 11,
+    DIR_ANY_TOWARD = 1 << 12,
+    DIR_LEFT = 1 << 13,
+    DIR_RIGHT = 1 << 14,
+    BTN_JAB = 1 << 15,
+    BTN_STRONG = 1 << 16,
+    BTN_FIERCE = 1 << 17,
+    BTN_SHORT = 1 << 18,
+    BTN_FORWARD = 1 << 19,
+    BTN_ROUNDHOUSE = 1 << 20,
+    BTN_MACRO1 = 1 << 21,
+    BTN_MACRO2 = 1 << 22,
 };
 inline PlayerInput operator~(PlayerInput a) { return (PlayerInput) ~(int)a; };
 inline PlayerInput operator|(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a | (int)b); };
@@ -124,11 +128,18 @@ struct PlayerBoxes
     int proximityBoxesSize;
 };
 
+struct PlayerProjectiles
+{
+    Box *projectilesArray;
+    int projectilesSize;
+};
+
 struct GameState
 {
     int gameTimer = 90;
     PlayerData playerData[2];
     PlayerBoxes playerBoxes[2];
+    PlayerProjectiles playerProjectiles[2];
 };
 
 #endif

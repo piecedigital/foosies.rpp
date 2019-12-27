@@ -11,9 +11,11 @@
 class PlayerController
 {
 public:
+    bool crouched;
     GGPOPlayer ggpoPlayer;
     PlayerData *playerData;
     PlayerBoxes *playerBoxes;
+    PlayerProjectiles *playerProjectiles;
     Character charMan[1];
 
     /**
@@ -23,21 +25,26 @@ public:
      * 0 and up is a game pad
      */
     int controllerId;
+    PlayerInput history[30];
+    int inputBufferLimit = 3;
 
     PlayerController();
     ~PlayerController();
 
-    void init(PlayerData *pd, PlayerBoxes *pb);
-    void updateBoxes(PlayerController *otherPlayer);
-    void checkCollisions(PlayerController *otherPlayer);
-    void updatePhysics(PlayerController *otherPlayer);
+    void init(PlayerData *pd, PlayerBoxes *pb, PlayerProjectiles *pp);
+    void updateFacing(PlayerController *otherPlayer);
     void normalizedToPlayerInput(NormalizedInput input);
     void setInputs(PlayerInput playerInput);
+    void processInputs();
+    void updateBoxes();
+    void checkCollisions(PlayerController *otherPlayer);
+    void updatePhysics();
 
 private:
-    void _calcForces();
     void _applyForces();
+    void _recalcForces();
     bool _isGrounded();
+    bool _isCrouched();
 };
 
 #endif

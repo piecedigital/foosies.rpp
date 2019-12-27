@@ -11,10 +11,11 @@ PlayerController::~PlayerController()
     playerData = NULL;
 }
 
-void PlayerController::init(PlayerData *pd, PlayerBoxes *pb)
+void PlayerController::init(PlayerData *pd, PlayerBoxes *pb, PlayerProjectiles *pp)
 {
     playerData = pd;
     playerBoxes = pb;
+    playerProjectiles = pp;
 
     charMan[0].playerData = &playerData;
     charMan[0].playerBoxes = &playerBoxes;
@@ -38,14 +39,12 @@ void PlayerController::init(PlayerData *pd, PlayerBoxes *pb)
         100,
         200
     );
+
+    playerProjectiles->projectilesSize = 0;
+    playerProjectiles->projectilesArray = new Box[playerProjectiles->projectilesSize];
 }
 
-void PlayerController::updateBoxes(PlayerController *otherPlayer)
-{
-    playerBoxes->pushBoxArray[0].updateBox(playerData->physical.x, playerData->physical.y + 100, 100, 200);
-}
-
-void PlayerController::checkCollisions(PlayerController *otherPlayer)
+void PlayerController::updateFacing(PlayerController *otherPlayer)
 {
     playerData->sideFace = (otherPlayer->playerData->physical.x < playerData->physical.x) ? -1
         : (otherPlayer->playerData->physical.x > playerData->physical.x) ? 1
@@ -57,69 +56,6 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer)
             : (otherPlayer->playerData->physical.x > playerData->physical.x) ? 1
             : playerData->sideFace;
     }
-
-    if (playerBoxes->pushBoxArray[0].isColliding(otherPlayer->playerBoxes->pushBoxArray[0]))
-    {
-        BoxIntersection intersection = playerBoxes->pushBoxArray[0].getIntersections(otherPlayer->playerBoxes->pushBoxArray[0], playerData->sideFace);
-
-        int dirModifier = 0;
-        if (otherPlayer->playerData->physical.x == playerData->physical.x)
-        {
-            dirModifier = playerData->sideFace;
-        }
-        else if (otherPlayer->playerData->physical.x > playerData->physical.x)
-        {
-            dirModifier = -1;
-        }
-        else
-        {
-            dirModifier = 1;
-        }
-
-        int distance = 12 > intersection.x / 2 ? intersection.x / 2 : 12;
-        if (playerData->physical.velocityH != 0 || otherPlayer->playerData->physical.velocityH != 0)
-        {
-            int selfVelocityH = std::abs(playerData->physical.velocityH);
-            int otherVelocityH = std::abs(otherPlayer->playerData->physical.velocityH);
-            int highestVelocity = std::max<int>(selfVelocityH, otherVelocityH);
-
-            float selfPercentageOfHighest = selfVelocityH == 0 ? 0.f : (float)highestVelocity / (float)selfVelocityH;
-            float otherPercentageOfHighest = otherVelocityH == 0 ? 0.f : (float)highestVelocity / (float)otherVelocityH;
-
-            float multiplier = otherPercentageOfHighest - selfPercentageOfHighest;
-
-            std::cout << "Distance before(" << controllerId <<"): " << distance << std::endl;
-            distance += distance * multiplier;
-            std::cout << "Distance After(" << controllerId <<"): " << distance << std::endl;
-        }
-
-        playerData->physical.pushback = distance * dirModifier;
-    }
-
-    /** @TODO: collisions
-     * Push to respective sides of colliding
-     * e.g., p1.x = 1 and p2.x = 0, p1 should be pushed to right side
-     * This is regardless of grounded or air positioning
-     *
-     * But what if they occupy the same space, the same X coord? This situation would happen in the corner often
-     * To start, if they're facing different directions, push one towards the direction they're facing
-     * There should be two different kinds of "facing": the original face set based on player side, and another face that stays static when the player jumps
-     * This is so special moves don't swap direction when jumping
-     * All call these:
-     * - face
-     * - actionFace
-     *
-     * Pushback should be exchanged based on h.speed (i.e., the faster player gives the most push back)
-     *
-     * Calculate the initial pushback required to move a player (shared or not)
-     * After that, if there's no room remaining for a player if they're in the corner, apply the remainder to the opponent
-     */
-}
-
-void PlayerController::updatePhysics(PlayerController *otherPlayer)
-{
-    _calcForces();
-    _applyForces();
 }
 
 void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
@@ -130,20 +66,42 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 
     if (normInput.DIR_H == -1)
     {
-        setFlag(*playerInput, playerData->actionFace == 1 ? PlayerInput::DIR_BACK
-                : PlayerInput::DIR_TOWARD);
         setFlag(*playerInput, PlayerInput::DIR_LEFT);
+        if (playerData->actionFace == 1)
+        {
+            setFlag(*playerInput, PlayerInput::DIR_BACK);
+            setFlag(*playerInput, PlayerInput::DIR_ANY_BACK);
+        }
+        else
+        {
+            setFlag(*playerInput, PlayerInput::DIR_TOWARD);
+            setFlag(*playerInput, PlayerInput::DIR_ANY_TOWARD);
+        }
     }
     if (normInput.DIR_H == 1)
     {
-        setFlag(*playerInput, playerData->actionFace == 1 ? PlayerInput::DIR_TOWARD
-                : PlayerInput::DIR_BACK);
         setFlag(*playerInput, PlayerInput::DIR_RIGHT);
+        if (playerData->actionFace == 1)
+        {
+            setFlag(*playerInput, PlayerInput::DIR_TOWARD);
+            setFlag(*playerInput, PlayerInput::DIR_ANY_TOWARD);
+        }
+        else
+        {
+            setFlag(*playerInput, PlayerInput::DIR_BACK);
+            setFlag(*playerInput, PlayerInput::DIR_ANY_BACK);
+        }
     }
     if (normInput.DIR_V == -1)
+    {
         setFlag(*playerInput, PlayerInput::DIR_DOWN);
+        setFlag(*playerInput, PlayerInput::DIR_ANY_DOWN);
+    }
     if (normInput.DIR_V == 1)
+    {
         setFlag(*playerInput, PlayerInput::DIR_UP);
+        setFlag(*playerInput, PlayerInput::DIR_ANY_UP);
+    }
     if (normInput.FACE_UP)
         setFlag(*playerInput, PlayerInput::BTN_STRONG);
     if (normInput.FACE_DOWN)
@@ -173,43 +131,111 @@ void PlayerController::setInputs(PlayerInput playerInput)
     playerData->input = playerInput;
 }
 
-void PlayerController::_calcForces()
+void PlayerController::processInputs()
 {
     if (_isGrounded())
     {
-        int directionSign = (hasFlag(playerData->input, PlayerInput::DIR_LEFT) ? -1 : 1);
+        crouched = false;
 
-        if (hasFlag(playerData->input, PlayerInput::DIR_TOWARD))
-        {
-            playerData->physical.velocityH = 10 * directionSign;
-        }
-        else if (hasFlag(playerData->input, PlayerInput::DIR_BACK))
-        {
-            playerData->physical.velocityH = 6 * directionSign;
-        }
-        else
-        {
-            playerData->physical.velocityH = 0;
-        }
-
-        if (hasFlag(playerData->input, PlayerInput::DIR_UP))
+        if (hasFlag(playerData->input, PlayerInput::DIR_ANY_UP))
         {
             playerData->physical.velocityV = playerData->physical.jumpSpeed;
         }
-    }
-
-    if (playerData->physical.pushback != 0)
-    {
-        int sign = playerData->physical.pushback < 0 ? 1 : -1;
-
-        int decrement = 2 * sign;
-        if (std::abs(decrement) > std::abs(playerData->physical.pushback))
+        else if (hasFlag(playerData->input, PlayerInput::DIR_ANY_DOWN))
         {
-            decrement = playerData->physical.pushback * -1;
+            crouched = true;
+            playerData->physical.velocityH = 0;
         }
 
-        playerData->physical.pushback += decrement;
+        if (!_isCrouched())
+        {
+            int directionSign = (hasFlag(playerData->input, PlayerInput::DIR_LEFT) ? -1 : 1);
+
+            if (hasFlag(playerData->input, PlayerInput::DIR_TOWARD))
+            {
+                playerData->physical.velocityH = 10 * directionSign;
+            }
+            else if (hasFlag(playerData->input, PlayerInput::DIR_BACK))
+            {
+                playerData->physical.velocityH = 6 * directionSign;
+            }
+            else
+            {
+                playerData->physical.velocityH = 0;
+            }
+        }
     }
+}
+
+void PlayerController::updateBoxes()
+{
+    int crouchModifierA = _isCrouched() ? 2 : 1;
+    int crouchModifierB = !_isCrouched() ? 2 : 1;
+    playerBoxes->pushBoxArray[0].updateBox(playerData->physical.x, playerData->physical.y + (100 / crouchModifierA), 100, 100 * crouchModifierB);
+}
+
+void PlayerController::checkCollisions(PlayerController *otherPlayer)
+{
+    if (playerBoxes->pushBoxArray[0].isColliding(otherPlayer->playerBoxes->pushBoxArray[0]))
+    {
+        BoxIntersection intersection = playerBoxes->pushBoxArray[0].getIntersections(otherPlayer->playerBoxes->pushBoxArray[0], playerData->sideFace);
+
+        int dirModifier = 0;
+        if (otherPlayer->playerData->physical.x == playerData->physical.x)
+        {
+            dirModifier = playerData->sideFace;
+        }
+        else if (otherPlayer->playerData->physical.x > playerData->physical.x)
+        {
+            dirModifier = -1;
+        }
+        else
+        {
+            dirModifier = 1;
+        }
+
+        int distance = 10 > intersection.x / 2 ? intersection.x / 2 : 10;
+        if (playerData->physical.velocityH != 0 || otherPlayer->playerData->physical.velocityH != 0)
+        {
+            int selfVelocityH = std::abs(playerData->physical.velocityH);
+            int otherVelocityH = std::abs(otherPlayer->playerData->physical.velocityH);
+            int highestVelocity = std::max<int>(selfVelocityH, otherVelocityH);
+
+            float selfPercentageOfHighest = selfVelocityH == 0 ? 0.f : (float)highestVelocity / (float)selfVelocityH;
+            float otherPercentageOfHighest = otherVelocityH == 0 ? 0.f : (float)highestVelocity / (float)otherVelocityH;
+
+            float multiplier = otherPercentageOfHighest - selfPercentageOfHighest;
+
+            distance += distance * multiplier;
+        }
+
+        playerData->physical.pushback = distance * dirModifier;
+    }
+
+    /** @TODO: collisions
+     * Push to respective sides of colliding
+     * e.g., p1.x = 1 and p2.x = 0, p1 should be pushed to right side
+     * This is regardless of grounded or air positioning
+     *
+     * But what if they occupy the same space, the same X coord? This situation would happen in the corner often
+     * To start, if they're facing different directions, push one towards the direction they're facing
+     * There should be two different kinds of "facing": the original face set based on player side, and another face that stays static when the player jumps
+     * This is so special moves don't swap direction when jumping
+     * All call these:
+     * - face
+     * - actionFace
+     *
+     * Pushback should be exchanged based on h.speed (i.e., the faster player gives the most push back)
+     *
+     * Calculate the initial pushback required to move a player (shared or not)
+     * After that, if there's no room remaining for a player if they're in the corner, apply the remainder to the opponent
+     */
+}
+
+void PlayerController::updatePhysics()
+{
+    _applyForces();
+    _recalcForces();
 }
 
 void PlayerController::_applyForces()
@@ -222,13 +248,6 @@ void PlayerController::_applyForces()
     else if (playerData->physical.pushback != 0)
     {
         playerData->physical.x += playerData->physical.pushback;
-        int decrement = 5;
-        int pushbackAbs = std::abs(playerData->physical.pushback);
-        if (decrement > pushbackAbs)
-        {
-            decrement = pushbackAbs;
-        }
-        playerData->physical.pushback -= decrement * (playerData->physical.pushback > 0 ? 1 : -1);
     }
     else
     {
@@ -236,6 +255,22 @@ void PlayerController::_applyForces()
     }
 
     playerData->physical.y += playerData->physical.velocityV;
+}
+
+void PlayerController::_recalcForces()
+{
+    if (playerData->physical.pushback != 0)
+    {
+        int sign = playerData->physical.pushback < 0 ? 1 : -1;
+
+        int decrement = 2 * sign;
+        if (std::abs(decrement) > std::abs(playerData->physical.pushback))
+        {
+            decrement = playerData->physical.pushback * -1;
+        }
+
+        playerData->physical.pushback += decrement;
+    }
 
     if (!_isGrounded())
     {
@@ -255,4 +290,9 @@ void PlayerController::_applyForces()
 bool PlayerController::_isGrounded()
 {
     return playerData->physical.y <= 0;
+}
+
+bool PlayerController::_isCrouched()
+{
+    return _isGrounded() && crouched;//hasFlag(playerData->input, PlayerInput::DIR_ANY_DOWN);
 }
