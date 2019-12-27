@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 #include "../bin/ggponet.h"
 #include "../bin/raylib.h"
 #include "character.hpp"
@@ -25,7 +26,7 @@ public:
      * 0 and up is a game pad
      */
     int controllerId;
-    PlayerInput history[30];
+    std::vector<PlayerInput> history;
     int inputBufferLimit = 3;
 
     PlayerController();
@@ -38,10 +39,11 @@ public:
     void processInputs();
     void updateBoxes();
     void checkCollisions(PlayerController *otherPlayer);
+    void calcPhysics(PlayerController *otherPlayer, int stageHalfWidth);
     void updatePhysics();
 
 private:
-    void _applyForces();
+    void _applyForces(PlayerController *otherPlayer, int stageHalfWidth);
     void _recalcForces();
     bool _isGrounded();
     bool _isCrouched();

@@ -50,6 +50,7 @@ BoxIntersection Box::getIntersections(Box otherBox, int sideFace)
     {
         intersection.x = std::abs(selfBoxLeft - otherBoxRight);
     }
+    std::cout << intersection.x << std::endl;
 
     /*
     if (y < otherBox.y)

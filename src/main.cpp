@@ -2,8 +2,10 @@
 
 int main()
 {
-    int screenWidth = 800;
-    int screenHeight = 450;
+    // 1280, 720
+    // 1920, 1080
+    int screenWidth = 1280;
+    int screenHeight = 720;
     InitWindow(screenWidth, screenHeight, "foosiespp");
 
     Game game;

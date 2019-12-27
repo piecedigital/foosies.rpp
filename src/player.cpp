@@ -13,6 +13,8 @@ PlayerController::~PlayerController()
 
 void PlayerController::init(PlayerData *pd, PlayerBoxes *pb, PlayerProjectiles *pp)
 {
+    history = std::vector<PlayerInput>{0};
+
     playerData = pd;
     playerBoxes = pb;
     playerProjectiles = pp;
@@ -139,12 +141,12 @@ void PlayerController::processInputs()
 
         if (hasFlag(playerData->input, PlayerInput::DIR_ANY_UP))
         {
-            playerData->physical.velocityV = playerData->physical.jumpSpeed;
+            playerData->physical.VSpeed = playerData->physical.jumpSpeed;
         }
         else if (hasFlag(playerData->input, PlayerInput::DIR_ANY_DOWN))
         {
             crouched = true;
-            playerData->physical.velocityH = 0;
+            playerData->physical.HSpeed = 0;
         }
 
         if (!_isCrouched())
@@ -153,15 +155,15 @@ void PlayerController::processInputs()
 
             if (hasFlag(playerData->input, PlayerInput::DIR_TOWARD))
             {
-                playerData->physical.velocityH = 10 * directionSign;
+                playerData->physical.HSpeed = 10 * directionSign;
             }
             else if (hasFlag(playerData->input, PlayerInput::DIR_BACK))
             {
-                playerData->physical.velocityH = 6 * directionSign;
+                playerData->physical.HSpeed = 6 * directionSign;
             }
             else
             {
-                playerData->physical.velocityH = 0;
+                playerData->physical.HSpeed = 0;
             }
         }
     }
@@ -194,16 +196,17 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer)
             dirModifier = 1;
         }
 
-        int maxPush = 10;
+        int maxPush = 100;
         int distance = maxPush > intersection.x / 2 ? intersection.x / 2 : maxPush;
-        if (playerData->physical.velocityH != 0 || otherPlayer->playerData->physical.velocityH != 0)
+        distance = distance < 0 ? 1 : distance;
+        if (playerData->physical.HSpeed != 0 || otherPlayer->playerData->physical.HSpeed != 0)
         {
-            int selfVelocityH = std::abs(playerData->physical.velocityH);
-            int otherVelocityH = std::abs(otherPlayer->playerData->physical.velocityH);
-            int highestVelocity = std::max<int>(selfVelocityH, otherVelocityH);
+            int selfHSpeed = std::abs(playerData->physical.HSpeed);
+            int otherHSpeed = std::abs(otherPlayer->playerData->physical.HSpeed);
+            int highestSpeed = std::max<int>(selfHSpeed, otherHSpeed);
 
-            float selfPercentageOfHighest = selfVelocityH == 0 ? 0.f : (float)highestVelocity / (float)selfVelocityH;
-            float otherPercentageOfHighest = otherVelocityH == 0 ? 0.f : (float)highestVelocity / (float)otherVelocityH;
+            float selfPercentageOfHighest = selfHSpeed == 0 ? 0.f : (float)highestSpeed / (float)selfHSpeed;
+            float otherPercentageOfHighest = otherHSpeed == 0 ? 0.f : (float)highestSpeed / (float)otherHSpeed;
 
             float multiplier = otherPercentageOfHighest - selfPercentageOfHighest;
 
@@ -233,14 +236,19 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer)
      */
 }
 
+void PlayerController::calcPhysics(PlayerController *otherPlayer, int stageHalfWidth)
+{
+    _applyForces(otherPlayer, stageHalfWidth);
+}
+
 void PlayerController::updatePhysics()
 {
-    _applyForces();
     _recalcForces();
 }
 
-void PlayerController::_applyForces()
+void PlayerController::_applyForces(PlayerController *otherPlayer, int stageHalfWidth)
 {
+    std::cout << "(" << controllerId << ")" << "PB(before): " << playerData->physical.pushback << std::endl;
     // if knockback value is non-zero, apply knockback
     if (playerData->physical.knockback != 0)
     {
@@ -249,22 +257,47 @@ void PlayerController::_applyForces()
     else if (playerData->physical.pushback != 0)
     {
         playerData->physical.x += playerData->physical.pushback;
+        if (playerData->physical.x < -stageHalfWidth)
+        {
+            otherPlayer->playerData->physical.pushback += (playerData->physical.pushback * -1);
+            otherPlayer->playerData->physical.pushback += (playerData->physical.x - -stageHalfWidth);
+            playerData->physical.pushback = 0;
+        }
+        else if (playerData->physical.x > stageHalfWidth)
+        {
+            otherPlayer->playerData->physical.pushback += (playerData->physical.pushback * -1);
+            otherPlayer->playerData->physical.pushback += (playerData->physical.x - stageHalfWidth);
+            playerData->physical.pushback = 0;
+        }
     }
     else
     {
-        playerData->physical.x += playerData->physical.velocityH;
+        playerData->physical.x += playerData->physical.HSpeed;
     }
 
-    playerData->physical.y += playerData->physical.velocityV;
+    // std::cout << "(" << controllerId << ")" << "PB(after): " << playerData->physical.pushback << std::endl;
+
+    // don't let player go beyond boundary
+    if (playerData->physical.x < -stageHalfWidth)
+    {
+        playerData->physical.x = -stageHalfWidth;
+    }
+    else if (playerData->physical.x > stageHalfWidth)
+    {
+        playerData->physical.x = stageHalfWidth;
+    }
+
+    playerData->physical.y += playerData->physical.VSpeed;
 }
 
 void PlayerController::_recalcForces()
 {
+    std::cout << "(" << controllerId << ")" << "PB: " << playerData->physical.pushback << std::endl;
     if (playerData->physical.pushback != 0)
     {
         int sign = playerData->physical.pushback < 0 ? 1 : -1;
 
-        int decrement = 5 * sign;
+        int decrement = 100 * sign;
         if (std::abs(decrement) > std::abs(playerData->physical.pushback))
         {
             decrement = playerData->physical.pushback * -1;
@@ -275,15 +308,15 @@ void PlayerController::_recalcForces()
 
     if (!_isGrounded())
     {
-        playerData->physical.velocityV -= playerData->physical.gravity / playerData->physical.drag;
-        if (playerData->physical.velocityV < -playerData->physical.jumpSpeed)
+        playerData->physical.VSpeed -= playerData->physical.gravity / playerData->physical.drag;
+        if (playerData->physical.VSpeed < -playerData->physical.jumpSpeed)
         {
-            playerData->physical.velocityV = playerData->physical.jumpSpeed;
+            playerData->physical.VSpeed = playerData->physical.jumpSpeed;
         }
     }
     else
     {
-        playerData->physical.velocityV = 0;
+        playerData->physical.VSpeed = 0;
         playerData->physical.y = 0;
     }
 }

@@ -46,7 +46,7 @@ Game::Game()
     scene._loadGameStateBtn.init("Load State", {(float)((screenWidth / 2) + 5), (float)(screenHeight - 40)});
     scene._loadGameStateBtn.callbacks.onClick = _loadGameState;
 
-    // _saveGameState();
+    _saveGameState();
 }
 
 Game::~Game()
@@ -99,14 +99,17 @@ void Game::update()
     scene.players[0].processInputs();
     scene.players[1].processInputs();
 
-    scene.players[0].updateBoxes();
-    scene.players[1].updateBoxes();
-
     scene.players[0].checkCollisions(&scene.players[1]);
     scene.players[1].checkCollisions(&scene.players[0]);
 
+    scene.players[0].calcPhysics(&scene.players[1], scene.stageHalfWidth);
+    scene.players[1].calcPhysics(&scene.players[0], scene.stageHalfWidth);
+
     scene.players[0].updatePhysics();
     scene.players[1].updatePhysics();
+
+    scene.players[0].updateBoxes();
+    scene.players[1].updateBoxes();
 
     scene._makeGameStateBufferBtn.update();
     scene._loadGameStateBtn.update();
@@ -213,22 +216,20 @@ void Game::_drawScene()
 void Game::_drawUI()
 {
     GGPOPlayerType type = GGPOPlayerType::GGPO_PLAYERTYPE_REMOTE;
-    std::string x = "Raylib->Foosies";
     std::string player1Info = "Player 1: ";
-    player1Info.append("\n");
-
-    player1Info.append("- Face: ")
+    player1Info.append("\n")
+        .append("- Face: ")
         .append("\n")
         .append("  - Action: ")
         .append(std::to_string(gameState.playerData[0].actionFace))
         .append("\n")
         .append("  - Side: ")
         .append(std::to_string(gameState.playerData[0].sideFace))
-        .append("\n");
-    player1Info.append("- Vitality: ")
-        .append(std::to_string(gameState.playerData[0].vitality))
-        .append("\n");
-    player1Info.append("- Position: ")
+        .append("\n")
+    //     .append("- Vitality: ")
+    //     .append(std::to_string(gameState.playerData[0].vitality))
+    //     .append("\n");
+        .append("- Position: ")
         .append("\n")
         .append("  - X: ")
         .append(std::to_string(gameState.playerData[0].physical.x))
@@ -237,23 +238,26 @@ void Game::_drawUI()
         .append(std::to_string(gameState.playerData[0].physical.y))
         .append("\n")
         .append("  - HSpeed: ")
-        .append(std::to_string(gameState.playerData[0].physical.velocityH))
-        .append("\n");
+        .append(std::to_string(gameState.playerData[0].physical.HSpeed))
+        .append("\n")
+        .append("  - PushBack: ")
+        .append(std::to_string(gameState.playerData[0].physical.pushback))
+        .append("\n");;
 
-    std::string player2Info = "Player 1: ";
-    player2Info.append("\n");
-    player2Info.append("- Face: ")
+    std::string player2Info = "Player 2: ";
+    player2Info.append("\n")
+        .append("- Face: ")
         .append("\n")
         .append("  - Action: ")
         .append(std::to_string(gameState.playerData[1].actionFace))
         .append("\n")
         .append("  - Side: ")
         .append(std::to_string(gameState.playerData[1].sideFace))
-        .append("\n");
-    player2Info.append("- Vitality: ")
-        .append(std::to_string(gameState.playerData[1].vitality))
-        .append("\n");
-    player2Info.append("- Position: ")
+        .append("\n")
+    //     .append("- Vitality: ")
+    //     .append(std::to_string(gameState.playerData[1].vitality))
+    //     .append("\n")
+        .append("- Position: ")
         .append("\n")
         .append("  - X: ")
         .append(std::to_string(gameState.playerData[1].physical.x))
@@ -262,13 +266,19 @@ void Game::_drawUI()
         .append(std::to_string(gameState.playerData[1].physical.y))
         .append("\n")
         .append("  - HSpeed: ")
-        .append(std::to_string(gameState.playerData[1].physical.velocityH))
-        .append("\n");
+        .append(std::to_string(gameState.playerData[1].physical.HSpeed))
+        .append("\n")
+        .append("  - PushBack: ")
+        .append(std::to_string(gameState.playerData[1].physical.pushback))
+        .append("\n");;
 
-    DrawText(x.c_str(), 10, 40, 20, DARKGRAY);
-    DrawText(player1Info.c_str(), 10, 56, 20, DARKGRAY);
-    DrawText(player2Info.c_str(), 400, 56, 20, DARKGRAY);
     DrawFPS(10, 10);
+
+    const char *player1InfoString = player1Info.c_str();
+    DrawText(player1InfoString, 10, 46, 16, DARKGRAY);
+    const char *player2InfoString = player2Info.c_str();
+    DrawText(player2InfoString, 1280 - 10 - GetTextWidth(player2InfoString), 46, 16, DARKGRAY);
+
     scene._makeGameStateBufferBtn.render();
     scene._loadGameStateBtn.render();
 };

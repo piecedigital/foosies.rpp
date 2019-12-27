@@ -15,8 +15,8 @@ struct Physical
     int jumpSpeed = 40;
     int knockback;
     int pushback;
-    int velocityH;
-    int velocityV;
+    int HSpeed;
+    int VSpeed;
 };
 
 struct NormalizedInput
@@ -141,5 +141,22 @@ struct GameState
     PlayerBoxes playerBoxes[2];
     PlayerProjectiles playerProjectiles[2];
 };
+
+inline int GetTextWidth(const char* text)
+{
+    int lineCount = 0;
+    const char **splitText = TextSplit(text, (char)"\n", &lineCount);
+
+    int longestLine = 0;
+
+    for (int i = 0; i < lineCount; i++)
+    {
+        const char *line = (*splitText) + i;
+        int length = TextLength(line);
+        if (length > longestLine) longestLine = length;
+    }
+
+    return longestLine;
+}
 
 #endif
