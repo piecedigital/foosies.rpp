@@ -38,7 +38,7 @@ public:
     void setInputs(PlayerInput playerInput);
     void processInputs();
     void updateBoxes();
-    void checkCollisions(PlayerController *otherPlayer);
+    void checkCollisions(PlayerController *otherPlayer, int stageHalfWidth);
     void calcPhysics(PlayerController *otherPlayer, int stageHalfWidth);
     void updatePhysics();
 

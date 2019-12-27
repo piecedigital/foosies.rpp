@@ -22,6 +22,10 @@ void Button::update()
     backgroundColor = RED;
     textColor = WHITE;
 
+    int width = MeasureText(title, 16);
+    rectangle.width = (float)(width + 10);
+    rectangle.height = (float)(26);
+
     bool inBox = CheckCollisionPointRec(
         GetMousePosition(),
         rectangle
@@ -46,18 +50,6 @@ void Button::clicked()
 
 void Button::render()
 {
-    // Font f = GetFontDefault();
-    // Vector2 width = MeasureTextEx(f, title, 16.f, 16.f);
-    // DrawRectangle(
-    //     (int)transform.translation.x,
-    //     (int)transform.translation.y,
-    //     (int)(width.x + 10),
-    //     (int)(width.y + 10),
-    //     RED);
-    int width = MeasureText(title, 16);
-    rectangle.width = (float)(width + 10);
-    rectangle.height = (float)(26);
-
     DrawRectangle(
         (int)rectangle.x,
         (int)rectangle.y,

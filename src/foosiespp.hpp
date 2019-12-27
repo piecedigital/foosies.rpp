@@ -24,6 +24,8 @@ struct Scene {
     PlayerController players[2];
     Button _makeGameStateBufferBtn;
     Button _loadGameStateBtn;
+    Button _toggleUpdateBtn;
+    Button _stepOneBtn;
 };
 
 class Game

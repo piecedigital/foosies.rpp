@@ -176,7 +176,7 @@ void PlayerController::updateBoxes()
     playerBoxes->pushBoxArray[0].updateBox(playerData->physical.x, playerData->physical.y + (100 / crouchModifierA), 100, 100 * crouchModifierB);
 }
 
-void PlayerController::checkCollisions(PlayerController *otherPlayer)
+void PlayerController::checkCollisions(PlayerController *otherPlayer, int stageHalfWidth)
 {
     if (playerBoxes->pushBoxArray[0].isColliding(otherPlayer->playerBoxes->pushBoxArray[0]))
     {
@@ -196,10 +196,18 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer)
             dirModifier = 1;
         }
 
-        int maxPush = 100;
+        int maxPush = 10;
         int distance = maxPush > intersection.x / 2 ? intersection.x / 2 : maxPush;
-        distance = distance < 0 ? 1 : distance;
-        if (playerData->physical.HSpeed != 0 || otherPlayer->playerData->physical.HSpeed != 0)
+
+        if (playerData->physical.x <= -stageHalfWidth || playerData->physical.x >= stageHalfWidth)
+        {
+            distance = 1;
+        }
+        if (otherPlayer->playerData->physical.x <= -stageHalfWidth || otherPlayer->playerData->physical.x >= stageHalfWidth)
+        {
+            distance += distance;
+        }
+        else if (playerData->physical.HSpeed != 0 || otherPlayer->playerData->physical.HSpeed != 0)
         {
             int selfHSpeed = std::abs(playerData->physical.HSpeed);
             int otherHSpeed = std::abs(otherPlayer->playerData->physical.HSpeed);
@@ -248,7 +256,8 @@ void PlayerController::updatePhysics()
 
 void PlayerController::_applyForces(PlayerController *otherPlayer, int stageHalfWidth)
 {
-    std::cout << "(" << controllerId << ")" << "PB(before): " << playerData->physical.pushback << std::endl;
+    playerData->physical.x += playerData->physical.HSpeed;
+
     // if knockback value is non-zero, apply knockback
     if (playerData->physical.knockback != 0)
     {
@@ -257,25 +266,7 @@ void PlayerController::_applyForces(PlayerController *otherPlayer, int stageHalf
     else if (playerData->physical.pushback != 0)
     {
         playerData->physical.x += playerData->physical.pushback;
-        if (playerData->physical.x < -stageHalfWidth)
-        {
-            otherPlayer->playerData->physical.pushback += (playerData->physical.pushback * -1);
-            otherPlayer->playerData->physical.pushback += (playerData->physical.x - -stageHalfWidth);
-            playerData->physical.pushback = 0;
-        }
-        else if (playerData->physical.x > stageHalfWidth)
-        {
-            otherPlayer->playerData->physical.pushback += (playerData->physical.pushback * -1);
-            otherPlayer->playerData->physical.pushback += (playerData->physical.x - stageHalfWidth);
-            playerData->physical.pushback = 0;
-        }
     }
-    else
-    {
-        playerData->physical.x += playerData->physical.HSpeed;
-    }
-
-    // std::cout << "(" << controllerId << ")" << "PB(after): " << playerData->physical.pushback << std::endl;
 
     // don't let player go beyond boundary
     if (playerData->physical.x < -stageHalfWidth)
@@ -292,12 +283,12 @@ void PlayerController::_applyForces(PlayerController *otherPlayer, int stageHalf
 
 void PlayerController::_recalcForces()
 {
-    std::cout << "(" << controllerId << ")" << "PB: " << playerData->physical.pushback << std::endl;
+    // std::cout << "(" << controllerId << ")" << "PB: " << playerData->physical.pushback << std::endl;
     if (playerData->physical.pushback != 0)
     {
         int sign = playerData->physical.pushback < 0 ? 1 : -1;
 
-        int decrement = 100 * sign;
+        int decrement = 10 * sign;
         if (std::abs(decrement) > std::abs(playerData->physical.pushback))
         {
             decrement = playerData->physical.pushback * -1;

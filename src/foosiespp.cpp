@@ -26,6 +26,20 @@ void _loadGameState()
     memcpy(tempState, buffer, len);
 }
 
+bool willStep = true;
+int stepAllowance;
+
+void _toggleUpdate()
+{
+    willStep = !willStep;
+}
+
+void _stepOne()
+{
+    willStep = false;
+    stepAllowance = 1;
+}
+
 // END TEST CODE
 
 Game::Game()
@@ -45,6 +59,13 @@ Game::Game()
     scene._makeGameStateBufferBtn.callbacks.onClick = _saveGameState;
     scene._loadGameStateBtn.init("Load State", {(float)((screenWidth / 2) + 5), (float)(screenHeight - 40)});
     scene._loadGameStateBtn.callbacks.onClick = _loadGameState;
+
+    const char *x = std::string("Pause update: ").append(willStep ? "yes" : "no").c_str();
+    std::cout << x << std::endl;
+    scene._toggleUpdateBtn.init(x, {(float)((screenWidth / 2) + 100), (float)(screenHeight - 40)});
+    scene._toggleUpdateBtn.callbacks.onClick = _toggleUpdate;
+    scene._stepOneBtn.init("Step one frame", {(float)((screenWidth / 2) + 250), (float)(screenHeight - 40)});
+    scene._stepOneBtn.callbacks.onClick = _stepOne;
 
     _saveGameState();
 }
@@ -90,29 +111,36 @@ int Game::init()
 
 void Game::update()
 {
-    scene.players[0].updateFacing(&scene.players[1]);
-    scene.players[1].updateFacing(&scene.players[0]);
+    if (willStep || stepAllowance > 0)
+    {
+        stepAllowance--;
 
-    _dispatchNormalizedInputs(scene.players[0]);
-    _dispatchNormalizedInputs(scene.players[1]);
+        scene.players[0].updateFacing(&scene.players[1]);
+        scene.players[1].updateFacing(&scene.players[0]);
 
-    scene.players[0].processInputs();
-    scene.players[1].processInputs();
+        _dispatchNormalizedInputs(scene.players[0]);
+        _dispatchNormalizedInputs(scene.players[1]);
 
-    scene.players[0].checkCollisions(&scene.players[1]);
-    scene.players[1].checkCollisions(&scene.players[0]);
+        scene.players[0].processInputs();
+        scene.players[1].processInputs();
 
-    scene.players[0].calcPhysics(&scene.players[1], scene.stageHalfWidth);
-    scene.players[1].calcPhysics(&scene.players[0], scene.stageHalfWidth);
+        scene.players[0].calcPhysics(&scene.players[1], scene.stageHalfWidth);
+        scene.players[1].calcPhysics(&scene.players[0], scene.stageHalfWidth);
 
-    scene.players[0].updatePhysics();
-    scene.players[1].updatePhysics();
+        scene.players[0].updatePhysics();
+        scene.players[1].updatePhysics();
 
-    scene.players[0].updateBoxes();
-    scene.players[1].updateBoxes();
+        scene.players[0].updateBoxes();
+        scene.players[1].updateBoxes();
+
+        scene.players[0].checkCollisions(&scene.players[1], scene.stageHalfWidth);
+        scene.players[1].checkCollisions(&scene.players[0], scene.stageHalfWidth);
+    }
 
     scene._makeGameStateBufferBtn.update();
     scene._loadGameStateBtn.update();
+    scene._toggleUpdateBtn.update();
+    scene._stepOneBtn.update();
 }
 
 void Game::render()
@@ -281,4 +309,6 @@ void Game::_drawUI()
 
     scene._makeGameStateBufferBtn.render();
     scene._loadGameStateBtn.render();
+    scene._toggleUpdateBtn.render();
+    scene._stepOneBtn.render();
 };
