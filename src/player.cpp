@@ -194,7 +194,8 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer)
             dirModifier = 1;
         }
 
-        int distance = 10 > intersection.x / 2 ? intersection.x / 2 : 10;
+        int maxPush = 10;
+        int distance = maxPush > intersection.x / 2 ? intersection.x / 2 : maxPush;
         if (playerData->physical.velocityH != 0 || otherPlayer->playerData->physical.velocityH != 0)
         {
             int selfVelocityH = std::abs(playerData->physical.velocityH);
@@ -263,7 +264,7 @@ void PlayerController::_recalcForces()
     {
         int sign = playerData->physical.pushback < 0 ? 1 : -1;
 
-        int decrement = 2 * sign;
+        int decrement = 5 * sign;
         if (std::abs(decrement) > std::abs(playerData->physical.pushback))
         {
             decrement = playerData->physical.pushback * -1;
