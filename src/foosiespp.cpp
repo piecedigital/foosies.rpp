@@ -135,6 +135,9 @@ void Game::update()
 
         scene.players[0].checkCollisions(&scene.players[1], scene.stageHalfWidth);
         scene.players[1].checkCollisions(&scene.players[0], scene.stageHalfWidth);
+
+        scene.players[0].updateBoxes();
+        scene.players[1].updateBoxes();
     }
 
     scene._makeGameStateBufferBtn.update();
@@ -303,9 +306,9 @@ void Game::_drawUI()
     DrawFPS(10, 10);
 
     const char *player1InfoString = player1Info.c_str();
-    DrawText(player1InfoString, 10, 46, 16, DARKGRAY);
+    DrawText(player1InfoString, 20, 46, 16, DARKGRAY);
     const char *player2InfoString = player2Info.c_str();
-    DrawText(player2InfoString, 1280 - 10 - GetTextWidth(player2InfoString), 46, 16, DARKGRAY);
+    DrawText(player2InfoString, 1280 - 20 - GetTextWidth(player2InfoString), 46, 16, DARKGRAY);
 
     scene._makeGameStateBufferBtn.render();
     scene._loadGameStateBtn.render();

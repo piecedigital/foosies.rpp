@@ -199,14 +199,17 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer, int stageH
         int maxPush = 20;
         int distance = maxPush > intersection.x / 2 ? intersection.x / 2 : maxPush;
 
-        if (playerData->physical.x <= -stageHalfWidth || playerData->physical.x >= stageHalfWidth)
-        {
-            distance = 1;
-        }
         if (otherPlayer->playerData->physical.x <= -stageHalfWidth || otherPlayer->playerData->physical.x >= stageHalfWidth)
         {
             distance += distance;
         }
+        else if (
+            (playerData->physical.x <= -stageHalfWidth || playerData->physical.x >= stageHalfWidth)
+        )
+        {
+            distance = 0;
+        }
+
         else if (playerData->physical.HSpeed != 0 || otherPlayer->playerData->physical.HSpeed != 0)
         {
             int selfHSpeed = std::abs(playerData->physical.HSpeed);
@@ -221,40 +224,12 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer, int stageH
             distance += distance * multiplier;
         }
 
-        playerData->physical.pushback = distance * dirModifier;
+        // playerData->physical.pushback = distance * dirModifier;
+        playerData->physical.x += distance * dirModifier;
     }
-
-    /** @TODO: collisions
-     * Push to respective sides of colliding
-     * e.g., p1.x = 1 and p2.x = 0, p1 should be pushed to right side
-     * This is regardless of grounded or air positioning
-     *
-     * But what if they occupy the same space, the same X coord? This situation would happen in the corner often
-     * To start, if they're facing different directions, push one towards the direction they're facing
-     * There should be two different kinds of "facing": the original face set based on player side, and another face that stays static when the player jumps
-     * This is so special moves don't swap direction when jumping
-     * All call these:
-     * - face
-     * - actionFace
-     *
-     * Pushback should be exchanged based on h.speed (i.e., the faster player gives the most push back)
-     *
-     * Calculate the initial pushback required to move a player (shared or not)
-     * After that, if there's no room remaining for a player if they're in the corner, apply the remainder to the opponent
-     */
 }
 
 void PlayerController::calcPhysics(PlayerController *otherPlayer, int stageHalfWidth)
-{
-    _applyForces(otherPlayer, stageHalfWidth);
-}
-
-void PlayerController::updatePhysics()
-{
-    _recalcForces();
-}
-
-void PlayerController::_applyForces(PlayerController *otherPlayer, int stageHalfWidth)
 {
     playerData->physical.x += playerData->physical.HSpeed;
 
@@ -281,7 +256,7 @@ void PlayerController::_applyForces(PlayerController *otherPlayer, int stageHalf
     playerData->physical.y += playerData->physical.VSpeed;
 }
 
-void PlayerController::_recalcForces()
+void PlayerController::updatePhysics()
 {
     // std::cout << "(" << controllerId << ")" << "PB: " << playerData->physical.pushback << std::endl;
     if (playerData->physical.pushback != 0)

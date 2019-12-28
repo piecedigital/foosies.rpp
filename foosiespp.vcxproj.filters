@@ -24,12 +24,6 @@
     <ClInclude Include="bin\ggponet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bin\ggponet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="bin\raylib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -57,22 +51,12 @@
     <ClInclude Include="src\session.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\ggponet.dll">
-      <Filter>Source Files\bin</Filter>
-    </None>
-    <None Include="bin\libraylib.dll">
-      <Filter>Source Files\bin</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="bin\ggponet.lib">
-      <Filter>Source Files\bin</Filter>
-    </Library>
-    <Library Include="bin\libraylib.dll.a">
-      <Filter>Source Files\bin</Filter>
-    </Library>
+    <ClInclude Include="bin\ggponet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bin\raylib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\box.cpp">
@@ -99,5 +83,13 @@
     <ClCompile Include="src\session.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\ggponet.dll" />
+    <None Include="bin\libraylib.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="bin\ggponet.lib" />
+    <Library Include="bin\libraylib.lib" />
   </ItemGroup>
 </Project>

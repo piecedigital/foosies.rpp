@@ -43,8 +43,8 @@ public:
     void updatePhysics();
 
 private:
-    void _applyForces(PlayerController *otherPlayer, int stageHalfWidth);
-    void _recalcForces();
+    // void _applyForces(PlayerController *otherPlayer, int stageHalfWidth);
+    // void _recalcForces();
     bool _isGrounded();
     bool _isCrouched();
 };

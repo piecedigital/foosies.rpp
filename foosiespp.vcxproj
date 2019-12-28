@@ -190,20 +190,6 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
     <ClInclude Include="src\session.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\ggponet.dll">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-    </None>
-    <None Include="bin\libraylib.dll">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="bin\ggponet.lib" />
-    <Library Include="bin\libraylib.dll.a" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="src\box.cpp" />
     <ClCompile Include="src\button.cpp" />
     <ClCompile Include="src\character.cpp" />
@@ -212,6 +198,14 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\session.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\ggponet.dll" />
+    <None Include="bin\libraylib.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="bin\ggponet.lib" />
+    <Library Include="bin\libraylib.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
