@@ -60,7 +60,7 @@ Game::Game()
     scene._loadGameStateBtn.init("Load State", {(float)((screenWidth / 2) + 5), (float)(screenHeight - 40)});
     scene._loadGameStateBtn.callbacks.onClick = _loadGameState;
 
-    const char *x = std::string("Pause update: ").append(willStep ? "yes" : "no").c_str();
+    const char *x = std::string("Pause update: ").c_str();//.append(willStep ? "yes" : "no").c_str();
     std::cout << x << std::endl;
     scene._toggleUpdateBtn.init(x, {(float)((screenWidth / 2) + 100), (float)(screenHeight - 40)});
     scene._toggleUpdateBtn.callbacks.onClick = _toggleUpdate;

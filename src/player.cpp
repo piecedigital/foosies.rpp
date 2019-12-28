@@ -196,7 +196,7 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer, int stageH
             dirModifier = 1;
         }
 
-        int maxPush = 10;
+        int maxPush = 20;
         int distance = maxPush > intersection.x / 2 ? intersection.x / 2 : maxPush;
 
         if (playerData->physical.x <= -stageHalfWidth || playerData->physical.x >= stageHalfWidth)
@@ -288,7 +288,7 @@ void PlayerController::_recalcForces()
     {
         int sign = playerData->physical.pushback < 0 ? 1 : -1;
 
-        int decrement = 10 * sign;
+        int decrement = 20 * sign;
         if (std::abs(decrement) > std::abs(playerData->physical.pushback))
         {
             decrement = playerData->physical.pushback * -1;
