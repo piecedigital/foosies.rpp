@@ -18,6 +18,34 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bin\ggponet.h" />
+    <ClInclude Include="bin\raygui.h" />
+    <ClInclude Include="bin\raylib.h" />
+    <ClInclude Include="bin\ricons.h" />
+    <ClInclude Include="src\box.hpp" />
+    <ClInclude Include="src\button.hpp" />
+    <ClInclude Include="src\character.hpp" />
+    <ClInclude Include="src\controller.hpp" />
+    <ClInclude Include="src\foosiespp.hpp" />
+    <ClInclude Include="src\globals.hpp" />
+    <ClInclude Include="src\player.hpp" />
+    <ClInclude Include="src\session.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="bin\ggponet.lib" />
+    <Library Include="bin\libraylib.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\box.cpp" />
+    <ClCompile Include="src\button.cpp" />
+    <ClCompile Include="src\character.cpp" />
+    <ClCompile Include="src\controller.cpp" />
+    <ClCompile Include="src\foosiespp.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\session.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{94569F8C-4CCE-4842-8D8B-044BAE2FE898}</ProjectGuid>
@@ -93,7 +121,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -113,7 +141,7 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,7 +165,7 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\raylib\raylib\release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsC</CompileAs>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -162,6 +190,7 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -174,39 +203,6 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
 xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="bin\ggponet.h" />
-    <ClInclude Include="bin\ggponet.hpp" />
-    <ClInclude Include="bin\raylib.h" />
-    <ClInclude Include="bin\raylib.hpp" />
-    <ClInclude Include="src\box.hpp" />
-    <ClInclude Include="src\button.hpp" />
-    <ClInclude Include="src\character.hpp" />
-    <ClInclude Include="src\controller.hpp" />
-    <ClInclude Include="src\foosiespp.hpp" />
-    <ClInclude Include="src\game.hpp" />
-    <ClInclude Include="src\globals.hpp" />
-    <ClInclude Include="src\player.hpp" />
-    <ClInclude Include="src\session.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\box.cpp" />
-    <ClCompile Include="src\button.cpp" />
-    <ClCompile Include="src\character.cpp" />
-    <ClCompile Include="src\controller.cpp" />
-    <ClCompile Include="src\foosiespp.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\player.cpp" />
-    <ClCompile Include="src\session.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\ggponet.dll" />
-    <None Include="bin\libraylib.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="bin\ggponet.lib" />
-    <Library Include="bin\libraylib.lib" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

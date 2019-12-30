@@ -620,8 +620,7 @@ typedef enum {
 } GamepadNumber;
 
 // Gamepad Buttons
-typedef enum
-{
+typedef enum {
     // This is here just for error checking
     GAMEPAD_BUTTON_UNKNOWN = 0,
 
@@ -632,8 +631,8 @@ typedef enum
     GAMEPAD_BUTTON_LEFT_FACE_LEFT,
 
     // This normally corresponds with PlayStation and Xbox controllers
-    // XB: [Y,X,A,B]
-    // PS: [Triangle,Square,Cross,Circle]
+    // XBOX: [Y,X,A,B]
+    // PS3: [Triangle,Square,Cross,Circle]
     // No support for 6 button controllers though..
     GAMEPAD_BUTTON_RIGHT_FACE_UP,
     GAMEPAD_BUTTON_RIGHT_FACE_RIGHT,
@@ -647,9 +646,9 @@ typedef enum
     GAMEPAD_BUTTON_RIGHT_TRIGGER_2,
 
     // These are buttons in the center of the gamepad
-    GAMEPAD_BUTTON_MIDDLE_LEFT,  //PS3 Select
-    GAMEPAD_BUTTON_MIDDLE,       //PS Button/XBOX Button
-    GAMEPAD_BUTTON_MIDDLE_RIGHT, //PS3 Start
+    GAMEPAD_BUTTON_MIDDLE_LEFT,     //PS3 Select
+    GAMEPAD_BUTTON_MIDDLE,          //PS Button/XBOX Button
+    GAMEPAD_BUTTON_MIDDLE_RIGHT,    //PS3 Start
 
     // These are the joystick press in buttons
     GAMEPAD_BUTTON_LEFT_THUMB,
@@ -1186,12 +1185,13 @@ RLAPI void DrawText(const char *text, int posX, int posY, int fontSize, Color co
 RLAPI void DrawTextEx(Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint);                // Draw text using font and additional parameters
 RLAPI void DrawTextRec(Font font, const char *text, Rectangle rec, float fontSize, float spacing, bool wordWrap, Color tint);   // Draw text using font inside rectangle limits
 RLAPI void DrawTextRecEx(Font font, const char *text, Rectangle rec, float fontSize, float spacing, bool wordWrap, Color tint,
-                         int selectStart, int selectLength, Color selectText, Color selectBack);    // Draw text using font inside rectangle limits with support for text selection
+                         int selectStart, int selectLength, Color selectTint, Color selectBackTint); // Draw text using font inside rectangle limits with support for text selection
+RLAPI void DrawTextCodepoint(Font font, int codepoint, Vector2 position, float scale, Color tint);   // Draw one character (codepoint)
 
 // Text misc. functions
 RLAPI int MeasureText(const char *text, int fontSize);                                      // Measure string width for default font
 RLAPI Vector2 MeasureTextEx(Font font, const char *text, float fontSize, float spacing);    // Measure string size for Font
-RLAPI int GetGlyphIndex(Font font, int character);                                          // Get index position for a unicode character on font
+RLAPI int GetGlyphIndex(Font font, int codepoint);                                          // Get index position for a unicode character on font
 
 // Text strings management functions (no utf8 strings, only byte chars)
 // NOTE: Some strings allocate memory internally for returned strings, just be careful!

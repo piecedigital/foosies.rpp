@@ -1,6 +1,11 @@
 ﻿
 #include "foosiespp.hpp"
 
+// #define RAYGUI_IMPLEMENTATION
+// #define RAYGUI_SUPPORT_RICONS
+// #define RAYGUI_TEXTBOX_EXTENDED
+// #include "../bin/raygui.h"
+
 // TEST CODE
 
 int len;
@@ -60,8 +65,8 @@ Game::Game()
     scene._loadGameStateBtn.init("Load State", {(float)((screenWidth / 2) + 5), (float)(screenHeight - 40)});
     scene._loadGameStateBtn.callbacks.onClick = _loadGameState;
 
-    const char *x = std::string("Pause update: ").c_str();//.append(willStep ? "yes" : "no").c_str();
-    std::cout << x << std::endl;
+    const char *x;
+    x = willStep ? "Pause update: yes" : "Pause update: no";
     scene._toggleUpdateBtn.init(x, {(float)((screenWidth / 2) + 100), (float)(screenHeight - 40)});
     scene._toggleUpdateBtn.callbacks.onClick = _toggleUpdate;
     scene._stepOneBtn.init("Step one frame", {(float)((screenWidth / 2) + 250), (float)(screenHeight - 40)});
@@ -308,7 +313,11 @@ void Game::_drawUI()
     const char *player1InfoString = player1Info.c_str();
     DrawText(player1InfoString, 20, 46, 16, DARKGRAY);
     const char *player2InfoString = player2Info.c_str();
-    DrawText(player2InfoString, 1280 - 20 - GetTextWidth(player2InfoString), 46, 16, DARKGRAY);
+    DrawText(player2InfoString, 1280 - 20 - fGetTextWidth(player2InfoString), 46, 16, DARKGRAY);
+
+    // DrawTextRecEx(GetFontDefault(), "Test", {400, 400, 2.f, 2.f}, 24.f, 5.f, false, GREEN, 0, 0, BLUE, RED);
+    DrawRectangleRec({400, 400, 2.f, 2.f}, GREEN);
+    DrawTexturePro(GetFontDefault().texture, {400, 400, 2.f, 2.f}, {400, 400, 2.f, 2.f}, {400, 400}, 0.f, RED);
 
     scene._makeGameStateBufferBtn.render();
     scene._loadGameStateBtn.render();

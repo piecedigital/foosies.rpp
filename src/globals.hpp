@@ -142,7 +142,7 @@ struct GameState
     PlayerProjectiles playerProjectiles[2];
 };
 
-inline int GetTextWidth(const char* text)
+inline int fGetTextWidth(const char* text)
 {
     int lineCount = 0;
     const char **splitText = TextSplit(text, (char)"\n", &lineCount);
@@ -158,5 +158,36 @@ inline int GetTextWidth(const char* text)
 
     return longestLine;
 }
+
+// struct ma_pcm_converter
+// {};
+
+// // Audio buffer structure
+// // NOTE: Slightly different logic is used when feeding data to the
+// // playback device depending on whether or not data is streamed
+// struct rAudioBuffer
+// {
+//     ma_pcm_converter dsp; // PCM data converter
+
+//     float volume; // Audio buffer volume
+//     float pitch;  // Audio buffer pitch
+
+//     bool playing; // Audio buffer state: AUDIO_PLAYING
+//     bool paused;  // Audio buffer state: AUDIO_PAUSED
+//     bool looping; // Audio buffer looping, always true for AudioStreams
+//     int usage;    // Audio buffer usage mode: STATIC or STREAM
+
+//     bool isSubBufferProcessed[2];      // SubBuffer processed (virtual double buffer)
+//     unsigned int frameCursorPos;       // Frame cursor position
+//     unsigned int bufferSizeInFrames;   // Total buffer size in frames
+//     unsigned int totalFramesProcessed; // Total frames processed in this buffer (required for play timming)
+
+//     unsigned char *buffer; // Data buffer, on music stream keeps filling
+
+//     rAudioBuffer *next; // Next audio buffer on the list
+//     rAudioBuffer *prev; // Previous audio buffer on the list
+// };
+
+// #define AudioBuffer rAudioBuffer // HACK: To avoid CoreAudio (macOS) symbol collision
 
 #endif

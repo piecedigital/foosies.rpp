@@ -18,13 +18,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bin\raylib.hpp">
+    <ClInclude Include="bin\ggponet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bin\ggponet.hpp">
+    <ClInclude Include="bin\raygui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\game.hpp">
+    <ClInclude Include="bin\raylib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bin\ricons.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\box.hpp">
@@ -51,12 +54,10 @@
     <ClInclude Include="src\session.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bin\ggponet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="bin\raylib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="bin\ggponet.lib" />
+    <Library Include="bin\libraylib.lib" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\box.cpp">
@@ -83,13 +84,5 @@
     <ClCompile Include="src\session.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\ggponet.dll" />
-    <None Include="bin\libraylib.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="bin\ggponet.lib" />
-    <Library Include="bin\libraylib.lib" />
   </ItemGroup>
 </Project>
