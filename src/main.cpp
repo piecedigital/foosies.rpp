@@ -8,11 +8,13 @@ int main()
     int screenHeight = 720;
     InitWindow(screenWidth, screenHeight, "foosiespp");
     InitAudioDevice();
-    LoadMusicStream("assets/audio/spawn.mp3");
+    Music s = LoadMusicStream("assets/audio/spawn.mp3");
     // PlayMusicStream(s);
-    // AudioStream ss = s.stream;
-    // rAudioBuffer **ab = &ss.buffer;
-    // std::cout << (**ab) << std::endl;
+    AudioStream ss = s.stream;
+    rAudioBuffer **ab = &ss.buffer;
+    // auto d = (**ab).buffer[0];
+    auto d = (**ab).bufferSizeInFrames;
+    std::cout << d << std::endl;
     Game game;
     return game.init();
 }

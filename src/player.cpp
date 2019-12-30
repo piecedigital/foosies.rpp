@@ -199,18 +199,7 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer, int stageH
         int maxPush = 20;
         int distance = maxPush > intersection.x / 2 ? intersection.x / 2 : maxPush;
 
-        if (otherPlayer->playerData->physical.x <= -stageHalfWidth || otherPlayer->playerData->physical.x >= stageHalfWidth)
-        {
-            distance += distance;
-        }
-        else if (
-            (playerData->physical.x <= -stageHalfWidth || playerData->physical.x >= stageHalfWidth)
-        )
-        {
-            distance = 0;
-        }
-
-        else if (playerData->physical.HSpeed != 0 || otherPlayer->playerData->physical.HSpeed != 0)
+        if (playerData->physical.HSpeed != 0 || otherPlayer->playerData->physical.HSpeed != 0)
         {
             int selfHSpeed = std::abs(playerData->physical.HSpeed);
             int otherHSpeed = std::abs(otherPlayer->playerData->physical.HSpeed);
@@ -224,8 +213,27 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer, int stageH
             distance += distance * multiplier;
         }
 
-        // playerData->physical.pushback = distance * dirModifier;
         playerData->physical.x += distance * dirModifier;
+
+        if (
+            (playerData->physical.x < -stageHalfWidth)
+            // || (playerData->physical.x > stageHalfWidth)
+        )
+        {
+            int distanceBack = (playerData->physical.x - -stageHalfWidth) * -1;
+
+            playerData->physical.x = -stageHalfWidth;
+            otherPlayer->playerData->physical.x += distanceBack;
+        }
+        else if (
+            (playerData->physical.x > stageHalfWidth)
+        )
+        {
+            int distanceBack = (playerData->physical.x - stageHalfWidth) * -1;
+
+            playerData->physical.x = stageHalfWidth;
+            otherPlayer->playerData->physical.x += distanceBack;
+        }
     }
 }
 

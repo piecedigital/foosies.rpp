@@ -1,6 +1,6 @@
 # Blender v2.81 (sub 16) OBJ File: 'd-func FIX [EX].blend'
 # www.blender.org
-# mtllib assets/models/characters/d-func/d-func.mtl
+mtllib assets/models/characters/d-func/d-func.mtl
 o D-Func_Cube
 v 0.012164 1.584372 -0.094686
 v 0.054202 1.702222 -0.162606

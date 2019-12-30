@@ -5,24 +5,32 @@ Character::Character()
 {
     color = BLACK;
     model = LoadModel("assets/models/characters/d-func/d-func.obj");
-
     // Shader shader = LoadShader("assets/shaders/toon.vs", "assets/shaders/toon.fs");
-    // Material mat = LoadMaterialDefault();
 
-    // mat.shader.locs[LOC_] = GetShaderLocation(shader, "lightPosition");
+    // shader.locs[LOC_MAP_IRRADIANCE] = GetShaderLocation(shader, "lightPosition");
     // shader.locs[LOC_VECTOR_VIEW] = GetShaderLocation(shader, "eyePosition");
     // shader.locs[LOC_MAP_METALNESS] = GetShaderLocation(shader, "materialShininess");
     // shader.locs[LOC_MAP_DIFFUSE] = GetShaderLocation(shader, "materialDiffuse");
     // shader.locs[LOC_MAP_SPECULAR] = GetShaderLocation(shader, "materialSpecular");
 
     // float cameraPos[3] = {0.f, 3.f, 1.f};
+    // float lightPos[3] = {0.f, 3.f, 1.f};
 
+    // SetShaderValue(shader, LOC_MAP_IRRADIANCE, lightPos, UNIFORM_VEC3);
     // SetShaderValue(shader, LOC_VECTOR_VIEW, cameraPos, UNIFORM_VEC3);
     // SetShaderValue(shader, LOC_MAP_METALNESS, new int[1]{ 1 }, UNIFORM_INT);
     // SetShaderValue(shader, LOC_MAP_DIFFUSE, new float[1]{ 1.f }, UNIFORM_FLOAT);
     // SetShaderValue(shader, LOC_MAP_SPECULAR, new float[1]{ 1.f }, UNIFORM_FLOAT);
 
-    // model.materials[0] = mat;
+    // model.materials[0].maps[MAP_ALBEDO].color = BLUE;
+    // model.materials[0].maps[MAP_NORMAL].color = {128, 128, 255, 255};
+    // model.materials[0].maps[MAP_METALNESS].value = 1.f;
+    // model.materials[0].maps[MAP_ROUGHNESS].value = 1.f;
+    // model.materials[0].maps[MAP_OCCLUSION].value = 1.0f;
+    // model.materials[0].maps[MAP_EMISSION].value = 0.5f;
+    // model.materials[0].maps[MAP_HEIGHT].value = 0.5f;
+
+    // model.materials[0].shader = shader;
 }
 Character::~Character()
 {

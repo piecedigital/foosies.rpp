@@ -1,11 +1,6 @@
 ﻿
 #include "foosiespp.hpp"
 
-// #define RAYGUI_IMPLEMENTATION
-// #define RAYGUI_SUPPORT_RICONS
-// #define RAYGUI_TEXTBOX_EXTENDED
-// #include "../bin/raygui.h"
-
 // TEST CODE
 
 int len;
