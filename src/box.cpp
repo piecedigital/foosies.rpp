@@ -1,6 +1,6 @@
 #include <string>
 #include "box.hpp"
-#include "../bin/raylib.h"
+#include "deps/raylib/raylib.h"
 
 Box::Box()
 {

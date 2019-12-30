@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 #include "../bin/ggponet.h"
-#include "../bin/raylib.h"
+#include "deps/raylib/raylib.h"
 #include "character.hpp"
 #include "globals.hpp"
 

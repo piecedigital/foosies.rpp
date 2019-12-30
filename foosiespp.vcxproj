@@ -20,13 +20,37 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bin\ggponet.h" />
-    <ClInclude Include="bin\raygui.h" />
-    <ClInclude Include="bin\raylib.h" />
-    <ClInclude Include="bin\ricons.h" />
     <ClInclude Include="src\box.hpp" />
     <ClInclude Include="src\button.hpp" />
     <ClInclude Include="src\character.hpp" />
     <ClInclude Include="src\controller.hpp" />
+    <ClInclude Include="src\deps\raylib\camera.h" />
+    <ClInclude Include="src\deps\raylib\config.h" />
+    <ClInclude Include="src\deps\raylib\easings.h" />
+    <ClInclude Include="src\deps\raylib\external\ANGLE\angle_windowsstore.h" />
+    <ClInclude Include="src\deps\raylib\external\ANGLE\EGL\egl.h" />
+    <ClInclude Include="src\deps\raylib\external\ANGLE\EGL\eglext.h" />
+    <ClInclude Include="src\deps\raylib\external\ANGLE\EGL\eglplatform.h" />
+    <ClInclude Include="src\deps\raylib\external\ANGLE\GLES2\gl2.h" />
+    <ClInclude Include="src\deps\raylib\external\ANGLE\GLES2\gl2ext.h" />
+    <ClInclude Include="src\deps\raylib\external\ANGLE\GLES2\gl2platform.h" />
+    <ClInclude Include="src\deps\raylib\external\ANGLE\GLES3\gl3.h" />
+    <ClInclude Include="src\deps\raylib\external\ANGLE\GLES3\gl3ext.h" />
+    <ClInclude Include="src\deps\raylib\external\ANGLE\GLES3\gl3platform.h" />
+    <ClInclude Include="src\deps\raylib\external\ANGLE\KHR\khrplatform.h" />
+    <ClInclude Include="src\deps\raylib\external\glfw\include\GLFW\glfw3.h" />
+    <ClInclude Include="src\deps\raylib\external\glfw\include\GLFW\glfw3native.h" />
+    <ClInclude Include="src\deps\raylib\gestures.h" />
+    <ClInclude Include="src\deps\raylib\physac.h" />
+    <ClInclude Include="src\deps\raylib\raudio.h" />
+    <ClInclude Include="src\deps\raylib\raygui.h" />
+    <ClInclude Include="src\deps\raylib\raylib.h" />
+    <ClInclude Include="src\deps\raylib\raymath.h" />
+    <ClInclude Include="src\deps\raylib\ricons.h" />
+    <ClInclude Include="src\deps\raylib\rlgl.h" />
+    <ClInclude Include="src\deps\raylib\rmem.h" />
+    <ClInclude Include="src\deps\raylib\rnet.h" />
+    <ClInclude Include="src\deps\raylib\utils.h" />
     <ClInclude Include="src\foosiespp.hpp" />
     <ClInclude Include="src\globals.hpp" />
     <ClInclude Include="src\player.hpp" />
@@ -34,13 +58,20 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="bin\ggponet.lib" />
-    <Library Include="bin\libraylib.lib" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\box.cpp" />
     <ClCompile Include="src\button.cpp" />
     <ClCompile Include="src\character.cpp" />
     <ClCompile Include="src\controller.cpp" />
+    <ClCompile Include="src\deps\raylib\core.c" />
+    <ClCompile Include="src\deps\raylib\models.c" />
+    <ClCompile Include="src\deps\raylib\raudio.c" />
+    <ClCompile Include="src\deps\raylib\rglfw.c" />
+    <ClCompile Include="src\deps\raylib\shapes.c" />
+    <ClCompile Include="src\deps\raylib\text.c" />
+    <ClCompile Include="src\deps\raylib\textures.c" />
+    <ClCompile Include="src\deps\raylib\utils.c" />
     <ClCompile Include="src\foosiespp.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\player.cpp" />
@@ -108,6 +139,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -119,13 +152,16 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WIN32;_DEBUG;_CONSOLE;GRAPHICS_API_OPENGL_33;PLATFORM_DESKTOP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>G:\raylib\projects\foosies++\foosies++\src\deps\raylib\external\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /S /I /Y $(ProjectDir)bin\*.dll $(OutDir)*.dll
@@ -142,6 +178,7 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,11 +198,12 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;GRAPHICS_API_OPENGL_33;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WIN32;NDEBUG;_CONSOLE;GRAPHICS_API_OPENGL_33;PLATFORM_DESKTOP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\raylib\raylib\release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsC</CompileAs>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -191,6 +229,7 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

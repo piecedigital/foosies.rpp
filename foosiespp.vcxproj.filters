@@ -21,15 +21,6 @@
     <ClInclude Include="bin\ggponet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bin\raygui.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="bin\raylib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="bin\ricons.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\box.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -54,10 +45,90 @@
     <ClInclude Include="src\session.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\deps\raylib\external\ANGLE\EGL\egl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\external\ANGLE\EGL\eglext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\external\ANGLE\EGL\eglplatform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\external\ANGLE\GLES2\gl2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\external\ANGLE\GLES2\gl2ext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\external\ANGLE\GLES2\gl2platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\external\ANGLE\GLES3\gl3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\external\ANGLE\GLES3\gl3ext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\external\ANGLE\GLES3\gl3platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\external\ANGLE\KHR\khrplatform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\external\ANGLE\angle_windowsstore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\easings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\gestures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\physac.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\raudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\raygui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\raylib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\raymath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\ricons.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\rlgl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\rmem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\rnet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\external\glfw\include\GLFW\glfw3native.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\raylib\external\glfw\include\GLFW\glfw3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="bin\ggponet.lib" />
-    <Library Include="bin\libraylib.lib" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\box.cpp">
@@ -82,6 +153,30 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\session.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\deps\raylib\core.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\deps\raylib\models.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\deps\raylib\raudio.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\deps\raylib\rglfw.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\deps\raylib\shapes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\deps\raylib\text.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\deps\raylib\textures.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\deps\raylib\utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

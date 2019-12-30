@@ -1,0 +1,7 @@
+#
+# rgs style text file (v3.1) - raygui style file generated using rGuiStyler
+#
+# Info:  p <controlId> <propertyId> <propertyValue>  // Property description
+#
+p 07 01 0xfb0000ff    COMBOBOX_BASE_COLOR_NORMAL 
+p 07 02 0xffffffff    COMBOBOX_TEXT_COLOR_NORMAL 

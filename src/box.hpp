@@ -2,7 +2,7 @@
 #define BOX_H
 
 #include <iostream>
-#include "../bin/raylib.h"
+#include "deps/raylib/raylib.h"
 
 #define PUSH_BOX_COLOR Color{253, 249, 0, 255};
 #define GRAB_BOX_COLOR Color{0, 121, 241, 255};
