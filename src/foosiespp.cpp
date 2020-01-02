@@ -73,7 +73,8 @@ Game::Game()
 
 Game::~Game()
 {
-    deleteSession();
+    UnloadTexture(renderTexture.texture);
+    UnloadRenderTexture(renderTexture);
     // delete gameState.playerData;
     _imguiShutdown();
 }
@@ -98,6 +99,8 @@ int Game::init()
     SetTargetFPS(scene.targetFPS);
 
     _imguiInit();
+
+    renderTexture = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
 
     while (!WindowShouldClose())
     {
@@ -154,17 +157,27 @@ void Game::render()
 {
     BeginDrawing();
 
-    ClearBackground(RAYWHITE);
+    // ClearBackground(RAYWHITE);
+    ClearBackground(GRAY);
+
+    DrawFPS(10, 10);
+
+    BeginTextureMode(renderTexture);
 
     // Vector2 mp = GetMousePosition();
     // BeginScissorMode(mp.x-50, mp.y-50, 100, 100);
 
-    // _drawScene();
-    _drawDevUI();
+    ClearBackground(RAYWHITE);
+
+    _drawScene();
 
     _drawUI();
 
     // EndScissorMode();
+
+    EndTextureMode();
+
+    _drawDevUI();
 
     EndDrawing();
 }
@@ -314,8 +327,6 @@ void Game::_drawUI()
         .append(std::to_string(gameState.playerData[1].physical.pushback))
         .append("\n");;
 
-    DrawFPS(10, 10);
-
     const char *player1InfoString = player1Info.c_str();
     DrawText(player1InfoString, 20, 46, -16, DARKGRAY);
     const char *player2InfoString = player2Info.c_str();
@@ -369,6 +380,32 @@ void Game::_imguiUpdate()
     int x = gameState.playerData[0].physical.x;
     ImGui::SliderInt("Slider Test", &x, -scene.stageHalfWidth, scene.stageHalfWidth);
     gameState.playerData[0].physical.x = x;
+    ImGui::End();
+
+    ImGui::Begin("Render window");
+    ImGui::SetNextWindowSize({-1, ImGui::GetWindowWidth() * (9 / 16)}, ImGuiCond_::ImGuiCond_Always);
+
+    ImVec2 wp = ImGui::GetWindowPos();
+
+    DrawTexturePro(renderTexture.texture,
+        {
+            0.f,
+            0.f,
+            (float)renderTexture.texture.width,
+            (float)-renderTexture.texture.height
+        },
+        {
+            wp.x,
+            wp.y+20.f,
+            (float)ImGui::GetWindowWidth(),
+            (float)ImGui::GetWindowHeight()-20
+        },
+        {
+            0,
+            0
+        },
+        0.f,
+        WHITE);
     ImGui::End();
 
     // Render dear imgui into screen
