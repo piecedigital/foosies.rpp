@@ -858,7 +858,7 @@ void ToggleFullscreen(void)
     fullscreen = !fullscreen;          // Toggle fullscreen flag
 
     // NOTE: glfwSetWindowMonitor() doesn't work properly (bugs)
-    if (fullscreen) 
+    if (fullscreen)
     {
         // Store previous window position (in case we exit fullscreen)
         glfwGetWindowPos(window, &windowPositionX, &windowPositionY);
@@ -873,7 +873,7 @@ void ToggleFullscreen(void)
 
         const GLFWvidmode *mode = glfwGetVideoMode(monitor);
         glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, screenWidth, screenHeight, mode->refreshRate);
-        
+
         // Try to enable GPU V-Sync, so frames are limited to screen refresh rate (60Hz -> 60 FPS)
         // NOTE: V-Sync can be enabled by graphic driver configuration
         if (configFlags & FLAG_VSYNC_HINT) glfwSwapInterval(1);
@@ -1003,6 +1003,26 @@ void *GetWindowHandle(void)
 #elif defined(__APPLE__)
     // NOTE: Returned handle is: (objc_object *)
     return NULL;    // TODO: return (void *)glfwGetCocoaWindow(window);
+#else
+    return NULL;
+#endif
+}
+
+// Get native window
+void *GetWindow(void)
+{
+#if defined(PLATFORM_DESKTOP) && defined(_WIN32)
+    // NOTE: Returned handle is: void *HWND (windows.h)
+    return (window);
+#elif defined(__linux__)
+    // NOTE: Returned handle is: unsigned long Window (X.h)
+    // typedef unsigned long XID;
+    // typedef XID Window;
+    //unsigned long id = (unsigned long)glfwGetX11Window(window);
+    return NULL; // TODO: Find a way to return value... cast to void *?
+#elif defined(__APPLE__)
+    // NOTE: Returned handle is: (objc_object *)
+    return NULL; // TODO: return (void *)glfwGetCocoaWindow(window);
 #else
     return NULL;
 #endif
@@ -1267,14 +1287,14 @@ void EndDrawing(void)
 
     SwapBuffers();                  // Copy back buffer to front buffer
     PollInputEvents();              // Poll user events
-    
+
     // Frame time control system
     currentTime = GetTime();
     drawTime = currentTime - previousTime;
     previousTime = currentTime;
 
     frameTime = updateTime + drawTime;
-    
+
     // Wait for some milliseconds...
     if (frameTime < targetTime)
     {
@@ -1285,9 +1305,9 @@ void EndDrawing(void)
         previousTime = currentTime;
 
         frameTime += waitTime;      // Total frame time: update + draw + wait
-        
-        //SetWindowTitle(FormatText("Update: %f, Draw: %f, Req.Wait: %f, Real.Wait: %f, Total: %f, Target: %f\n", 
-        //               (float)updateTime, (float)drawTime, (float)(targetTime - (updateTime + drawTime)), 
+
+        //SetWindowTitle(FormatText("Update: %f, Draw: %f, Req.Wait: %f, Real.Wait: %f, Total: %f, Target: %f\n",
+        //               (float)updateTime, (float)drawTime, (float)(targetTime - (updateTime + drawTime)),
         //               (float)waitTime, (float)frameTime, (float)targetTime));
     }
 }
@@ -2022,7 +2042,7 @@ void ClearDirectoryFiles(void)
 
         RL_FREE(dirFilesPath);
     }
-    
+
     dirFilesCount = 0;
 }
 
@@ -2591,11 +2611,11 @@ Vector2 GetTouchPosition(int index)
 #elif defined(PLATFORM_RPI)
 
     position = touchPosition[index];
-    
+
 #else   // PLATFORM_DESKTOP
 
     // TODO: GLFW is not supporting multi-touch input just yet
-    
+
     // https://www.codeproject.com/Articles/668404/Programming-for-Multi-Touch
     // https://docs.microsoft.com/en-us/windows/win32/wintouch/getting-started-with-multi-touch-messages
 
@@ -3194,7 +3214,7 @@ static bool InitGraphicsDevice(int width, int height)
     screenScaling = MatrixScale((float)fbWidth/screenWidth, (float)fbHeight/screenHeight, 1.0f);
 #if !defined(__APPLE__)
     SetMouseScale((float)screenWidth/fbWidth, (float)screenHeight/fbHeight);
-#endif    
+#endif
     SetTextureFilter(GetFontDefault().texture, FILTER_BILINEAR);
 #endif  // PLATFORM_DESKTOP && SUPPORT_HIGH_DPI
 
@@ -3509,7 +3529,7 @@ static void PollInputEvents(void)
     {
         keyPressedQueue[keyPressedQueueCount] = lastKeyPressedEvdev.Contents[lastKeyPressedEvdev.Tail];    // Read the key from the buffer
         keyPressedQueueCount++;
-        
+
         lastKeyPressedEvdev.Tail = (lastKeyPressedEvdev.Tail + 1) & 0x07;           // Increment the tail pointer forwards and binary wraparound after 7 (fifo is 8 elements long)
     }
 
@@ -4204,7 +4224,7 @@ static int32_t AndroidInputCallback(struct android_app *app, AInputEvent *event)
         if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_DOWN)
         {
             currentKeyState[keycode] = 1;  // Key down
-            
+
             keyPressedQueue[keyPressedQueueCount] = keycode;
             keyPressedQueueCount++;
         }
@@ -4221,7 +4241,7 @@ static int32_t AndroidInputCallback(struct android_app *app, AInputEvent *event)
         if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_DOWN)
         {
             currentKeyState[keycode] = 1;   // Key down
-            
+
             keyPressedQueue[keyPressedQueueCount] = keycode;
             keyPressedQueueCount++;
         }
@@ -4587,15 +4607,15 @@ static void ProcessKeyboard(void)
         }
         else if (keysBuffer[i] == 0x0a)     // raylib KEY_ENTER (don't mix with <linux/input.h> KEY_*)
         {
-            currentKeyState[257] = 1; 
-            
+            currentKeyState[257] = 1;
+
             keyPressedQueue[keyPressedQueueCount] = 257;     // Add keys pressed into queue
             keyPressedQueueCount++;
         }
         else if (keysBuffer[i] == 0x7f)     // raylib KEY_BACKSPACE
-        { 
-            currentKeyState[259] = 1; 
-            
+        {
+            currentKeyState[259] = 1;
+
             keyPressedQueue[keyPressedQueueCount] = 257;     // Add keys pressed into queue
             keyPressedQueueCount++;
         }
@@ -5024,7 +5044,7 @@ static void *EventThread(void *arg)
                         */
 
                         currentKeyState[keycode] = event.value;
-                        if (event.value == 1) 
+                        if (event.value == 1)
                         {
                             keyPressedQueue[keyPressedQueueCount] = keycode;     // Register last key pressed
                             keyPressedQueueCount++;

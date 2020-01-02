@@ -44,12 +44,6 @@ void Character::render()
         _convertTranslation();
 
         DrawModelEx(model, (*playerData)->transform.translation, {0.f, 1.f, 0.f}, (90.f * (*playerData)->actionFace), {1.f, 1.f, 1.f}, WHITE);
-        DrawModelEx(model, {
-                               (*playerData)->transform.translation.x,
-                               (*playerData)->transform.translation.y+1.f,
-                               (*playerData)->transform.translation.z,
-                           },
-                    {0.f, 1.f, 0.f}, (90.f * (*playerData)->actionFace), {1.f, 1.f, 1.f}, WHITE);
         DrawModelWiresEx(model, (*playerData)->transform.translation, {0.f, 1.f, 0.f}, (90.f * (*playerData)->actionFace), {1.f, 1.f, 1.f}, color);
     }
 

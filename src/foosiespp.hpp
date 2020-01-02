@@ -51,6 +51,11 @@ private:
     void _dispatchNormalizedInputs(PlayerController &player);
     void _drawScene();
     void _drawUI();
+    void _drawDevUI();
+
+    void _imguiInit();
+    void _imguiUpdate();
+    void _imguiShutdown();
 };
 
 void _saveGameState();

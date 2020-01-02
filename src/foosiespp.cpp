@@ -1,6 +1,7 @@
-﻿
-#include "foosiespp.hpp"
-
+﻿#include "foosiespp.hpp"
+#include "deps/imgui/imgui.h"
+#include "deps/imgui/imgui_impl_glfw.h"
+#include "deps/imgui/imgui_impl_opengl3.h"
 // TEST CODE
 
 int len;
@@ -74,6 +75,7 @@ Game::~Game()
 {
     deleteSession();
     // delete gameState.playerData;
+    _imguiShutdown();
 }
 
 int Game::init()
@@ -94,6 +96,8 @@ int Game::init()
     // scene.cam.type = CAMERA_PERSPECTIVE;
 
     SetTargetFPS(scene.targetFPS);
+
+    _imguiInit();
 
     while (!WindowShouldClose())
     {
@@ -152,11 +156,15 @@ void Game::render()
 
     ClearBackground(RAYWHITE);
 
-    Vector2 mp = GetMousePosition();
-    BeginScissorMode(mp.x, mp.y, 2.f, 2.f);
-    _drawScene();
+    // Vector2 mp = GetMousePosition();
+    // BeginScissorMode(mp.x-50, mp.y-50, 100, 100);
+
+    // _drawScene();
+    _drawDevUI();
+
     _drawUI();
-    EndScissorMode();
+
+    // EndScissorMode();
 
     EndDrawing();
 }
@@ -309,7 +317,7 @@ void Game::_drawUI()
     DrawFPS(10, 10);
 
     const char *player1InfoString = player1Info.c_str();
-    DrawText(player1InfoString, 20, 46, 16, DARKGRAY);
+    DrawText(player1InfoString, 20, 46, -16, DARKGRAY);
     const char *player2InfoString = player2Info.c_str();
     DrawText(player2InfoString, 1280 - 20 - fGetTextWidth(player2InfoString), 46, 16, DARKGRAY);
 
@@ -322,3 +330,60 @@ void Game::_drawUI()
     scene._toggleUpdateBtn.render();
     scene._stepOneBtn.render();
 };
+
+void Game::_drawDevUI()
+{
+    _imguiUpdate();
+}
+
+void Game::_imguiInit()
+{
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO();
+    // Setup Platform/Renderer bindings
+    GLFWwindow *window = (GLFWwindow *)GetWindow();
+
+    std::cout << "GLFW Window gotten" << std::endl;
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init(/*glsl_version*/);
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
+}
+
+void Game::_imguiUpdate()
+{
+    GLFWwindow *window = (GLFWwindow *)GetWindow();
+    // glfwPollEvents();
+    // glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
+    // glClear(GL_COLOR_BUFFER_BIT);
+
+    // feed inputs to dear imgui, start new frame
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
+    // render your GUI
+    ImGui::Begin("Demo window");
+    int x = gameState.playerData[0].physical.x;
+    ImGui::SliderInt("Slider Test", &x, -scene.stageHalfWidth, scene.stageHalfWidth);
+    gameState.playerData[0].physical.x = x;
+    ImGui::End();
+
+    // Render dear imgui into screen
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    // int display_w, display_h;
+    // glfwGetFramebufferSize(window, &display_w, &display_h);
+    // glViewport(0, 0, display_w, display_h);
+    // glfwSwapBuffers(window);
+}
+
+void Game::_imguiShutdown()
+{
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+}

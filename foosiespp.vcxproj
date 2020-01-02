@@ -24,6 +24,14 @@
     <ClInclude Include="src\button.hpp" />
     <ClInclude Include="src\character.hpp" />
     <ClInclude Include="src\controller.hpp" />
+    <ClInclude Include="src\deps\imgui\imconfig.h" />
+    <ClInclude Include="src\deps\imgui\imgui.h" />
+    <ClInclude Include="src\deps\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="src\deps\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\deps\imgui\imgui_internal.h" />
+    <ClInclude Include="src\deps\imgui\imstb_rectpack.h" />
+    <ClInclude Include="src\deps\imgui\imstb_textedit.h" />
+    <ClInclude Include="src\deps\imgui\imstb_truetype.h" />
     <ClInclude Include="src\deps\raylib\camera.h" />
     <ClInclude Include="src\deps\raylib\config.h" />
     <ClInclude Include="src\deps\raylib\easings.h" />
@@ -64,6 +72,11 @@
     <ClCompile Include="src\button.cpp" />
     <ClCompile Include="src\character.cpp" />
     <ClCompile Include="src\controller.cpp" />
+    <ClCompile Include="src\deps\imgui\imgui.cpp" />
+    <ClCompile Include="src\deps\imgui\imgui_draw.cpp" />
+    <ClCompile Include="src\deps\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\deps\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\deps\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\deps\raylib\core.c" />
     <ClCompile Include="src\deps\raylib\models.c" />
     <ClCompile Include="src\deps\raylib\raudio.c" />
@@ -156,7 +169,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>G:\raylib\projects\foosies++\foosies++\src\deps\raylib\external\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>G:\raylib\projects\foosies++\foosies++\src\deps\raylib;G:\raylib\projects\foosies++\foosies++\src\deps\raylib\external\glfw\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -200,7 +213,7 @@ xcopy /S /I /Y $(ProjectDir)assets $(OutDir)assets</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_WIN32;GRAPHICS_API_OPENGL_33;PLATFORM_DESKTOP;NDEBUG;NCONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>G:\raylib\projects\foosies++\foosies++\src\deps\raylib\external\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>G:\raylib\projects\foosies++\foosies++\src\deps\raylib;G:\raylib\projects\foosies++\foosies++\src\deps\raylib\external\glfw\include</AdditionalIncludeDirectories>
       <CompileAs>CompileAsC</CompileAs>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
