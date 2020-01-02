@@ -382,9 +382,8 @@ void Game::_imguiUpdate()
     gameState.playerData[0].physical.x = x;
     ImGui::End();
 
+    ImGui::SetNextWindowSizeConstraints({1.f, 0.5}, {200.f, 100.f});
     ImGui::Begin("Render window");
-    ImGui::SetNextWindowSize({-1, ImGui::GetWindowWidth() * (9 / 16)}, ImGuiCond_::ImGuiCond_Always);
-
     ImVec2 wp = ImGui::GetWindowPos();
 
     DrawTexturePro(renderTexture.texture,
