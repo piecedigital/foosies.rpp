@@ -26,7 +26,7 @@ void _loadGameState()
     memcpy(tempState, buffer, len);
 }
 
-bool willStep = true;
+static bool willStep = true;
 int stepAllowance;
 
 void _toggleUpdate()
@@ -152,8 +152,11 @@ void Game::render()
 
     ClearBackground(RAYWHITE);
 
+    Vector2 mp = GetMousePosition();
+    BeginScissorMode(mp.x, mp.y, 2.f, 2.f);
     _drawScene();
     _drawUI();
+    EndScissorMode();
 
     EndDrawing();
 }
