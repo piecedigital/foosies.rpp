@@ -177,17 +177,29 @@ void Game::_aggregateGamepadInputs()
 
 void Game::_dispatchNormalizedInputs(PlayerController &player)
 {
+    NormalizedInput input;
+
     if (player.controllerId > -2)
     {
         if (player.controllerId == -1)
         {
-            player.normalizedToPlayerInput(keyboard.inputs);
+            input = keyboard.inputs;
         }
         else
         {
-            player.normalizedToPlayerInput(controllers[player.controllerId].inputs);
+            input = controllers[player.controllerId].inputs;
         }
     }
+
+#ifdef _DEBUG
+    if (!devGui.renderWindowIsFocused)
+    {
+#endif
+        input = {0};
+#ifdef _DEBUG
+    }
+#endif
+    player.normalizedToPlayerInput(input);
 }
 
 void Game::_drawScene()

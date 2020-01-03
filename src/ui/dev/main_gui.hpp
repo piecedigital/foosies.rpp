@@ -24,6 +24,8 @@ public:
     void beginRenderTexture();
     void endRenderTexture();
     void imguiShutdown();
+    bool renderWindowIsFocused;
+
     static void _SixteenNineAspectRatio(ImGuiSizeCallbackData *data)
     {
         data->DesiredSize = ImVec2(data->DesiredSize.x, data->DesiredSize.x * (9.f / 16.f));

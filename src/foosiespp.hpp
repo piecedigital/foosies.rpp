@@ -11,7 +11,10 @@
 #include "controller.hpp"
 #include "player.hpp"
 #include "session.hpp"
+
+#ifdef _DEBUG
 #include "ui/dev/main_gui.hpp"
+#endif
 
 struct Grid {
     int hCells;
