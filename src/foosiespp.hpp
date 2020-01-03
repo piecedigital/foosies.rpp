@@ -11,6 +11,7 @@
 #include "controller.hpp"
 #include "player.hpp"
 #include "session.hpp"
+#include "ui/dev/main_gui.hpp"
 
 struct Grid {
     int hCells;
@@ -53,11 +54,13 @@ private:
     void _dispatchNormalizedInputs(PlayerController &player);
     void _drawScene();
     void _drawUI();
-    void _drawDevUI();
 
-    void _imguiInit();
-    void _imguiUpdate();
-    void _imguiShutdown();
+// dev stuff
+#ifdef _DEBUG
+    DevGui devGui;
+
+    void _drawDevUI();
+#endif
 };
 
 void _saveGameState();

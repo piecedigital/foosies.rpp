@@ -278,7 +278,6 @@ int main()
     int screenWidth = 1280;
     int screenHeight = 720;
     InitWindow(screenWidth, screenHeight, "foosiespp");
-    GetWindowHandle();
     InitAudioDevice();
     Music s = LoadMusicStream("assets/audio/spawn.mp3");
     PlayMusicStream(s);
