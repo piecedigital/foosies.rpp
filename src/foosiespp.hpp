@@ -21,12 +21,10 @@ struct Grid {
 struct Scene {
     int targetFPS;
     int stageHalfWidth = 700;
+    int stepAllowance = 0;
+    bool willStep = true;
     Camera3D cam;
     PlayerController players[2];
-    Button _makeGameStateBufferBtn;
-    Button _loadGameStateBtn;
-    Button _toggleUpdateBtn;
-    Button _stepOneBtn;
 };
 
 class Game
@@ -63,5 +61,8 @@ private:
 
 void _saveGameState();
 void _loadGameState();
+
+void _toggleUpdate();
+void _stepOne();
 
 #endif

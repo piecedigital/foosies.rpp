@@ -1008,7 +1008,7 @@ void *GetWindowHandle(void)
 #endif
 }
 
-// Get native window
+// CUSTOM THING: Get native window
 void *GetWindow(void)
 {
 #if defined(PLATFORM_DESKTOP) && defined(_WIN32)

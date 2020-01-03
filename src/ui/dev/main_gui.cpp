@@ -7,6 +7,8 @@ void DevGui::imguiInit(dgScene *s, GameState *gs)
     scene = s;
     gameState = gs;
 
+    _saveGameState();
+
     renderTexture = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
 
     // Setup Dear ImGui context
@@ -33,6 +35,7 @@ void DevGui::imguiUpdate()
     // render your GUI
     _displayPlayerInfo(0);
     _displayPlayerInfo(1);
+    _displayStateManipButtons();
     _displayRenderWindow();
 
     // Render dear imgui into screen
@@ -40,11 +43,11 @@ void DevGui::imguiUpdate()
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void DevGui::begin()
+void DevGui::beginRenderTexture()
 {
     BeginTextureMode(renderTexture);
 }
-void DevGui::end()
+void DevGui::endRenderTexture()
 {
     EndTextureMode();
 }
@@ -72,6 +75,40 @@ void DevGui::_displayPlayerInfo(int playerId)
     ImGui::Text("  HSpeed: %i", gameState->playerData[playerId].physical.VSpeed);
     char buf[254] = "";
     ImGui::InputText("Test", buf, 254);
+
+    ImGui::End();
+}
+
+void DevGui::_displayStateManipButtons()
+{
+    ImGui::Begin("State Manipulation");
+    ImGui::Columns(4);
+
+    if(ImGui::Button("Save State"))
+    {
+        _saveGameState();
+    }
+
+    ImGui::NextColumn();
+
+    if (ImGui::Button("Load State"))
+    {
+        _loadGameState();
+    }
+
+    ImGui::NextColumn();
+
+    if (ImGui::Button("Toggle Update"))
+    {
+        _toggleUpdate();
+    }
+
+    ImGui::NextColumn();
+
+    if (ImGui::Button("Step Update"))
+    {
+        _stepUpdate();
+    }
 
     ImGui::End();
 }
@@ -104,4 +141,34 @@ void DevGui::_displayRenderWindow()
         WHITE);
 
     ImGui::End();
+}
+
+void DevGui::_saveGameState()
+{
+    std::cout << "Clicked: Save State" << std::endl;
+    gsLen = sizeof(*gameState);
+    gsBuffer = (unsigned char *)malloc(gsLen);
+    if (!*gsBuffer)
+    {
+        return;
+    }
+    memcpy(gsBuffer, gameState, gsLen);
+    gameState->playerData[0].vitality -= 10;
+}
+
+void DevGui::_loadGameState()
+{
+    std::cout << "Clicked: Load State" << std::endl;
+    memcpy(gameState, gsBuffer, gsLen);
+}
+
+void DevGui::_toggleUpdate()
+{
+    scene->willStep = !scene->willStep;
+}
+
+void DevGui::_stepUpdate(int allowance)
+{
+    scene->willStep = false;
+    scene->stepAllowance = allowance;
 }

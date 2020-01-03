@@ -8,12 +8,10 @@ struct dgScene
 {
     int targetFPS;
     int stageHalfWidth = 700;
+    int stepAllowance = 0;
+    bool willStep = true;
     // Camera3D cam;
     // PlayerController players[2];
-    // Button _makeGameStateBufferBtn;
-    // Button _loadGameStateBtn;
-    // Button _toggleUpdateBtn;
-    // Button _stepOneBtn;
 };
 
 class DevGui
@@ -23,8 +21,8 @@ public:
 
     void imguiInit(dgScene *scene, GameState *gs);
     void imguiUpdate();
-    void begin();
-    void end();
+    void beginRenderTexture();
+    void endRenderTexture();
     void imguiShutdown();
     static void _SixteenNineAspectRatio(ImGuiSizeCallbackData *data)
     {
@@ -34,7 +32,15 @@ public:
 private:
     dgScene *scene;
     GameState *gameState;
+    int gsLen;
+    unsigned char *gsBuffer;
 
     void _displayPlayerInfo(int playerId);
+    void _displayStateManipButtons();
     void _displayRenderWindow();
+
+    void _saveGameState();
+    void _loadGameState();
+    void _toggleUpdate();
+    void _stepUpdate(int allowance = 1);
 };

@@ -1,48 +1,7 @@
 ﻿#include "foosiespp.hpp"
-// TEST CODE
-
-int len;
-unsigned char *buffer;
-GameState *tempState;
-
-void _saveGameState()
-{
-    std::cout << "Clicked: Save State" << std::endl;
-    len = sizeof(*tempState);
-    buffer = (unsigned char *)malloc(len);
-    if (!*buffer)
-    {
-        return;
-    }
-    memcpy(buffer, tempState, len);
-    tempState->playerData[0].vitality -= 10;
-}
-
-void _loadGameState()
-{
-    std::cout << "Clicked: Load State" << std::endl;
-    memcpy(tempState, buffer, len);
-}
-
-static bool willStep = true;
-int stepAllowance;
-
-void _toggleUpdate()
-{
-    willStep = !willStep;
-}
-
-void _stepOne()
-{
-    willStep = false;
-    stepAllowance = 1;
-}
-
-// END TEST CODE
 
 Game::Game()
 {
-    tempState = &gameState;
     scene.players[0].init(&gameState.playerData[0], &gameState.playerBoxes[0], &gameState.playerProjectiles[0]);
     scene.players[1].init(&gameState.playerData[1], &gameState.playerBoxes[1], &gameState.playerProjectiles[1]);
 
@@ -53,19 +12,6 @@ Game::Game()
 
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
-    scene._makeGameStateBufferBtn.init("Save State", {(float)((screenWidth / 2) - 100), (float)(screenHeight - 40)});
-    scene._makeGameStateBufferBtn.callbacks.onClick = _saveGameState;
-    scene._loadGameStateBtn.init("Load State", {(float)((screenWidth / 2) + 5), (float)(screenHeight - 40)});
-    scene._loadGameStateBtn.callbacks.onClick = _loadGameState;
-
-    const char *x;
-    x = willStep ? "Pause update: yes" : "Pause update: no";
-    scene._toggleUpdateBtn.init(x, {(float)((screenWidth / 2) + 100), (float)(screenHeight - 40)});
-    scene._toggleUpdateBtn.callbacks.onClick = _toggleUpdate;
-    scene._stepOneBtn.init("Step one frame", {(float)((screenWidth / 2) + 250), (float)(screenHeight - 40)});
-    scene._stepOneBtn.callbacks.onClick = _stepOne;
-
-    _saveGameState();
 }
 
 Game::~Game()
@@ -114,9 +60,9 @@ int Game::init()
 
 void Game::update()
 {
-    if (willStep || stepAllowance > 0)
+    if (scene.willStep || scene.stepAllowance > 0)
     {
-        stepAllowance--;
+        scene.stepAllowance--;
 
         scene.players[0].updateFacing(&scene.players[1]);
         scene.players[1].updateFacing(&scene.players[0]);
@@ -142,11 +88,6 @@ void Game::update()
         scene.players[0].updateBoxes();
         scene.players[1].updateBoxes();
     }
-
-    scene._makeGameStateBufferBtn.update();
-    scene._loadGameStateBtn.update();
-    scene._toggleUpdateBtn.update();
-    scene._stepOneBtn.update();
 }
 
 void Game::render()
@@ -161,7 +102,7 @@ void Game::render()
 
 #ifdef _DEBUG
     DrawFPS(10, 10);
-    devGui.begin();
+    devGui.beginRenderTexture();
     ClearBackground(RAYWHITE);
 #endif
 
@@ -171,7 +112,7 @@ void Game::render()
     _drawUI();
 
 #ifdef _DEBUG
-    devGui.end();
+    devGui.endRenderTexture();
     _drawDevUI();
 #endif
 
@@ -266,10 +207,6 @@ void Game::_drawScene()
 
 void Game::_drawUI()
 {
-    scene._makeGameStateBufferBtn.render();
-    scene._loadGameStateBtn.render();
-    scene._toggleUpdateBtn.render();
-    scene._stepOneBtn.render();
 };
 
 #ifdef _DEBUG
