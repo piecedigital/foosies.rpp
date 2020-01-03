@@ -3,8 +3,8 @@
 
 #version 330
 
-in vec3 in_position;
-in vec3 in_normal;
+in vec3 vertexPosition;
+in vec3 vertexNormal;
 
 uniform mat4 model_matrix, view_matrix, projection_matrix;
 
@@ -15,7 +15,7 @@ out vec3 world_normal;
 void main()
 {
     //convert in world coords
-    world_pos = mat3(model_matrix) * in_position;//careful here
-    world_normal = normalize(mat3(model_matrix) * in_normal);
-    gl_Position = projection_matrix*view_matrix*model_matrix*vec4(in_position,1);
+    world_pos = mat3(model_matrix) * vertexPosition;//careful here
+    world_normal = normalize(mat3(model_matrix) * vertexNormal);
+    gl_Position = projection_matrix*view_matrix*model_matrix*vec4(vertexPosition,1);
 }

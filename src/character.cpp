@@ -5,32 +5,36 @@ Character::Character()
 {
     color = BLACK;
     model = LoadModel("assets/models/characters/d-func/d-func.obj");
-    Shader shader = LoadShader("assets/shaders/toon.vs", "assets/shaders/toon.fs");
+    for (int i = 0; i < model.materialCount; i++)
+    {
+        Shader shader = LoadShader("assets/shaders/toon.vs", "assets/shaders/toon.fs");
 
-    shader.locs[LOC_MAP_IRRADIANCE] = GetShaderLocation(shader, "lightPosition");
-    shader.locs[LOC_VECTOR_VIEW] = GetShaderLocation(shader, "eyePosition");
-    shader.locs[LOC_MAP_METALNESS] = GetShaderLocation(shader, "materialShininess");
-    shader.locs[LOC_MAP_DIFFUSE] = GetShaderLocation(shader, "materialDiffuse");
-    shader.locs[LOC_MAP_SPECULAR] = GetShaderLocation(shader, "materialSpecular");
+        float cameraPos[3] = {0.f, 3.f, 2.f};
 
-    float cameraPos[3] = {0.f, 3.f, 1.f};
-    float lightPos[3] = {0.f, 3.f, 1.f};
+        float lightPos[3] = {
+            1.f,
+            1.f,
+            1.f};
 
-    SetShaderValue(shader, 1, lightPos, UNIFORM_VEC3);
-    SetShaderValue(shader, LOC_VECTOR_VIEW, cameraPos, UNIFORM_VEC3);
-    SetShaderValue(shader, LOC_MAP_METALNESS, new int[1]{ 1 }, UNIFORM_INT);
-    SetShaderValue(shader, LOC_MAP_DIFFUSE, new float[1]{ 1.f }, UNIFORM_FLOAT);
-    SetShaderValue(shader, LOC_MAP_SPECULAR, new float[1]{ 1.f }, UNIFORM_FLOAT);
+        SetShaderValue(shader, GetShaderLocation(shader, "color"), &model.materials[i].maps[MAP_ALBEDO].color, UNIFORM_VEC3);
+        SetShaderValue(shader, GetShaderLocation(shader, "lightPosition"), lightPos, UNIFORM_VEC3);
+        SetShaderValue(shader, GetShaderLocation(shader, "eyePosition"), cameraPos, UNIFORM_VEC3);
+        SetShaderValue(shader, GetShaderLocation(shader, "materialShininess"), new int[1]{1}, UNIFORM_INT);
+        SetShaderValue(shader, GetShaderLocation(shader, "materialDiffuse"), new float[1]{1.f}, UNIFORM_FLOAT);
+        SetShaderValue(shader, GetShaderLocation(shader, "materialSpecular"), new float[1]{1.f}, UNIFORM_FLOAT);
 
-    model.materials[0].maps[MAP_ALBEDO].color = BLUE;
-    model.materials[0].maps[MAP_NORMAL].color = {128, 128, 255, 255};
-    model.materials[0].maps[MAP_METALNESS].value = 1.f;
-    model.materials[0].maps[MAP_ROUGHNESS].value = 1.f;
-    model.materials[0].maps[MAP_OCCLUSION].value = 1.0f;
-    model.materials[0].maps[MAP_EMISSION].value = 0.5f;
-    model.materials[0].maps[MAP_HEIGHT].value = 0.5f;
+        shader.locs[LOC_MATRIX_MODEL] = GetShaderLocation(shader, "model_matrix");
+        shader.locs[LOC_MATRIX_VIEW] = GetShaderLocation(shader, "view_matrix");
+        shader.locs[LOC_MATRIX_PROJECTION] = GetShaderLocation(shader, "projection_matrix");
 
-    model.materials[0].shader = shader;
+        model.materials[i].maps[MAP_METALNESS].value = 1.f;
+        model.materials[i].maps[MAP_ROUGHNESS].value = 5.5;
+        model.materials[i].maps[MAP_OCCLUSION].value = 1.0f;
+        model.materials[i].maps[MAP_EMISSION].value = 0.5f;
+        model.materials[i].maps[MAP_HEIGHT].value = 0.5f;
+
+        model.materials[i].shader = shader;
+    }
 }
 Character::~Character()
 {
@@ -39,6 +43,12 @@ Character::~Character()
 
 void Character::render()
 {
+    float lightPos[3] = {
+        (*playerData)->transform.translation.x + 1,
+        (*playerData)->transform.translation.y + 1,
+        (*playerData)->transform.translation.z + 1};
+    SetShaderValue(model.materials[0].shader, GetShaderLocation(model.materials[0].shader, "lightPosition"), lightPos, UNIFORM_VEC3);
+
     if (*playerData != NULL)
     {
         _convertTranslation();

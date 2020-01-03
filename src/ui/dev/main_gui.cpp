@@ -118,6 +118,7 @@ void DevGui::_displayRenderWindow()
 {
     ImGui::SetNextWindowSizeConstraints({50.f, 50.f}, {(float)GetScreenWidth(), (float)GetScreenHeight()}, _SixteenNineAspectRatio);
     ImGui::Begin("Render window");
+
     renderWindowIsFocused = ImGui::IsWindowFocused();
     ImVec2 wp = ImGui::GetWindowPos();
 

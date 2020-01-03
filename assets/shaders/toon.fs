@@ -3,13 +3,12 @@
 #version 330
 out vec4 out_color;
 
+uniform vec3 color;
 uniform vec3 lightPosition;
 uniform vec3 eyePosition;
 uniform int materialShininess;
 uniform float materialDiffuse;
 uniform float materialSpecular;
-
-// const vec3 ambient = vec3(0.90,0.0,0.20);
 
 in vec3 world_pos;
 in vec3 world_normal;
@@ -18,9 +17,8 @@ const int levels = 5;
 const float scaleFactor = 1.0 / levels;
 
 void main(){
-    vec3 col = vec3(0.90,0.0,0.20);
-
-    vec3 colorDiffuse = vec3(0.30,0.80,0.10);
+    vec3 col = vec3(1.0,1.0,1.0);
+    vec3 colorDiffuse = vec3(1.0,1.0,1.0);
 
     vec3 L = normalize( lightPosition - world_pos);
     vec3 V = normalize( eyePosition - world_pos);
@@ -40,7 +38,7 @@ void main(){
     float specMask = (pow(dot(H, world_normal), materialShininess) > 0.4) ? 1 : 0;
     float edgeMask = (dot(V, world_normal) >  0.2) ? 1 : 0;
 
-    col = edgeMask * (col + colorDiffuse + speculara * specMask);
+    col = edgeMask * (color + colorDiffuse + speculara * specMask);
 
     out_color = vec4(col,1);
 }
