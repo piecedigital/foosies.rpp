@@ -70,8 +70,6 @@ Game::Game()
 
 Game::~Game()
 {
-    UnloadTexture(renderTexture.texture);
-    UnloadRenderTexture(renderTexture);
     // delete gameState.playerData;
 #ifdef _DEBUG
     devGui.imguiShutdown();
@@ -98,11 +96,8 @@ int Game::init()
     SetTargetFPS(scene.targetFPS);
 
 #ifdef _DEBUG
-    devGui.imguiInit();
+    devGui.imguiInit((dgScene *)&scene, &gameState);
 #endif
-
-    renderTexture = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
-
     while (!WindowShouldClose())
     {
         _aggregateGamepadInputs();
@@ -166,7 +161,7 @@ void Game::render()
 
 #ifdef _DEBUG
     DrawFPS(10, 10);
-    BeginTextureMode(renderTexture);
+    devGui.begin();
     ClearBackground(RAYWHITE);
 #endif
 
@@ -176,7 +171,7 @@ void Game::render()
     _drawUI();
 
 #ifdef _DEBUG
-    EndTextureMode();
+    devGui.end();
     _drawDevUI();
 #endif
 
@@ -271,72 +266,6 @@ void Game::_drawScene()
 
 void Game::_drawUI()
 {
-    GGPOPlayerType type = GGPOPlayerType::GGPO_PLAYERTYPE_REMOTE;
-    std::string player1Info = "Player 1: ";
-    player1Info.append("\n")
-        .append("- Face: ")
-        .append("\n")
-        .append("  - Action: ")
-        .append(std::to_string(gameState.playerData[0].actionFace))
-        .append("\n")
-        .append("  - Side: ")
-        .append(std::to_string(gameState.playerData[0].sideFace))
-        .append("\n")
-    //     .append("- Vitality: ")
-    //     .append(std::to_string(gameState.playerData[0].vitality))
-    //     .append("\n");
-        .append("- Position: ")
-        .append("\n")
-        .append("  - X: ")
-        .append(std::to_string(gameState.playerData[0].physical.x))
-        .append("\n")
-        .append("  - Y: ")
-        .append(std::to_string(gameState.playerData[0].physical.y))
-        .append("\n")
-        .append("  - HSpeed: ")
-        .append(std::to_string(gameState.playerData[0].physical.HSpeed))
-        .append("\n")
-        .append("  - PushBack: ")
-        .append(std::to_string(gameState.playerData[0].physical.pushback))
-        .append("\n");;
-
-    std::string player2Info = "Player 2: ";
-    player2Info.append("\n")
-        .append("- Face: ")
-        .append("\n")
-        .append("  - Action: ")
-        .append(std::to_string(gameState.playerData[1].actionFace))
-        .append("\n")
-        .append("  - Side: ")
-        .append(std::to_string(gameState.playerData[1].sideFace))
-        .append("\n")
-    //     .append("- Vitality: ")
-    //     .append(std::to_string(gameState.playerData[1].vitality))
-    //     .append("\n")
-        .append("- Position: ")
-        .append("\n")
-        .append("  - X: ")
-        .append(std::to_string(gameState.playerData[1].physical.x))
-        .append("\n")
-        .append("  - Y: ")
-        .append(std::to_string(gameState.playerData[1].physical.y))
-        .append("\n")
-        .append("  - HSpeed: ")
-        .append(std::to_string(gameState.playerData[1].physical.HSpeed))
-        .append("\n")
-        .append("  - PushBack: ")
-        .append(std::to_string(gameState.playerData[1].physical.pushback))
-        .append("\n");;
-
-    const char *player1InfoString = player1Info.c_str();
-    DrawText(player1InfoString, 20, 46, -16, DARKGRAY);
-    const char *player2InfoString = player2Info.c_str();
-    DrawText(player2InfoString, 1280 - 20 - fGetTextWidth(player2InfoString), 46, 16, DARKGRAY);
-
-    // DrawTextRecEx(GetFontDefault(), "Test", {400, 400, 2.f, 2.f}, 24.f, 5.f, false, GREEN, 0, 0, BLUE, RED);
-    DrawRectangleRec({400, 400, 2.f, 2.f}, GREEN);
-    DrawTexturePro(GetFontDefault().texture, {400, 400, 2.f, 2.f}, {400, 400, 2.f, 2.f}, {400, 400}, 0.f, RED);
-
     scene._makeGameStateBufferBtn.render();
     scene._loadGameStateBtn.render();
     scene._toggleUpdateBtn.render();

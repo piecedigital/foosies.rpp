@@ -63,6 +63,7 @@
     <ClInclude Include="src\globals.hpp" />
     <ClInclude Include="src\player.hpp" />
     <ClInclude Include="src\session.hpp" />
+    <ClInclude Include="src\ui\dev\main_gui.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="bin\ggponet.lib" />
@@ -89,6 +90,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\session.cpp" />
+    <ClCompile Include="src\ui\dev\main_gui.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

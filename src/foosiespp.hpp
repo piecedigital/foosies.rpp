@@ -48,8 +48,6 @@ public:
     void deleteSession();
 
 private:
-    RenderTexture renderTexture;
-
     void _aggregateGamepadInputs();
     void _dispatchNormalizedInputs(PlayerController &player);
     void _drawScene();
