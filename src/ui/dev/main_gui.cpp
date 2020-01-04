@@ -1,6 +1,11 @@
 #include "main_gui.hpp"
 #include <string>
+#include <iostream>
+#include <fstream>
 #include "../../deps/raylib/raylib.h"
+// #include "../../audio.hpp"
+
+Music music;
 
 void DevGui::imguiInit(dgScene *s, GameState *gs)
 {
@@ -8,6 +13,11 @@ void DevGui::imguiInit(dgScene *s, GameState *gs)
     gameState = gs;
 
     _saveGameState();
+
+    // music = LoadMusicStream("assets/audio/spawn.mp3");
+    // PlayMusicStream(music);
+    // AudioStream ss = music.stream;
+    // RigmocAudio::rAudioBuffer *ab = ss.buffer;
 
     renderTexture = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
 
@@ -73,7 +83,7 @@ void DevGui::_displayPlayerInfo(int playerId)
     ImGui::Text("       X: %i", gameState->playerData[playerId].physical.x);
     ImGui::Text("       Y: %i", gameState->playerData[playerId].physical.y);
     ImGui::Text("  HSpeed: %i", gameState->playerData[playerId].physical.HSpeed);
-    ImGui::Text("  HSpeed: %i", gameState->playerData[playerId].physical.VSpeed);
+    ImGui::Text("  VSpeed: %i", gameState->playerData[playerId].physical.VSpeed);
     char buf[254] = "";
     ImGui::InputText("Test", buf, 254);
 
@@ -156,11 +166,23 @@ void DevGui::_saveGameState()
     }
     memcpy(gsBuffer, gameState, gsLen);
     gameState->playerData[0].vitality -= 10;
+    std::ofstream file;
+    file.open("buffer.txt", std::ofstream::out | std::ofstream::binary);
+    file << (void *)*gsBuffer;
+    file.close();
 }
 
 void DevGui::_loadGameState()
 {
     std::cout << "Clicked: Load State" << std::endl;
+
+    std::ifstream file;
+    file.open("buffer.txt", std::ofstream::in | std::ofstream::binary);
+    int dataSize = file.tellg();
+    char *data = new char[dataSize];
+    file.read(data, dataSize);
+    file.close();
+    // memcpy(gameState, data, gsLen);
     memcpy(gameState, gsBuffer, gsLen);
 }
 

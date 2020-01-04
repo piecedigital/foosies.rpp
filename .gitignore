@@ -1,4 +1,3 @@
 .vs*
-Debug/
-Release/
+Win32/*
 *.user

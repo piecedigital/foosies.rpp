@@ -191,12 +191,10 @@ void Game::_dispatchNormalizedInputs(PlayerController &player)
         }
     }
 
-#ifdef _DEBUG
+#ifdef DEBUG
     if (!devGui.renderWindowIsFocused)
     {
-#endif
         input = {0};
-#ifdef _DEBUG
     }
 #endif
     player.normalizedToPlayerInput(input);
