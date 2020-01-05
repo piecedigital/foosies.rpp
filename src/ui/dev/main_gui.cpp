@@ -3,10 +3,10 @@
 #include <iostream>
 #include <fstream>
 #include "../../deps/raylib/raylib.h"
+// #include "../../deps/raylib/raudio.h"
 // #include "../../audio.hpp"
 
-Music music;
-
+// Music music;
 void DevGui::imguiInit(dgScene *s, GameState *gs)
 {
     scene = s;
@@ -80,12 +80,10 @@ void DevGui::_displayPlayerInfo(int playerId)
     ImGui::Text("Action Face: %i", gameState->playerData[playerId].actionFace);
     ImGui::Text("Side Face: %i", gameState->playerData[playerId].sideFace);
     ImGui::Text("Physical:");
-    ImGui::Text("       X: %i", gameState->playerData[playerId].physical.x);
-    ImGui::Text("       Y: %i", gameState->playerData[playerId].physical.y);
-    ImGui::Text("  HSpeed: %i", gameState->playerData[playerId].physical.HSpeed);
-    ImGui::Text("  VSpeed: %i", gameState->playerData[playerId].physical.VSpeed);
-    char buf[254] = "";
-    ImGui::InputText("Test", buf, 254);
+    ImGui::Text(":X", gameState->playerData[playerId].physical.x);
+    ImGui::Text(":Y", gameState->playerData[playerId].physical.y);
+    ImGui::Text(":HSpeed", gameState->playerData[playerId].physical.HSpeed);
+    ImGui::Text(":VSpeed", gameState->playerData[playerId].physical.VSpeed);
 
     ImGui::End();
 }

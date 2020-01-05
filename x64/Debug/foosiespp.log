@@ -1,0 +1,23 @@
+﻿  foosiespp.cpp
+G:\raylib\projects\foosies++\foosies++\src\globals.hpp(81,105): warning C4312: 'type cast': conversion from 'int' to 'PlayerInput *' of greater size
+G:\raylib\projects\foosies++\foosies++\src\globals.hpp(82,105): warning C4312: 'type cast': conversion from 'int' to 'PlayerInput *' of greater size
+G:\raylib\projects\foosies++\foosies++\src\globals.hpp(85,113): warning C4312: 'type cast': conversion from 'int' to 'PlayerInput *' of greater size
+G:\raylib\projects\foosies++\foosies++\src\globals.hpp(148,56): warning C4302: 'type cast': truncation from 'const char *' to 'char'
+  main.cpp
+G:\raylib\projects\foosies++\foosies++\src\globals.hpp(81,105): warning C4312: 'type cast': conversion from 'int' to 'PlayerInput *' of greater size
+G:\raylib\projects\foosies++\foosies++\src\globals.hpp(82,105): warning C4312: 'type cast': conversion from 'int' to 'PlayerInput *' of greater size
+G:\raylib\projects\foosies++\foosies++\src\globals.hpp(85,113): warning C4312: 'type cast': conversion from 'int' to 'PlayerInput *' of greater size
+G:\raylib\projects\foosies++\foosies++\src\globals.hpp(148,56): warning C4302: 'type cast': truncation from 'const char *' to 'char'
+  session.cpp
+G:\raylib\projects\foosies++\foosies++\src\globals.hpp(81,105): warning C4312: 'type cast': conversion from 'int' to 'PlayerInput *' of greater size
+G:\raylib\projects\foosies++\foosies++\src\globals.hpp(82,105): warning C4312: 'type cast': conversion from 'int' to 'PlayerInput *' of greater size
+G:\raylib\projects\foosies++\foosies++\src\globals.hpp(85,113): warning C4312: 'type cast': conversion from 'int' to 'PlayerInput *' of greater size
+G:\raylib\projects\foosies++\foosies++\src\globals.hpp(148,56): warning C4302: 'type cast': truncation from 'const char *' to 'char'
+  Generating Code...
+session.obj : error LNK2019: unresolved external symbol ggpo_start_session referenced in function "public: enum GGPOErrorCode __cdecl Session::start(void)" (?start@Session@@QEAA?AW4GGPOErrorCode@@XZ)
+session.obj : error LNK2019: unresolved external symbol ggpo_add_player referenced in function "public: enum GGPOErrorCode __cdecl Session::addPlayer(class PlayerController *,enum GGPOPlayerType)" (?addPlayer@Session@@QEAA?AW4GGPOErrorCode@@PEAVPlayerController@@W4GGPOPlayerType@@@Z)
+session.obj : error LNK2019: unresolved external symbol ggpo_close_session referenced in function "public: __cdecl Session::~Session(void)" (??1Session@@QEAA@XZ)
+session.obj : error LNK2019: unresolved external symbol ggpo_add_local_input referenced in function "public: enum GGPOErrorCode __cdecl Session::synchronizeInputs(void)" (?synchronizeInputs@Session@@QEAA?AW4GGPOErrorCode@@XZ)
+session.obj : error LNK2019: unresolved external symbol ggpo_synchronize_input referenced in function "public: enum GGPOErrorCode __cdecl Session::synchronizeInputs(void)" (?synchronizeInputs@Session@@QEAA?AW4GGPOErrorCode@@XZ)
+bin\ggponet.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+G:\raylib\projects\foosies++\foosies++\x64\Debug\foosiespp.exe : fatal error LNK1120: 5 unresolved externals
