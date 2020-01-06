@@ -6,6 +6,13 @@
 // #include "../../deps/raylib/raudio.h"
 // #include "../../audio.hpp"
 
+ImVec4 xGREEN = {(float)GREEN.r / 255 - 0.1, (float)GREEN.g / 255 - 0.1, (float)GREEN.b / 255 - 0.1, (float)GREEN.a / 255};
+ImVec4 xGREENHover = {(float)GREEN.r / 255, (float)GREEN.g / 255, (float)GREEN.b / 255, (float)GREEN.a / 255};
+ImVec4 xRED = {(float)RED.r / 255 - 0.1, (float)RED.g / 255 - 0.1, (float)RED.b / 255 - 0.1, (float)RED.a / 255};
+ImVec4 xREDHover = {(float)RED.r / 255, (float)RED.g / 255, (float)RED.b / 255, (float)RED.a / 255};
+ImVec4 xBLACK = {(float)BLACK.r / 255, (float)BLACK.g / 255, (float)BLACK.b / 255, (float)BLACK.a / 255};
+ImVec4 xWHITE = {(float)WHITE.r / 255, (float)WHITE.g / 255, (float)WHITE.b / 255, (float)WHITE.a / 255};
+
 // Music music;
 void DevGui::imguiInit(dgScene *s, GameState *gs)
 {
@@ -47,7 +54,7 @@ void DevGui::imguiUpdate()
     _displayPlayerInfo(0);
     _displayPlayerInfo(1);
     _displayPlayerInputHistory(0);
-    // _displayPlayerInputHistory(1);
+    _displayPlayerInputHistory(1);
     _displayStateManipButtons();
 
     // Render dear imgui into screen
@@ -111,10 +118,14 @@ void DevGui::_displayStateManipButtons()
 
     ImGui::NextColumn();
 
+    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Button, scene->willStep ? xGREEN : xRED);
+    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ButtonHovered, scene->willStep ? xGREENHover : xREDHover);
+    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Text, scene->willStep ? xBLACK : xWHITE);
     if (ImGui::Button("Toggle Update"))
     {
         _toggleUpdate();
     }
+    ImGui::PopStyleColor(3);
 
     ImGui::NextColumn();
 
@@ -132,7 +143,7 @@ void DevGui::_displayPlayerInputHistory(int playerId)
 
     for (int i = 0; i < INPUT_HISTORY_MAX; i++)
     {
-        ImGui::Text(std::to_string(scene->players[playerId].inputHistory[i]).c_str());
+        ImGui::Text(std::to_string(gameState->inputHistory[playerId][i]).c_str());
     }
 
     ImGui::End();

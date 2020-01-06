@@ -32,10 +32,10 @@ public:
     };
 
 private:
-    dgScene *scene;
-    GameState *gameState;
     int gsLen;
     unsigned char *gsBuffer;
+    dgScene *scene;
+    GameState *gameState;
 
     void _displayPlayerInfo(int playerId);
     void _displayStateManipButtons();

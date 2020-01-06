@@ -11,8 +11,9 @@ PlayerController::~PlayerController()
     playerData = NULL;
 }
 
-void PlayerController::init(PlayerData *pd, PlayerBoxes *pb, PlayerProjectiles *pp)
+void PlayerController::init(PlayerInput *ih, PlayerData *pd, PlayerBoxes *pb, PlayerProjectiles *pp)
 {
+    inputHistory = ih;
     playerData = pd;
     playerBoxes = pb;
     playerProjectiles = pp;

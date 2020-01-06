@@ -9,9 +9,6 @@
 #include "character.hpp"
 #include "globals.hpp"
 
-#define INPUT_HISTORY_MAX 20
-#define INPUT_BUFFER_MAX 5
-
 class PlayerController
 {
 public:
@@ -30,13 +27,12 @@ public:
      */
     int controllerId;
     // TODO: move input history to game state
-    PlayerInput inputHistory[INPUT_HISTORY_MAX];
-    int inputBufferLimit = 3;
+    PlayerInput *inputHistory;
 
     PlayerController();
     ~PlayerController();
 
-    void init(PlayerData *pd, PlayerBoxes *pb, PlayerProjectiles *pp);
+    void init(PlayerInput *inputHistory, PlayerData *pd, PlayerBoxes *pb, PlayerProjectiles *pp);
     void updateFacing(PlayerController *otherPlayer);
     void normalizedToPlayerInput(NormalizedInput input);
     void setInputs(PlayerInput playerInput);

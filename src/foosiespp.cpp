@@ -2,8 +2,8 @@
 
 Game::Game()
 {
-    scene.players[0].init(&gameState.playerData[0], &gameState.playerBoxes[0], &gameState.playerProjectiles[0]);
-    scene.players[1].init(&gameState.playerData[1], &gameState.playerBoxes[1], &gameState.playerProjectiles[1]);
+    scene.players[0].init(gameState.inputHistory[0], &gameState.playerData[0], &gameState.playerBoxes[0], &gameState.playerProjectiles[0]);
+    scene.players[1].init(gameState.inputHistory[1], &gameState.playerData[1], &gameState.playerBoxes[1], &gameState.playerProjectiles[1]);
 
     scene.players[0].charMan[0].color = Color{50, 50, 50, 255};
     scene.players[0].controllerId = -1;
@@ -84,10 +84,10 @@ void Game::update()
 
         scene.players[0].checkCollisions(&scene.players[1], scene.stageHalfWidth);
         scene.players[1].checkCollisions(&scene.players[0], scene.stageHalfWidth);
-
-        scene.players[0].updateBoxes();
-        scene.players[1].updateBoxes();
     }
+
+    scene.players[0].updateBoxes();
+    scene.players[1].updateBoxes();
 }
 
 void Game::render()

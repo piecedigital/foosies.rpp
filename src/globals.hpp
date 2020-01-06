@@ -4,6 +4,9 @@
 #include "deps/raylib/raylib.h"
 #include "box.hpp"
 
+#define INPUT_HISTORY_MAX 20
+#define INPUT_BUFFER_MAX 5
+
 // structs
 struct Physical
 {
@@ -137,6 +140,7 @@ struct PlayerProjectiles
 struct GameState
 {
     int gameTimer = 90;
+    PlayerInput inputHistory[2][INPUT_HISTORY_MAX];
     PlayerData playerData[2];
     PlayerBoxes playerBoxes[2];
     PlayerProjectiles playerProjectiles[2];
