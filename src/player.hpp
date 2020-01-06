@@ -29,6 +29,7 @@ public:
      * 0 and up is a game pad
      */
     int controllerId;
+    // TODO: move input history to game state
     PlayerInput inputHistory[INPUT_HISTORY_MAX];
     int inputBufferLimit = 3;
 
