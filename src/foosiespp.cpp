@@ -105,12 +105,9 @@ void Game::render()
     devGui.beginRenderTexture();
     ClearBackground(RAYWHITE);
 #endif
-
-
     _drawScene();
 
     _drawUI();
-
 #ifdef _DEBUG
     devGui.endRenderTexture();
     _drawDevUI();
@@ -191,7 +188,7 @@ void Game::_dispatchNormalizedInputs(PlayerController &player)
         }
     }
 
-#ifdef DEBUG
+#ifdef _DEBUG
     if (!devGui.renderWindowIsFocused)
     {
         input = {0};

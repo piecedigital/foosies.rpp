@@ -9,6 +9,9 @@
 #include "character.hpp"
 #include "globals.hpp"
 
+#define INPUT_HISTORY_MAX 20
+#define INPUT_BUFFER_MAX 5
+
 class PlayerController
 {
 public:
@@ -26,7 +29,7 @@ public:
      * 0 and up is a game pad
      */
     int controllerId;
-    std::vector<PlayerInput> history;
+    PlayerInput inputHistory[INPUT_HISTORY_MAX];
     int inputBufferLimit = 3;
 
     PlayerController();

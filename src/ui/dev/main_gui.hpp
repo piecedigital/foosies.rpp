@@ -10,8 +10,8 @@ struct dgScene
     int stageHalfWidth = 700;
     int stepAllowance = 0;
     bool willStep = true;
-    // Camera3D cam;
-    // PlayerController players[2];
+    Camera3D cam;
+    PlayerController players[2];
 };
 
 class DevGui
@@ -39,6 +39,7 @@ private:
 
     void _displayPlayerInfo(int playerId);
     void _displayStateManipButtons();
+    void _displayPlayerInputHistory(int playerId);
     void _displayRenderWindow();
 
     void _saveGameState();

@@ -13,8 +13,6 @@ PlayerController::~PlayerController()
 
 void PlayerController::init(PlayerData *pd, PlayerBoxes *pb, PlayerProjectiles *pp)
 {
-    history = std::vector<PlayerInput>{0};
-
     playerData = pd;
     playerBoxes = pb;
     playerProjectiles = pp;
@@ -126,11 +124,21 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
     //     setFlag(*playerInput, PlayerInput::START);
     // if (normInput.HOME)
     //     setFlag(*playerInput, PlayerInput::HOME);
+    setInputs(*playerInput);
 };
 
 void PlayerController::setInputs(PlayerInput playerInput)
 {
     playerData->input = playerInput;
+
+    PlayerInput currentInput;
+    PlayerInput newInput = playerInput;
+    for (int i = 0; i < INPUT_HISTORY_MAX; i++)
+    {
+        currentInput = inputHistory[i];
+        inputHistory[i] = newInput;
+        newInput = currentInput;
+    }
 }
 
 void PlayerController::processInputs()

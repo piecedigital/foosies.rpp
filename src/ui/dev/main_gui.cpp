@@ -43,10 +43,12 @@ void DevGui::imguiUpdate()
     ImGui::AlignTextToFramePadding();
 
     // render your GUI
+    _displayRenderWindow();
     _displayPlayerInfo(0);
     _displayPlayerInfo(1);
+    _displayPlayerInputHistory(0);
+    // _displayPlayerInputHistory(1);
     _displayStateManipButtons();
-    _displayRenderWindow();
 
     // Render dear imgui into screen
     ImGui::Render();
@@ -124,6 +126,18 @@ void DevGui::_displayStateManipButtons()
     ImGui::End();
 }
 
+void DevGui::_displayPlayerInputHistory(int playerId)
+{
+    ImGui::Begin(std::string("Player ").append(std::to_string(playerId)).append(" Input History").c_str());
+
+    for (int i = 0; i < INPUT_HISTORY_MAX; i++)
+    {
+        ImGui::Text(std::to_string(scene->players[playerId].inputHistory[i]).c_str());
+    }
+
+    ImGui::End();
+}
+
 void DevGui::_displayRenderWindow()
 {
     ImGui::SetNextWindowSizeConstraints({50.f, 50.f}, {(float)GetScreenWidth(), (float)GetScreenHeight()}, _SixteenNineAspectRatio);
@@ -132,25 +146,28 @@ void DevGui::_displayRenderWindow()
     renderWindowIsFocused = ImGui::IsWindowFocused();
     ImVec2 wp = ImGui::GetWindowPos();
 
-    DrawTexturePro(renderTexture.texture,
-        {
+    if (!ImGui::IsWindowCollapsed())
+    {
+        DrawTexturePro(renderTexture.texture,
+            {
+                0.f,
+                0.f,
+                (float)renderTexture.texture.width,
+                (float)-renderTexture.texture.height
+            },
+            {
+                wp.x,
+                wp.y + 20.f,
+                (float)ImGui::GetWindowWidth(),
+                (float)ImGui::GetWindowHeight() - 20
+            },
+            {
+                0,
+                0
+            },
             0.f,
-            0.f,
-            (float)renderTexture.texture.width,
-            (float)-renderTexture.texture.height
-        },
-        {
-            wp.x,
-            wp.y + 20.f,
-            (float)ImGui::GetWindowWidth(),
-            (float)ImGui::GetWindowHeight() - 20
-        },
-        {
-            0,
-            0
-        },
-        0.f,
-        WHITE);
+            WHITE);
+    }
 
     ImGui::End();
 }
@@ -166,10 +183,10 @@ void DevGui::_saveGameState()
     }
     memcpy(gsBuffer, gameState, gsLen);
     gameState->playerData[0].vitality -= 10;
-    std::ofstream file;
-    file.open("buffer.txt", std::ofstream::out | std::ofstream::binary);
-    file << (void *)*gsBuffer;
-    file.close();
+    // std::ofstream file;
+    // file.open("buffer.txt", std::ofstream::out | std::ofstream::binary);
+    // file << (void *)*gsBuffer;
+    // file.close();
 }
 
 void DevGui::_loadGameState()
@@ -177,12 +194,11 @@ void DevGui::_loadGameState()
     std::cout << "Clicked: Load State" << std::endl;
 
     std::ifstream file;
-    file.open("buffer.txt", std::ofstream::in | std::ofstream::binary);
-    int dataSize = file.tellg();
-    char *data = new char[dataSize];
-    file.read(data, dataSize);
-    file.close();
-    // memcpy(gameState, data, gsLen);
+    // file.open("buffer.txt", std::ofstream::in | std::ofstream::binary);
+    // int dataSize = file.tellg();
+    // char *data = new char[dataSize];
+    // file.read(data, dataSize);
+    // file.close();
     memcpy(gameState, gsBuffer, gsLen);
 }
 

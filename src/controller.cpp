@@ -54,108 +54,63 @@ void Controller::pollNormalizedInputs()
 
     if (_IsInputDown("up") || _IsAxisTilted("up"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]DIR_V += 1" << std::endl;
-        #endif
         inputs.DIR_V += 1;
     }
     if (_IsInputDown("down") || _IsAxisTilted("down"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]DIR_V -= 1" << std::endl;
-        #endif
         inputs.DIR_V -= 1;
     }
 
     if (_IsInputDown("left") || _IsAxisTilted("left"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]DIR_H -= 1" << std::endl;
-        #endif
         inputs.DIR_H -= 1;
     }
     if (_IsInputDown("right") || _IsAxisTilted("right"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]DIR_H += 1" << std::endl;
-        #endif
         inputs.DIR_H += 1;
     }
     if (_IsInputPressed("face_up"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]FACE_UP = true" << std::endl;
-        #endif
         inputs.FACE_UP = true;
     }
     if (_IsInputPressed("face_down"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]FACE_DOWN = true" << std::endl;
-        #endif
         inputs.FACE_DOWN = true;
     }
     if (_IsInputPressed("face_left"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]FACE_LEFT = true" << std::endl;
-        #endif
         inputs.FACE_LEFT = true;
     }
     if (_IsInputPressed("face_right"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]FACE_RIGHT = true" << std::endl;
-        #endif
         inputs.FACE_RIGHT = true;
     }
     if (_IsInputPressed("shoulder_left"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]SHOULDER_L = true" << std::endl;
-        #endif
         inputs.SHOULDER_L = true;
     }
     if (_IsInputPressed("shoulder_right"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]SHOULDER_R = true" << std::endl;
-        #endif
         inputs.SHOULDER_R = true;
     }
     if (_IsInputPressed("trigger_left"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]TRIGGER_L = true" << std::endl;
-        #endif
         inputs.TRIGGER_L = true;
     }
     if (_IsInputPressed("trigger_right"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]TRIGGER_R = true" << std::endl;
-        #endif
         inputs.TRIGGER_R = true;
     }
     if (_IsInputPressed("back"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]BACK = true" << std::endl;
-        #endif
         inputs.BACK = true;
     }
     if (_IsInputPressed("home"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]HOME = true" << std::endl;
-        #endif
         inputs.HOME = true;
     }
     if (_IsInputPressed("start"))
     {
-        #ifdef _DEBUG
-        // std::cout << "[" + std::to_string(padId) + "]START = true" << std::endl;
-        #endif
         inputs.START = true;
     }
 }
