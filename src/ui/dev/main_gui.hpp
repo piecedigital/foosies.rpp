@@ -22,7 +22,7 @@ public:
     dgScene scene;
     GameState gameState;
     Session *session;
-    std::vector<Controller> controllers;
+    Controller controllers[MAX_KEYBOARDS + MAX_GAMEPADS];
     Controller keyboard;
 };
 

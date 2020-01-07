@@ -6,14 +6,25 @@
 #include "deps/raylib/raylib.h"
 #include "globals.hpp"
 
+#define MAX_KEYBOARDS 1
+#define MAX_GAMEPADS 4
+
+enum ControllerType
+{
+    gamepad = 0,
+    keyboard,
+};
+
 class Controller
 {
 public:
-    int padId;
-    const char *name;
-    NormalizedInput inputs;
+    int padId = -1;
+    ControllerType controllerType = ControllerType::keyboard;
+    bool available = false;
+    const char *name = "";
+    NormalizedInput inputs = {0};
 
-    Controller(unsigned int padId, const char *name);
+    Controller(unsigned int padId, ControllerType type, const char *name);
     Controller();
     ~Controller();
     void pollNormalizedInputs();

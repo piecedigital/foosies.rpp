@@ -25,7 +25,7 @@ public:
      * -1 is the keyboard
      * 0 and up is a game pad
      */
-    int controllerId;
+    int controllerId = -1;
     // TODO: move input history to game state
     PlayerInput *inputHistory;
 

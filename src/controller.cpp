@@ -1,15 +1,16 @@
 #include "controller.hpp"
 
-Controller::Controller(unsigned int padId, const char *name)
+Controller::Controller(unsigned int padId, ControllerType type, const char *name)
 {
-    Controller::padId = padId;
-    Controller::name = name;
-    Controller::axisThresholdH = 0.5;
-    Controller::axisThresholdV = 0.5;
-    Controller::axisAbsoluteH = 0;
-    Controller::axisAbsoluteV = 0;
-    Controller::axisChangedH = false;
-    Controller::axisChangedV = false;
+    this->padId = padId;
+    this->name = name;
+    this->controllerType = type;
+    this->axisThresholdH = 0.5;
+    this->axisThresholdV = 0.5;
+    this->axisAbsoluteH = 0;
+    this->axisAbsoluteV = 0;
+    this->axisChangedH = false;
+    this->axisChangedV = false;
 }
 
 Controller::Controller()

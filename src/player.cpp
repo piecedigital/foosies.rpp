@@ -61,7 +61,6 @@ void PlayerController::updateFacing(PlayerController *otherPlayer)
 
 void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 {
-    // PlayerInput playerInput = PlayerInput();
     PlayerInput *playerInput = &playerData->input;
     *playerInput = PlayerInput::NONE;
 

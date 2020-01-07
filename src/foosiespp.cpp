@@ -2,11 +2,25 @@
 
 Game::Game()
 {
+    for (int i = 0; i < MAX_KEYBOARDS + MAX_GAMEPADS; i++)
+    {
+        controllers[i].name = "";
+        controllers[i].padId = i - MAX_KEYBOARDS;
+        controllers[i].controllerType = ControllerType::gamepad;
+
+        if (i < MAX_KEYBOARDS)
+        {
+            controllers[i].name = "Keyboard";
+            controllers[i].controllerType = ControllerType::keyboard;
+        }
+    }
+
+
     scene.players[0].init(gameState.inputHistory[0], &gameState.playerData[0], &gameState.playerBoxes[0], &gameState.playerProjectiles[0]);
     scene.players[1].init(gameState.inputHistory[1], &gameState.playerData[1], &gameState.playerBoxes[1], &gameState.playerProjectiles[1]);
 
     scene.players[0].charMan[0].color = Color{50, 50, 50, 255};
-    scene.players[0].controllerId = -1;
+    scene.players[0].controllerId = 0;
     scene.players[1].playerData->sideFace = -1;
     scene.players[1].playerData->actionFace = -1;
 
@@ -131,68 +145,50 @@ void Game::deleteSession()
     }
 }
 
-// TODO: rework. don't delete controllers. keep them. add a flag for availability instead
 void Game::_aggregateGamepadInputs()
 {
     unsigned int maxPads = 4;
     int padsAvailable = 0;
 
-    // get input for keyboard
-    keyboard.pollNormalizedInputs();
-
     // get input for gamepads
-    for (unsigned int padId = 0; padId < maxPads; padId++)
+    for (unsigned int controllerId = 0; controllerId < maxPads; controllerId++)
     {
-        if (IsGamepadAvailable(padId))
+        if (controllers[controllerId].controllerType == ControllerType::keyboard)
         {
-            padsAvailable++;
-
-            if (padId < controllers.size())
-            {
-                if (GetGamepadName(padId) != controllers.at(padId).name)
-                {
-                    controllers.erase(controllers.begin() + padId);
-                    controllers.emplace(controllers.begin() + padId, Controller(padId, GetGamepadName(padId)));
-                }
-            }
-            else
-            {
-                controllers.push_back(Controller(padId, GetGamepadName(padId)));
-            }
-
-            controllers.at(padId).pollNormalizedInputs();
+            controllers[controllerId].pollNormalizedInputs();
         }
-    }
-
-    if (padsAvailable > controllers.size())
-    {
-        controllers.erase(controllers.begin() + padsAvailable - 1, controllers.end());
+        else if (IsGamepadAvailable(controllerId))
+        {
+            controllers[controllerId].available = true;
+            controllers[controllerId].name = GetGamepadName(controllers[controllerId].padId);
+            controllers[controllerId].pollNormalizedInputs();
+        }
+        else
+        {
+            controllers[controllerId].available = false;
+            controllers[controllerId].name = "";
+        }
     }
 }
 
 void Game::_dispatchNormalizedInputs(PlayerController &player)
 {
-    NormalizedInput input;
-
-    if (player.controllerId > -2)
+    if (player.controllerId > -1)
     {
-        if (player.controllerId == -1)
+#ifdef _DEBUG
+        if (devGui.renderWindowIsFocused)
         {
-            input = keyboard.inputs;
+            player.normalizedToPlayerInput(controllers[player.controllerId].inputs);
         }
         else
         {
-            input = controllers[player.controllerId].inputs;
+            player.normalizedToPlayerInput({0});
         }
+#else
+        player.normalizedToPlayerInput(controllers[player.controllerId].inputs);
+#endif
     }
 
-#ifdef _DEBUG
-    if (!devGui.renderWindowIsFocused)
-    {
-        input = {0};
-    }
-#endif
-    player.normalizedToPlayerInput(input);
 }
 
 void Game::_drawScene()

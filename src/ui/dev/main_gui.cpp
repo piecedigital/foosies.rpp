@@ -88,6 +88,7 @@ void DevGui::_displayPlayerInfo(int playerId)
 {
     ImGui::Begin(std::string("Player ").append(std::to_string(playerId)).append(" info").c_str());
 
+    ImGui::Text("Controller: %i", game->scene.players[playerId].controllerId);
     ImGui::Text("Action Face: %i", game->gameState.playerData[playerId].actionFace);
     ImGui::Text("Side Face: %i", game->gameState.playerData[playerId].sideFace);
     ImGui::Text("Physical:");
@@ -155,11 +156,9 @@ void DevGui::_displayAvailableControllers()
 {
     ImGui::Begin("Controllers");
 
-    ImGui::Text("Keyboard");
-    std::cout << "pad: " << game->controllers.size() << std::endl;
-    for (int i = 0; i < game->controllers.size(); i++)
+    for (int i = 0; i < MAX_KEYBOARDS + MAX_GAMEPADS; i++)
     {
-        ImGui::Text(game->controllers.at(i).name);
+        ImGui::Text(game->controllers[i].name);
     }
 
     ImGui::End();
