@@ -107,14 +107,14 @@ void DevGui::_displayStateManipButtons()
     ImGui::Begin("State Manipulation");
     ImGui::Columns(4);
 
-    if(ImGui::Button("Save State"))
+    if(ImGui::Button("Save State") || IsKeyPressed(KEY_Z))
     {
         _saveGameState();
     }
 
     ImGui::NextColumn();
 
-    if (ImGui::Button("Load State"))
+    if (ImGui::Button("Load State") || IsKeyPressed(KEY_X))
     {
         _loadGameState();
     }
@@ -124,7 +124,7 @@ void DevGui::_displayStateManipButtons()
     ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Button, game->scene.willStep ? xGREEN : xRED);
     ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ButtonHovered, game->scene.willStep ? xGREENHover : xREDHover);
     ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Text, game->scene.willStep ? xBLACK : xWHITE);
-    if (ImGui::Button("Toggle Update"))
+    if (ImGui::Button("Toggle Update") || IsKeyPressed(KEY_C))
     {
         _toggleUpdate();
     }
@@ -132,7 +132,7 @@ void DevGui::_displayStateManipButtons()
 
     ImGui::NextColumn();
 
-    if (ImGui::Button("Step Update"))
+    if (ImGui::Button("Step Update") || IsKeyPressed(KEY_V))
     {
         _stepUpdate();
     }
