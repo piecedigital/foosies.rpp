@@ -14,10 +14,9 @@ ImVec4 xBLACK = {(float)BLACK.r / 255, (float)BLACK.g / 255, (float)BLACK.b / 25
 ImVec4 xWHITE = {(float)WHITE.r / 255, (float)WHITE.g / 255, (float)WHITE.b / 255, (float)WHITE.a / 255};
 
 // Music music;
-void DevGui::imguiInit(dgScene *s, GameState *gs)
+void DevGui::imguiInit(void *g)
 {
-    scene = s;
-    gameState = gs;
+    game = (dgGame *)g;
 
     _saveGameState();
 
@@ -50,12 +49,15 @@ void DevGui::imguiUpdate()
     ImGui::AlignTextToFramePadding();
 
     // render your GUI
-    _displayRenderWindow();
     _displayPlayerInfo(0);
     _displayPlayerInfo(1);
     _displayPlayerInputHistory(0);
     _displayPlayerInputHistory(1);
     _displayStateManipButtons();
+    _displayAvailableControllers();
+    _displayPlayerController(0);
+    _displayPlayerController(1);
+    _displayRenderWindow();
 
     // Render dear imgui into screen
     ImGui::Render();
@@ -86,13 +88,13 @@ void DevGui::_displayPlayerInfo(int playerId)
 {
     ImGui::Begin(std::string("Player ").append(std::to_string(playerId)).append(" info").c_str());
 
-    ImGui::Text("Action Face: %i", gameState->playerData[playerId].actionFace);
-    ImGui::Text("Side Face: %i", gameState->playerData[playerId].sideFace);
+    ImGui::Text("Action Face: %i", game->gameState.playerData[playerId].actionFace);
+    ImGui::Text("Side Face: %i", game->gameState.playerData[playerId].sideFace);
     ImGui::Text("Physical:");
-    ImGui::Text("       X: %i", gameState->playerData[playerId].physical.x);
-    ImGui::Text("       Y: %i", gameState->playerData[playerId].physical.y);
-    ImGui::Text("  HSpeed: %i", gameState->playerData[playerId].physical.HSpeed);
-    ImGui::Text("  VSpeed: %i", gameState->playerData[playerId].physical.VSpeed);
+    ImGui::Text("       X: %i", game->gameState.playerData[playerId].physical.x);
+    ImGui::Text("       Y: %i", game->gameState.playerData[playerId].physical.y);
+    ImGui::Text("  HSpeed: %i", game->gameState.playerData[playerId].physical.HSpeed);
+    ImGui::Text("  VSpeed: %i", game->gameState.playerData[playerId].physical.VSpeed);
     char buf[254] = "";
     ImGui::InputText("Test", buf, 254);
 
@@ -118,9 +120,9 @@ void DevGui::_displayStateManipButtons()
 
     ImGui::NextColumn();
 
-    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Button, scene->willStep ? xGREEN : xRED);
-    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ButtonHovered, scene->willStep ? xGREENHover : xREDHover);
-    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Text, scene->willStep ? xBLACK : xWHITE);
+    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Button, game->scene.willStep ? xGREEN : xRED);
+    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ButtonHovered, game->scene.willStep ? xGREENHover : xREDHover);
+    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Text, game->scene.willStep ? xBLACK : xWHITE);
     if (ImGui::Button("Toggle Update"))
     {
         _toggleUpdate();
@@ -143,11 +145,28 @@ void DevGui::_displayPlayerInputHistory(int playerId)
 
     for (int i = 0; i < INPUT_HISTORY_MAX; i++)
     {
-        ImGui::Text(std::to_string(gameState->inputHistory[playerId][i]).c_str());
+        ImGui::Text(std::to_string(game->gameState.inputHistory[playerId][i]).c_str());
     }
 
     ImGui::End();
 }
+
+void DevGui::_displayAvailableControllers()
+{
+    ImGui::Begin("Controllers");
+
+    ImGui::Text("Keyboard");
+    std::cout << "pad: " << game->controllers.size() << std::endl;
+    for (int i = 0; i < game->controllers.size(); i++)
+    {
+        ImGui::Text(game->controllers.at(i).name);
+    }
+
+    ImGui::End();
+}
+
+void DevGui::_displayPlayerController(int playerId)
+{}
 
 void DevGui::_displayRenderWindow()
 {
@@ -186,14 +205,14 @@ void DevGui::_displayRenderWindow()
 void DevGui::_saveGameState()
 {
     std::cout << "Clicked: Save State" << std::endl;
-    gsLen = sizeof(*gameState);
+    gsLen = sizeof(game->gameState);
     gsBuffer = (unsigned char *)malloc(gsLen);
     if (!*gsBuffer)
     {
         return;
     }
-    memcpy(gsBuffer, gameState, gsLen);
-    gameState->playerData[0].vitality -= 10;
+    memcpy(gsBuffer, &game->gameState, gsLen);
+    game->gameState.playerData[0].vitality -= 10;
     // std::ofstream file;
     // file.open("buffer.txt", std::ofstream::out | std::ofstream::binary);
     // file << (void *)*gsBuffer;
@@ -210,16 +229,16 @@ void DevGui::_loadGameState()
     // char *data = new char[dataSize];
     // file.read(data, dataSize);
     // file.close();
-    memcpy(gameState, gsBuffer, gsLen);
+    memcpy(&game->gameState, gsBuffer, gsLen);
 }
 
 void DevGui::_toggleUpdate()
 {
-    scene->willStep = !scene->willStep;
+    game->scene.willStep = !game->scene.willStep;
 }
 
 void DevGui::_stepUpdate(int allowance)
 {
-    scene->willStep = false;
-    scene->stepAllowance = allowance;
+    game->scene.willStep = false;
+    game->scene.stepAllowance = allowance;
 }

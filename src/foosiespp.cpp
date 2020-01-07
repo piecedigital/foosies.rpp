@@ -42,7 +42,7 @@ int Game::init()
     SetTargetFPS(scene.targetFPS);
 
 #ifdef _DEBUG
-    devGui.imguiInit((dgScene *)&scene, &gameState);
+    devGui.imguiInit(this);
 #endif
     while (!WindowShouldClose())
     {
@@ -96,13 +96,10 @@ void Game::render()
 
 #ifdef _DEBUG
     ClearBackground(GRAY);
-#else
-    ClearBackground(RAYWHITE);
-#endif
-
-#ifdef _DEBUG
     DrawFPS(10, 10);
     devGui.beginRenderTexture();
+    ClearBackground(RAYWHITE);
+#else
     ClearBackground(RAYWHITE);
 #endif
     _drawScene();
@@ -134,6 +131,7 @@ void Game::deleteSession()
     }
 }
 
+// TODO: rework. don't delete controllers. keep them. add a flag for availability instead
 void Game::_aggregateGamepadInputs()
 {
     unsigned int maxPads = 4;
@@ -166,7 +164,7 @@ void Game::_aggregateGamepadInputs()
         }
     }
 
-    if (padsAvailable > 0)
+    if (padsAvailable > controllers.size())
     {
         controllers.erase(controllers.begin() + padsAvailable - 1, controllers.end());
     }

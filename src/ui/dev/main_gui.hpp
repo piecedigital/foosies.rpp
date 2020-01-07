@@ -1,5 +1,7 @@
 #include "../../globals.hpp"
 #include "../../player.hpp"
+#include "../../controller.hpp"
+#include "../../session.hpp"
 #include "../../deps/imgui/imgui.h"
 #include "../../deps/imgui/imgui_impl_glfw.h"
 #include "../../deps/imgui/imgui_impl_opengl3.h"
@@ -14,12 +16,22 @@ struct dgScene
     PlayerController players[2];
 };
 
+class dgGame
+{
+public:
+    dgScene scene;
+    GameState gameState;
+    Session *session;
+    std::vector<Controller> controllers;
+    Controller keyboard;
+};
+
 class DevGui
 {
 public:
     RenderTexture renderTexture;
 
-    void imguiInit(dgScene *scene, GameState *gs);
+    void imguiInit(void *);
     void imguiUpdate();
     void beginRenderTexture();
     void endRenderTexture();
@@ -34,12 +46,13 @@ public:
 private:
     int gsLen;
     unsigned char *gsBuffer;
-    dgScene *scene;
-    GameState *gameState;
+    dgGame *game;
 
     void _displayPlayerInfo(int playerId);
     void _displayStateManipButtons();
     void _displayPlayerInputHistory(int playerId);
+    void _displayAvailableControllers();
+    void _displayPlayerController(int playerId);
     void _displayRenderWindow();
 
     void _saveGameState();

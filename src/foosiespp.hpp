@@ -16,11 +16,6 @@
 #include "ui/dev/main_gui.hpp"
 #endif
 
-struct Grid {
-    int hCells;
-    int vCells;
-};
-
 struct Scene {
     int targetFPS;
     int stageHalfWidth = 700;
@@ -33,7 +28,6 @@ struct Scene {
 class Game
 {
 public:
-    Grid grid;
     Scene scene;
     GameState gameState;
     Session *session;

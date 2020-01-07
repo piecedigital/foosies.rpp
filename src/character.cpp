@@ -47,7 +47,7 @@ void Character::render()
         (*playerData)->transform.translation.x + 1,
         (*playerData)->transform.translation.y + 1,
         (*playerData)->transform.translation.z + 1};
-    SetShaderValue(model.materials[0].shader, GetShaderLocation(model.materials[0].shader, "lightPosition"), lightPos, UNIFORM_VEC3);
+    // SetShaderValue(model.materials[0].shader, GetShaderLocation(model.materials[0].shader, "lightPosition"), lightPos, UNIFORM_VEC3);
 
     if (*playerData != NULL)
     {
