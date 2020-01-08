@@ -10,6 +10,8 @@
 class Character
 {
 public:
+    int bodyWidth;
+    int bodyHeight;
     Color color;
     Model model;
     ModelAnimation anim;

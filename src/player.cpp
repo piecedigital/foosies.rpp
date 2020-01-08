@@ -179,9 +179,12 @@ void PlayerController::processInputs()
 
 void PlayerController::updateBoxes()
 {
-    int crouchModifierA = _isCrouched() ? 2 : 1;
-    int crouchModifierB = !_isCrouched() ? 2 : 1;
-    playerBoxes->pushBoxArray[0].updateBox(playerData->physical.x, playerData->physical.y + (100 / crouchModifierA), 100, 100 * crouchModifierB);
+    int crouchModifier = _isCrouched() ? 2 : 1;
+    playerBoxes->pushBoxArray[0].updateBox(
+        playerData->physical.x,
+        playerData->physical.y + ((charMan[0].bodyHeight / 2) * crouchModifier),
+        charMan[0].bodyWidth,
+        charMan[0].bodyHeight / crouchModifier);
 }
 
 void PlayerController::checkCollisions(PlayerController *otherPlayer, int stageHalfWidth)

@@ -3,6 +3,8 @@
 
 Character::Character()
 {
+    bodyWidth = 100;
+    bodyHeight = 200;
     color = BLACK;
     model = LoadModel("assets/models/characters/d-func/d-func.obj");
     for (int i = 0; i < model.materialCount; i++)

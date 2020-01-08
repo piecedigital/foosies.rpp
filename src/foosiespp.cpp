@@ -147,8 +147,7 @@ void Game::deleteSession()
 
 void Game::_aggregateGamepadInputs()
 {
-    unsigned int maxPads = 4;
-    int padsAvailable = 0;
+    unsigned int maxPads = MAX_KEYBOARDS + MAX_GAMEPADS;
 
     // get input for gamepads
     for (unsigned int controllerId = 0; controllerId < maxPads; controllerId++)
@@ -157,7 +156,7 @@ void Game::_aggregateGamepadInputs()
         {
             controllers[controllerId].pollNormalizedInputs();
         }
-        else if (IsGamepadAvailable(controllerId))
+        else if (IsGamepadAvailable(controllers[controllerId].padId))
         {
             controllers[controllerId].available = true;
             controllers[controllerId].name = GetGamepadName(controllers[controllerId].padId);

@@ -49,6 +49,7 @@ private:
     dgGame *game;
 
     void _displayPlayerInfo(int playerId);
+    void _displayPlayerTweakers(int playerId);
     void _displayStateManipButtons();
     void _displayPlayerInputHistory(int playerId);
     void _displayAvailableControllers();

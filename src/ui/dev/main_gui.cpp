@@ -51,6 +51,8 @@ void DevGui::imguiUpdate()
     // render your GUI
     _displayPlayerInfo(0);
     _displayPlayerInfo(1);
+    _displayPlayerTweakers(0);
+    _displayPlayerTweakers(1);
     _displayPlayerInputHistory(0);
     _displayPlayerInputHistory(1);
     _displayStateManipButtons();
@@ -98,6 +100,16 @@ void DevGui::_displayPlayerInfo(int playerId)
     ImGui::Text("  VSpeed: %i", game->gameState.playerData[playerId].physical.VSpeed);
     char buf[254] = "";
     ImGui::InputText("Test", buf, 254);
+
+    ImGui::End();
+}
+
+void DevGui::_displayPlayerTweakers(int playerId)
+{
+    ImGui::Begin(std::string("Player ").append(std::to_string(playerId)).append(" Tweaker").c_str());
+
+    ImGui::SliderInt("Body Width", &game->scene.players[playerId].charMan[0].bodyWidth, 100, 200);
+    ImGui::SliderInt("Body Height", &game->scene.players[playerId].charMan[0].bodyHeight, 100, 400);
 
     ImGui::End();
 }
@@ -158,7 +170,7 @@ void DevGui::_displayAvailableControllers()
 
     for (int i = 0; i < MAX_KEYBOARDS + MAX_GAMEPADS; i++)
     {
-        ImGui::Text(game->controllers[i].name);
+        ImGui::Text("(%d) %s", game->controllers[i].controllerType, game->controllers[i].name);
     }
 
     ImGui::End();
