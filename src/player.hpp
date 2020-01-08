@@ -9,6 +9,40 @@
 #include "character.hpp"
 #include "globals.hpp"
 
+struct CommandTypes
+{
+    PlayerInput HCF_Precise[5];
+    // PlayerInput HCF[5];
+    PlayerInput HCB_Precise[5];
+    // PlayerInput HCB[5];
+    PlayerInput DPF_Precise[3];
+    // PlayerInput DPF[3];
+    PlayerInput DPB_Precise[3];
+    // PlayerInput DPB[3];
+    PlayerInput QCF_Precise[3];
+    // PlayerInput QCF[3];
+    PlayerInput QCB_Precise[3];
+    // PlayerInput QCB[3];
+    PlayerInput FF[3];
+    PlayerInput BB[3];
+    int HCSize = 5;
+    int DPSize = 3;
+    int QCSize = 3;
+    int FFSize = 3;
+    int BBSize = 3;
+};
+
+static CommandTypes commandsTypes = {
+    {PlayerInput::DIR_BACK, PlayerInput::DIR_DOWNBACK, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNTOWARD, PlayerInput::DIR_TOWARD}, // HCF_Precise
+    {PlayerInput::DIR_TOWARD, PlayerInput::DIR_DOWNTOWARD, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNBACK, PlayerInput::DIR_BACK}, // HCB_Precise
+    {PlayerInput::DIR_TOWARD, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNTOWARD},                                                   // DPF_Precise
+    {PlayerInput::DIR_BACK, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNBACK},                                                       // DPB_Precise
+    {PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNTOWARD, PlayerInput::DIR_TOWARD},                                                  // QCF_Precise
+    {PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNBACK, PlayerInput::DIR_BACK},                                                  // QCB_Precise
+    {0},                                                                                                                             // FF
+    {0},                                                                                                                             // BB
+};
+
 class PlayerController
 {
 public:
@@ -21,12 +55,10 @@ public:
 
     /**
      * The id of the controller passing inputs to the player
-     * -2 is the default, meaning no controller
-     * -1 is the keyboard
-     * 0 and up is a game pad
+     * -1 is the default, meaning no controller
+     * 0 is the keyboard, and 1+ is a gamepad
      */
     int controllerId = -1;
-    // TODO: move input history to game state
     PlayerInput *inputHistory;
 
     PlayerController();
@@ -43,10 +75,9 @@ public:
     void updatePhysics();
 
 private:
-    // void _applyForces(PlayerController *otherPlayer, int stageHalfWidth);
-    // void _recalcForces();
     bool _isGrounded();
     bool _isCrouched();
+    bool _detectCommand();
 };
 
 #endif

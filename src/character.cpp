@@ -14,9 +14,9 @@ Character::Character()
         float cameraPos[3] = {0.f, 3.f, 2.f};
 
         float lightPos[3] = {
-            1.f,
-            1.f,
-            1.f};
+            2.f,
+            6.f,
+            2.f};
 
         SetShaderValue(shader, GetShaderLocation(shader, "color"), &model.materials[i].maps[MAP_ALBEDO].color, UNIFORM_VEC3);
         SetShaderValue(shader, GetShaderLocation(shader, "lightPosition"), lightPos, UNIFORM_VEC3);

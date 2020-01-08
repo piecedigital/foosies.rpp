@@ -182,7 +182,7 @@ void PlayerController::updateBoxes()
     int crouchModifier = _isCrouched() ? 2 : 1;
     playerBoxes->pushBoxArray[0].updateBox(
         playerData->physical.x,
-        playerData->physical.y + ((charMan[0].bodyHeight / 2) * crouchModifier),
+        playerData->physical.y + ((charMan[0].bodyHeight / 2) / (crouchModifier)),
         charMan[0].bodyWidth,
         charMan[0].bodyHeight / crouchModifier);
 }
