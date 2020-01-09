@@ -1,7 +1,7 @@
 #ifndef CUSTOM_TYPES_H
 #define CUSTOM_TYPES_H
 
-#include "deps/raylib/raylib.h"
+#include "deps/raylib/raylib.h";
 #include "box.hpp"
 
 #define INPUT_HISTORY_MAX 20

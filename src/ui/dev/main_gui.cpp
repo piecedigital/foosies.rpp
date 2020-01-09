@@ -3,8 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include "../../deps/raylib/raylib.h"
-// #include "../../deps/raylib/raudio.h"
-// #include "../../audio.hpp"
+#include "../../deps/raylib/external/miniaudio.h"
 
 ImVec4 xGREEN = {(float)GREEN.r / 255 - 0.1, (float)GREEN.g / 255 - 0.1, (float)GREEN.b / 255 - 0.1, (float)GREEN.a / 255};
 ImVec4 xGREENHover = {(float)GREEN.r / 255, (float)GREEN.g / 255, (float)GREEN.b / 255, (float)GREEN.a / 255};
@@ -13,17 +12,11 @@ ImVec4 xREDHover = {(float)RED.r / 255, (float)RED.g / 255, (float)RED.b / 255, 
 ImVec4 xBLACK = {(float)BLACK.r / 255, (float)BLACK.g / 255, (float)BLACK.b / 255, (float)BLACK.a / 255};
 ImVec4 xWHITE = {(float)WHITE.r / 255, (float)WHITE.g / 255, (float)WHITE.b / 255, (float)WHITE.a / 255};
 
-// Music music;
 void DevGui::imguiInit(void *g)
 {
     game = (dgGame *)g;
 
     _saveGameState();
-
-    // music = LoadMusicStream("assets/audio/spawn.mp3");
-    // PlayMusicStream(music);
-    // AudioStream ss = music.stream;
-    // RigmocAudio::rAudioBuffer *ab = ss.buffer;
 
     renderTexture = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
 

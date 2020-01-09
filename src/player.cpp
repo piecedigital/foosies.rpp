@@ -1,5 +1,8 @@
 #include <algorithm>
+#include "deps/raylib/raylib.h"
 #include "player.hpp"
+
+// Movelist testmovelist
 
 PlayerController::PlayerController()
 {
@@ -186,7 +189,7 @@ void PlayerController::processInputs()
         }
     }
 
-    _detectCommand();
+    // Rigmoc::Actions::detectCommand(playerData->input, testmovelist);
 }
 
 bool PlayerController::_noDirInput()

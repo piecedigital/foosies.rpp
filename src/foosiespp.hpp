@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include "../bin/ggponet.h"
-#include "deps/raylib/raylib.h"
+#include "deps/raylib/raylib.h";
 #include "globals.hpp"
 #include "button.hpp"
 #include "controller.hpp"
