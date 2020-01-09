@@ -129,6 +129,16 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 
 void PlayerController::setInputs(PlayerInput playerInput)
 {
+    if (_noDirInput())
+    {
+        setFlag(playerInput, PlayerInput::NO_DIR);
+    }
+
+    if (_noBtnInput())
+    {
+        setFlag(playerInput, PlayerInput::NO_BTN);
+    }
+
     playerData->input = playerInput;
 
     PlayerInput currentInput;
@@ -175,6 +185,38 @@ void PlayerController::processInputs()
             }
         }
     }
+
+    _detectCommand();
+}
+
+bool PlayerController::_noDirInput()
+{
+    return !hasFlag(playerData->input, PlayerInput::DIR_UP) &&
+           !hasFlag(playerData->input, PlayerInput::DIR_DOWN) &&
+           !hasFlag(playerData->input, PlayerInput::DIR_BACK) &&
+           !hasFlag(playerData->input, PlayerInput::DIR_TOWARD) &&
+           !hasFlag(playerData->input, PlayerInput::DIR_UPBACK) &&
+           !hasFlag(playerData->input, PlayerInput::DIR_UPTOWARD) &&
+           !hasFlag(playerData->input, PlayerInput::DIR_DOWNBACK) &&
+           !hasFlag(playerData->input, PlayerInput::DIR_DOWNTOWARD) &&
+           !hasFlag(playerData->input, PlayerInput::DIR_ANY_UP) &&
+           !hasFlag(playerData->input, PlayerInput::DIR_ANY_DOWN) &&
+           !hasFlag(playerData->input, PlayerInput::DIR_ANY_BACK) &&
+           !hasFlag(playerData->input, PlayerInput::DIR_ANY_TOWARD) &&
+           !hasFlag(playerData->input, PlayerInput::DIR_LEFT) &&
+           !hasFlag(playerData->input, PlayerInput::DIR_RIGHT);
+}
+
+bool PlayerController::_noBtnInput()
+{
+    return !hasFlag(playerData->input, PlayerInput::BTN_JAB) &&
+           !hasFlag(playerData->input, PlayerInput::BTN_STRONG) &&
+           !hasFlag(playerData->input, PlayerInput::BTN_FIERCE) &&
+           !hasFlag(playerData->input, PlayerInput::BTN_SHORT) &&
+           !hasFlag(playerData->input, PlayerInput::BTN_FORWARD) &&
+           !hasFlag(playerData->input, PlayerInput::BTN_ROUNDHOUSE) &&
+           !hasFlag(playerData->input, PlayerInput::BTN_MACRO1) &&
+           !hasFlag(playerData->input, PlayerInput::BTN_MACRO2);
 }
 
 void PlayerController::updateBoxes()

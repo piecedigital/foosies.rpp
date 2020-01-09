@@ -37,10 +37,10 @@ static CommandTypes commandsTypes = {
     {PlayerInput::DIR_TOWARD, PlayerInput::DIR_DOWNTOWARD, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNBACK, PlayerInput::DIR_BACK}, // HCB_Precise
     {PlayerInput::DIR_TOWARD, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNTOWARD},                                                   // DPF_Precise
     {PlayerInput::DIR_BACK, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNBACK},                                                       // DPB_Precise
-    {PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNTOWARD, PlayerInput::DIR_TOWARD},                                                  // QCF_Precise
-    {PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNBACK, PlayerInput::DIR_BACK},                                                  // QCB_Precise
-    {0},                                                                                                                             // FF
-    {0},                                                                                                                             // BB
+    {PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNTOWARD, PlayerInput::DIR_TOWARD},                                                   // QCF_Precise
+    {PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNBACK, PlayerInput::DIR_BACK},                                                       // QCB_Precise
+    {PlayerInput::DIR_TOWARD,  PlayerInput::NO_DIR, PlayerInput::DIR_TOWARD},                                                          // FF
+    {PlayerInput::DIR_BACK, PlayerInput::NO_DIR, PlayerInput::DIR_BACK},                                                               // BB
 };
 
 class PlayerController
@@ -78,6 +78,8 @@ private:
     bool _isGrounded();
     bool _isCrouched();
     bool _detectCommand();
+    bool _noDirInput();
+    bool _noBtnInput();
 };
 
 #endif
