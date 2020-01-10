@@ -60,6 +60,7 @@
     <ClInclude Include="src\deps\raylib\rmem.h" />
     <ClInclude Include="src\deps\raylib\rnet.h" />
     <ClInclude Include="src\deps\raylib\utils.h" />
+    <ClInclude Include="src\entity.hpp" />
     <ClInclude Include="src\foosiespp.hpp" />
     <ClInclude Include="src\globals.hpp" />
     <ClInclude Include="src\player.hpp" />
@@ -87,6 +88,7 @@
     <ClCompile Include="src\deps\raylib\text.c" />
     <ClCompile Include="src\deps\raylib\textures.c" />
     <ClCompile Include="src\deps\raylib\utils.c" />
+    <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\foosiespp.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\player.cpp" />

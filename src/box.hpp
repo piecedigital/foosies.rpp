@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "deps/raylib/raylib.h";
+#include "entity.hpp"
 
 #define PUSH_BOX_COLOR Color{253, 249, 0, 255};
 #define GRAB_BOX_COLOR Color{0, 121, 241, 255};
@@ -34,7 +35,7 @@ enum BoxType
     BOX_PROXIMITY,
 };
 
-class Box
+class Box: public Entity
 {
 public:
     BoxType type;

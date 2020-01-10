@@ -38,12 +38,27 @@ struct MoveList
     Move *QCB_Precise; // PlayerInput QCB[3];
     Move *FF;
     Move *BB;
+    const char *processOrder[10] = {"HCF_Precise","HCB_Precise","DPF_Precise","DPF","DPB_Precise","DPB","QCF_Precise","QCB_Precise","FF","BB"};
 };
 
 namespace Rigmoc::Actions
 {
-    static Move detectCommand(PlayerInput &playerInput, MoveList *movelist)
+    static Move detectCommand(PlayerInput *playerInputHistory, MoveList *movelist)
     {
+        switch (expression)
+            {
+            case /* constant-expression */:
+                /* code */
+                break;
+
+            default:
+                break;
+            }
+
+        for (int i = 0; i < INPUT_HISTORY_MAX; i++)
+        {
+        }
+
         return Move{};
     }
 }

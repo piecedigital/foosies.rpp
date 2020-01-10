@@ -189,7 +189,7 @@ void PlayerController::processInputs()
         }
     }
 
-    // Rigmoc::Actions::detectCommand(playerData->input, testmovelist);
+    Rigmoc::Actions::detectCommand(inputHistory, testmovelist);
 }
 
 bool PlayerController::_noDirInput()

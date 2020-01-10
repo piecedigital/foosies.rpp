@@ -8,6 +8,7 @@
 #include "globals.hpp"
 #include "actions.hpp"
 #include "character.hpp"
+#include "entity.hpp"
 
 static CommandTypes commandsTypes = {
     {PlayerInput::DIR_BACK, PlayerInput::DIR_DOWNBACK, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNTOWARD, PlayerInput::DIR_TOWARD}, // HCF_Precise
@@ -22,7 +23,7 @@ static CommandTypes commandsTypes = {
     {PlayerInput::DIR_BACK, PlayerInput::NO_DIR, PlayerInput::DIR_BACK},                                                             // BB
 };
 
-class PlayerController
+class PlayerController : public Entity
 {
 public:
     bool crouched;
