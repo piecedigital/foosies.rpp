@@ -37,6 +37,10 @@ Character::Character()
 
         model.materials[i].shader = shader;
     }
+
+    moveList.QCF_Precise = new Move;
+    moveList.QCF_Precise->name = "Hadouken";
+    moveList.QCFTriggerBtn = (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE);
 }
 Character::~Character()
 {

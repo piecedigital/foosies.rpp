@@ -4,7 +4,7 @@
 #include "deps/raylib/raylib.h";
 #include "box.hpp"
 
-#define INPUT_HISTORY_MAX 20
+#define INPUT_HISTORY_MAX 30
 #define INPUT_BUFFER_MAX 5
 
 // structs
@@ -78,18 +78,18 @@ enum PlayerInput
     BTN_MACRO1 = 1 << 23,
     BTN_MACRO2 = 1 << 24,
 };
-inline PlayerInput operator~(PlayerInput a) { return (PlayerInput) ~(int)a; };
-inline PlayerInput operator|(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a | (int)b); };
-inline PlayerInput operator&(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a & (int)b); };
-inline PlayerInput operator^(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a ^ (int)b); };
+// inline PlayerInput operator~(PlayerInput a) { return (PlayerInput) ~(int)a; };
+// inline PlayerInput operator|(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a | (int)b); };
+// inline PlayerInput operator&(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a & (int)b); };
+// inline PlayerInput operator^(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a ^ (int)b); };
 
-inline PlayerInput *operator|(PlayerInput *a, PlayerInput b) { return (PlayerInput *)((int &)a | (int)b); };
-inline PlayerInput *operator&(PlayerInput *a, PlayerInput b) { return (PlayerInput *)((int &)a & (int)b); };
+// inline PlayerInput *operator|(PlayerInput *a, PlayerInput b) { return (PlayerInput *)((int &)a | (int)b); };
+// inline PlayerInput *operator&(PlayerInput *a, PlayerInput b) { return (PlayerInput *)((int &)a & (int)b); };
 
-inline PlayerInput &operator|=(PlayerInput const &a, PlayerInput b) { return (PlayerInput &)((int &)a |= (int)b); };
-inline PlayerInput *operator|=(PlayerInput const *a, PlayerInput b) { return (PlayerInput *)((int &)a |= (int)b); };
-inline PlayerInput &operator&=(PlayerInput const &a, PlayerInput b) { return (PlayerInput &)((int &)a &= (int)b); };
-inline PlayerInput &operator^=(PlayerInput const &a, PlayerInput b) { return (PlayerInput &)((int &)a ^= (int)b); };
+// inline PlayerInput &operator|=(PlayerInput const &a, PlayerInput b) { return (PlayerInput &)((int &)a |= (int)b); };
+// inline PlayerInput *operator|=(PlayerInput const *a, PlayerInput b) { return (PlayerInput *)((int &)a |= (int)b); };
+// inline PlayerInput &operator&=(PlayerInput const &a, PlayerInput b) { return (PlayerInput &)((int &)a &= (int)b); };
+// inline PlayerInput &operator^=(PlayerInput const &a, PlayerInput b) { return (PlayerInput &)((int &)a ^= (int)b); };
 
 // functions
 inline bool hasFlag(PlayerInput v, PlayerInput flag)
@@ -99,7 +99,7 @@ inline bool hasFlag(PlayerInput v, PlayerInput flag)
 
 inline void setFlag(PlayerInput &v, PlayerInput flag)
 {
-    v |= flag;
+    v = (PlayerInput)(v | flag);
 };
 
 inline void clearEnum(PlayerInput &v)

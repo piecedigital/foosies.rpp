@@ -6,6 +6,7 @@
 #include "deps/raylib/raylib.h";
 #include "box.hpp"
 #include "globals.hpp"
+#include "actions.hpp"
 
 class Character
 {
@@ -17,6 +18,7 @@ public:
     ModelAnimation anim;
     PlayerData **playerData;
     PlayerBoxes **playerBoxes;
+    MoveList moveList;
 
     Character();
     ~Character();
