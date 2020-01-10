@@ -78,33 +78,30 @@ enum PlayerInput
     BTN_MACRO1 = 1 << 23,
     BTN_MACRO2 = 1 << 24,
 };
-// inline PlayerInput operator~(PlayerInput a) { return (PlayerInput) ~(int)a; };
-// inline PlayerInput operator|(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a | (int)b); };
-// inline PlayerInput operator&(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a & (int)b); };
-// inline PlayerInput operator^(PlayerInput a, PlayerInput b) { return (PlayerInput)((int)a ^ (int)b); };
-
-// inline PlayerInput *operator|(PlayerInput *a, PlayerInput b) { return (PlayerInput *)((int &)a | (int)b); };
-// inline PlayerInput *operator&(PlayerInput *a, PlayerInput b) { return (PlayerInput *)((int &)a & (int)b); };
-
-// inline PlayerInput &operator|=(PlayerInput const &a, PlayerInput b) { return (PlayerInput &)((int &)a |= (int)b); };
-// inline PlayerInput *operator|=(PlayerInput const *a, PlayerInput b) { return (PlayerInput *)((int &)a |= (int)b); };
-// inline PlayerInput &operator&=(PlayerInput const &a, PlayerInput b) { return (PlayerInput &)((int &)a &= (int)b); };
-// inline PlayerInput &operator^=(PlayerInput const &a, PlayerInput b) { return (PlayerInput &)((int &)a ^= (int)b); };
 
 // functions
-inline bool hasFlag(PlayerInput v, PlayerInput flag)
+template <class T>
+bool hasFlag(T &v, T flag)
 {
-    return (int)(v & flag) != 0;
+    return (v & flag) != 0;
 };
 
-inline void setFlag(PlayerInput &v, PlayerInput flag)
+template <class T>
+void setFlag(T &v, T flag)
 {
-    v = (PlayerInput)(v | flag);
+    v = (T)(v | flag);
 };
 
-inline void clearEnum(PlayerInput &v)
+template <class T>
+void unsetFlag(T &v, T flag)
 {
-    v = PlayerInput::NONE;
+    v = (T)(v &~ flag);
+};
+
+template <class T>
+void clearEnum(T &v)
+{
+    v = 0;
 };
 
 struct PlayerData

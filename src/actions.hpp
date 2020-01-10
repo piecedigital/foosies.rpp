@@ -74,7 +74,7 @@ namespace Rigmoc::Actions
                 return false;
             }
 
-            if (hasFlag(playerInputHistory[i], triggerBtn))
+            if (hasFlag<PlayerInput>(playerInputHistory[i], triggerBtn))
             {
                 std::cout << "Triggered: " << move->name << std::endl;
             }

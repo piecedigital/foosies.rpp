@@ -67,64 +67,64 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 
     if (normInput.DIR_H == -1)
     {
-        setFlag(*playerInput, PlayerInput::DIR_LEFT);
+        setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_LEFT);
         if (playerData->actionFace == 1)
         {
-            setFlag(*playerInput, PlayerInput::DIR_BACK);
-            setFlag(*playerInput, PlayerInput::DIR_ANY_BACK);
+            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_BACK);
+            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_ANY_BACK);
         }
         else
         {
-            setFlag(*playerInput, PlayerInput::DIR_TOWARD);
-            setFlag(*playerInput, PlayerInput::DIR_ANY_TOWARD);
+            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_TOWARD);
+            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_ANY_TOWARD);
         }
     }
     if (normInput.DIR_H == 1)
     {
-        setFlag(*playerInput, PlayerInput::DIR_RIGHT);
+        setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_RIGHT);
         if (playerData->actionFace == 1)
         {
-            setFlag(*playerInput, PlayerInput::DIR_TOWARD);
-            setFlag(*playerInput, PlayerInput::DIR_ANY_TOWARD);
+            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_TOWARD);
+            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_ANY_TOWARD);
         }
         else
         {
-            setFlag(*playerInput, PlayerInput::DIR_BACK);
-            setFlag(*playerInput, PlayerInput::DIR_ANY_BACK);
+            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_BACK);
+            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_ANY_BACK);
         }
     }
     if (normInput.DIR_V == -1)
     {
-        setFlag(*playerInput, PlayerInput::DIR_DOWN);
-        setFlag(*playerInput, PlayerInput::DIR_ANY_DOWN);
+        setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_DOWN);
+        setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_ANY_DOWN);
     }
     if (normInput.DIR_V == 1)
     {
-        setFlag(*playerInput, PlayerInput::DIR_UP);
-        setFlag(*playerInput, PlayerInput::DIR_ANY_UP);
+        setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_UP);
+        setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_ANY_UP);
     }
     if (normInput.FACE_UP)
-        setFlag(*playerInput, PlayerInput::BTN_STRONG);
+        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_STRONG);
     if (normInput.FACE_DOWN)
-        setFlag(*playerInput, PlayerInput::BTN_SHORT);
+        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_SHORT);
     if (normInput.FACE_LEFT)
-        setFlag(*playerInput, PlayerInput::BTN_JAB);
+        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_JAB);
     if (normInput.FACE_RIGHT)
-        setFlag(*playerInput, PlayerInput::BTN_FORWARD);
+        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_FORWARD);
     if (normInput.SHOULDER_L)
-        setFlag(*playerInput, PlayerInput::BTN_MACRO1);
+        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_MACRO1);
     if (normInput.SHOULDER_R)
-        setFlag(*playerInput, PlayerInput::BTN_FIERCE);
+        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_FIERCE);
     if (normInput.TRIGGER_L)
-        setFlag(*playerInput, PlayerInput::BTN_MACRO2);
+        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_MACRO2);
     if (normInput.TRIGGER_R)
-        setFlag(*playerInput, PlayerInput::BTN_ROUNDHOUSE);
+        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_ROUNDHOUSE);
     // if (normInput.BACK)
-    //     setFlag(*playerInput, PlayerInput::BACK);
+    //     setFlag<PlayerInput>(*playerInput, PlayerInput::BACK);
     // if (normInput.START)
-    //     setFlag(*playerInput, PlayerInput::START);
+    //     setFlag<PlayerInput>(*playerInput, PlayerInput::START);
     // if (normInput.HOME)
-    //     setFlag(*playerInput, PlayerInput::HOME);
+    //     setFlag<PlayerInput>(*playerInput, PlayerInput::HOME);
     setInputs(*playerInput);
 };
 
