@@ -1,23 +1,5 @@
 #include "actions.hpp"
 
-// CommandTypes Actions::commandsTypes = {
-//     {PlayerInput::DIR_BACK, PlayerInput::DIR_DOWNBACK, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNTOWARD, PlayerInput::DIR_TOWARD},
-//     {PlayerInput::DIR_TOWARD, PlayerInput::DIR_DOWNTOWARD, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNBACK, PlayerInput::DIR_BACK},
-//     {PlayerInput::NO_DIR, PlayerInput::DIR_TOWARD, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNTOWARD},
-//     {PlayerInput::NO_DIR, PlayerInput::DIR_ANY_TOWARD, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNTOWARD},
-//     {PlayerInput::NO_DIR, PlayerInput::DIR_BACK, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNBACK},
-//     {PlayerInput::NO_DIR, PlayerInput::DIR_ANY_BACK, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNBACK},
-//     {PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNTOWARD, PlayerInput::DIR_TOWARD},
-//     {PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNBACK, PlayerInput::DIR_BACK},
-//     {PlayerInput::NO_DIR, PlayerInput::DIR_TOWARD, PlayerInput::NO_DIR, PlayerInput::DIR_TOWARD},
-//     {PlayerInput::NO_DIR, PlayerInput::DIR_BACK, PlayerInput::NO_DIR, PlayerInput::DIR_BACK},
-//     5,
-//     4,
-//     3,
-//     4,
-//     4,
-// };
-
 bool Actions::checkMove(Move *move, PlayerInput *playerInputHistory)
 {
     if (move == NULL)
@@ -34,46 +16,58 @@ bool Actions::checkMove(Move *move, PlayerInput *playerInputHistory)
 
     int inputsMatched = 0;
 
-    for (int i = 0; i < INPUT_HISTORY_MAX; i++)
+    int i = 0;
+    // check for button press within buffer window
+    for (i; i < INPUT_BUFFER_MAX; i++)
     {
         if (hasFlag(playerInputHistory[i], move->triggerBtn))
         {
             buttonWithinBuffer = true;
-            std::cout << "btn" << std::endl;
         }
+    }
 
-        if (!buttonWithinBuffer)
-            return;
-        if (i >= INPUT_BUFFER_MAX)
-            return false;
-
-        if (hasFlag(playerInputHistory[i], move->commandSequence[move->sequenceSize - 1 - inputCurser]))
+    if (buttonWithinBuffer)
+    {
+        for (i--; i < INPUT_HISTORY_MAX; i++)
         {
-            inputsMatched++;
-            inputCurser++;
-            spaceTravelled = 0;
-            std::cout
-                << "i: " << i
-                << ", Cursor: " << inputCurser
-                << " | "
-                << playerInputHistory[i]
-                << " & "
-                << move->commandSequence[move->sequenceSize - 1 - inputCurser]
-                << " = "
-                << (playerInputHistory[i] & move->commandSequence[move->sequenceSize - 1 - inputCurser])
-                << " | Match: " << inputsMatched
-                << std::endl;
-        }
-        else
-        {
-            spaceTravelled++;
-        }
+            if (hasFlag(playerInputHistory[i], move->commandSequence[(move->sequenceSize - 1) - inputCurser]))
+            {
+                inputsMatched++;
 
+                std::cout
+                    << "i: " << i
+                    << ", Cursor: " << inputCurser
+                    << " | "
+                    << playerInputHistory[i]
+                    << " & "
+                    << move->commandSequence[(move->sequenceSize - 1) - inputCurser]
+                    << " = "
+                    << (playerInputHistory[i] & move->commandSequence[(move->sequenceSize - 1) - inputCurser])
+                    << " | Match: " << inputsMatched
+                    << std::endl;
 
-        if (inputsMatched == move->sequenceSize)
-        {
-            std::cout << "Triggered: " << move->name << std::endl;
-            return true;
+                inputCurser++;
+                spaceTravelled = 0;
+            }
+            else
+            {
+                spaceTravelled++;
+                // std::cout
+                //     << "i: " << i
+                //     << " | "
+                //     << playerInputHistory[i]
+                //     << " & "
+                //     << move->commandSequence[(move->sequenceSize - 1) - inputCurser]
+                //     << " = "
+                //     << (playerInputHistory[i] & move->commandSequence[(move->sequenceSize - 1) - inputCurser])
+                //     << std::endl;
+            }
+
+            if (inputsMatched == move->sequenceSize)
+            {
+                std::cout << "Triggered: " << move->name << std::endl;
+                return true;
+            }
         }
     }
 
