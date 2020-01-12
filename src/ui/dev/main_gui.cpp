@@ -103,6 +103,9 @@ void DevGui::_displayPlayerTweakers(int playerId)
 
     ImGui::SliderInt("Body Width", &game->scene.players[playerId].charMan[0].bodyWidth, 100, 200);
     ImGui::SliderInt("Body Height", &game->scene.players[playerId].charMan[0].bodyHeight, 100, 400);
+    ImGui::SliderFloat("Light X", &game->scene.players[playerId].charMan[0].lightPos[0], -10.f, 10.f);
+    ImGui::SliderFloat("Light Y", &game->scene.players[playerId].charMan[0].lightPos[1], -10.f, 10.f);
+    ImGui::SliderFloat("Light Z", &game->scene.players[playerId].charMan[0].lightPos[2], -10.f, 10.f);
 
     ImGui::End();
 }

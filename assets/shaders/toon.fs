@@ -7,24 +7,26 @@ uniform vec3 color;
 uniform vec3 lightPosition;
 uniform vec3 eyePosition;
 uniform int materialShininess;
-uniform float materialDiffuse;
+uniform vec3 materialDiffuse;
 uniform float materialSpecular;
+uniform sampler2D diffuse;
 
 in vec3 world_pos;
 in vec3 world_normal;
+in vec2 fragTexCoord;
 
-const int levels = 5;
+const int levels = 4;
 const float scaleFactor = 1.0 / levels;
 
 void main(){
-    vec3 col = vec3(1.0,1.0,1.0);
-    vec3 colorDiffuse = vec3(1.0,1.0,1.0);
+    // vec3 colorDiffuse = vec3(1.0,1.0,1.0);
+    vec3 colorDiffuse = texture(diffuse, fragTexCoord).rgb;
 
     vec3 L = normalize( lightPosition - world_pos);
     vec3 V = normalize( eyePosition - world_pos);
 
     float difuza = max(0, dot(L,world_normal));
-    colorDiffuse = colorDiffuse * materialDiffuse* floor(difuza * levels) * scaleFactor;
+    colorDiffuse = colorDiffuse * materialDiffuse * ceil(difuza * levels) * scaleFactor;
 
     vec3 H = normalize(L + V);
 
@@ -37,6 +39,8 @@ void main(){
 
     float specMask = (pow(dot(H, world_normal), materialShininess) > 0.4) ? 1 : 0;
     float edgeMask = (dot(V, world_normal) >  0.2) ? 1 : 0;
+
+    vec3 col = vec3(1.0,1.0,1.0);
 
     col = edgeMask * (color + colorDiffuse + speculara * specMask);
 

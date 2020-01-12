@@ -19,6 +19,7 @@ public:
     PlayerData **playerData;
     PlayerBoxes **playerBoxes;
     MoveList moveList;
+    float lightPos[3];
 
     Character();
     ~Character();
