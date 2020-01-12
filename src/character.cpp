@@ -40,7 +40,9 @@ Character::Character()
 
     moveList.QCF_Precise = new Move;
     moveList.QCF_Precise->name = "Hadouken";
-    moveList.QCFTriggerBtn = (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE);
+    moveList.QCF_Precise->triggerBtn = (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE);
+    moveList.QCF_Precise->commandSequence = Actions::commandsTypes.QCF_Precise;
+    moveList.QCF_Precise->sequenceSize = Actions::commandsTypes.QCSize;
 }
 Character::~Character()
 {

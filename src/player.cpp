@@ -67,64 +67,64 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 
     if (normInput.DIR_H == -1)
     {
-        setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_LEFT);
+        setFlag(*playerInput, PlayerInput::DIR_LEFT);
         if (playerData->actionFace == 1)
         {
-            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_BACK);
-            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_ANY_BACK);
+            setFlag(*playerInput, PlayerInput::DIR_BACK);
+            setFlag(*playerInput, PlayerInput::DIR_ANY_BACK);
         }
         else
         {
-            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_TOWARD);
-            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_ANY_TOWARD);
+            setFlag(*playerInput, PlayerInput::DIR_TOWARD);
+            setFlag(*playerInput, PlayerInput::DIR_ANY_TOWARD);
         }
     }
     if (normInput.DIR_H == 1)
     {
-        setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_RIGHT);
+        setFlag(*playerInput, PlayerInput::DIR_RIGHT);
         if (playerData->actionFace == 1)
         {
-            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_TOWARD);
-            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_ANY_TOWARD);
+            setFlag(*playerInput, PlayerInput::DIR_TOWARD);
+            setFlag(*playerInput, PlayerInput::DIR_ANY_TOWARD);
         }
         else
         {
-            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_BACK);
-            setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_ANY_BACK);
+            setFlag(*playerInput, PlayerInput::DIR_BACK);
+            setFlag(*playerInput, PlayerInput::DIR_ANY_BACK);
         }
     }
     if (normInput.DIR_V == -1)
     {
-        setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_DOWN);
-        setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_ANY_DOWN);
+        setFlag(*playerInput, PlayerInput::DIR_DOWN);
+        setFlag(*playerInput, PlayerInput::DIR_ANY_DOWN);
     }
     if (normInput.DIR_V == 1)
     {
-        setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_UP);
-        setFlag<PlayerInput>(*playerInput, PlayerInput::DIR_ANY_UP);
+        setFlag(*playerInput, PlayerInput::DIR_UP);
+        setFlag(*playerInput, PlayerInput::DIR_ANY_UP);
     }
     if (normInput.FACE_UP)
-        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_STRONG);
+        setFlag(*playerInput, PlayerInput::BTN_STRONG);
     if (normInput.FACE_DOWN)
-        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_SHORT);
+        setFlag(*playerInput, PlayerInput::BTN_SHORT);
     if (normInput.FACE_LEFT)
-        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_JAB);
+        setFlag(*playerInput, PlayerInput::BTN_JAB);
     if (normInput.FACE_RIGHT)
-        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_FORWARD);
+        setFlag(*playerInput, PlayerInput::BTN_FORWARD);
     if (normInput.SHOULDER_L)
-        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_MACRO1);
+        setFlag(*playerInput, PlayerInput::BTN_MACRO1);
     if (normInput.SHOULDER_R)
-        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_FIERCE);
+        setFlag(*playerInput, PlayerInput::BTN_FIERCE);
     if (normInput.TRIGGER_L)
-        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_MACRO2);
+        setFlag(*playerInput, PlayerInput::BTN_MACRO2);
     if (normInput.TRIGGER_R)
-        setFlag<PlayerInput>(*playerInput, PlayerInput::BTN_ROUNDHOUSE);
+        setFlag(*playerInput, PlayerInput::BTN_ROUNDHOUSE);
     // if (normInput.BACK)
-    //     setFlag<PlayerInput>(*playerInput, PlayerInput::BACK);
+    //     setFlag(*playerInput, PlayerInput::BACK);
     // if (normInput.START)
-    //     setFlag<PlayerInput>(*playerInput, PlayerInput::START);
+    //     setFlag(*playerInput, PlayerInput::START);
     // if (normInput.HOME)
-    //     setFlag<PlayerInput>(*playerInput, PlayerInput::HOME);
+    //     setFlag(*playerInput, PlayerInput::HOME);
     setInputs(*playerInput);
 };
 
@@ -187,7 +187,7 @@ void PlayerController::processInputs()
         }
     }
 
-    Rigmoc::Actions::detectCommand(inputHistory, &charMan->moveList);
+    Actions::detectCommand(inputHistory, &charMan->moveList);
 }
 
 bool PlayerController::_noDirInput()

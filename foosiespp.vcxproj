@@ -71,6 +71,7 @@
     <Library Include="bin\ggponet.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\actions.cpp" />
     <ClCompile Include="src\box.cpp" />
     <ClCompile Include="src\button.cpp" />
     <ClCompile Include="src\character.cpp" />
