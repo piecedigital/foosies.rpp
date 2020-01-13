@@ -311,5 +311,11 @@ void DevGui::_playRecording()
 
 void DevGui::_play()
 {
-
+    for (int i = 0; i < 60*60; i++)
+    {
+        game->scene.players[1].setInputs(p2Recording[i - 1 - playbackCursorReverse]);
+        playbackCursorReverse++;
+        if (playbackCursorReverse > 60*60)
+            playbackCursorReverse = 0;
+    }
 }

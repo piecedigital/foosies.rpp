@@ -63,6 +63,7 @@ private:
     bool isRecording;
     bool isPlaying;
     PlayerInput p2Recording[60 * 60];
+    int playbackCursorReverse = 0;
     void _startRecording();
     void _record();
     void _stopRecording();
