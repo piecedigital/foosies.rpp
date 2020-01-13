@@ -59,6 +59,7 @@ void DevGui::imguiUpdate()
     _displayAvailableControllers();
     _displayPlayerController(0);
     _displayPlayerController(1);
+    _displayRecordingState();
     _displayRenderWindow();
 
     // Render dear imgui into screen
@@ -196,6 +197,16 @@ void DevGui::_displayAvailableControllers()
 void DevGui::_displayPlayerController(int playerId)
 {}
 
+void DevGui::_displayRecordingState()
+{
+    ImGui::Begin("Recording/Playback");
+
+    ImGui::Text("Recording: %d", isRecording);
+    ImGui::Text("Playback: %d", isPlaying);
+
+    ImGui::End();
+}
+
 void DevGui::_displayRenderWindow()
 {
     ImGui::SetNextWindowSizeConstraints({50.f, 50.f}, {(float)GetScreenWidth(), (float)GetScreenHeight()}, _SixteenNineAspectRatio);
@@ -301,6 +312,7 @@ void DevGui::_togglePlayback()
 
 void DevGui::_startRecording()
 {
+    _stopPlayback();
     isRecording = true;
     game->scene.players[1].controllerId = 0; // game->scene.players[0].controllerId;
     game->scene.players[0].controllerId = -1;
@@ -335,17 +347,14 @@ void DevGui::_startPlayback()
 
 void DevGui::_play()
 {
-    for (int i = 0; i < 60*60; i++)
-    {
-        game->scene.players[1].setInputs(p2Recording[i - 1 - playbackCursorReverse]);
-        playbackCursorReverse++;
-        if (playbackCursorReverse > 60*60)
-            playbackCursorReverse = 0;
-    }
+    game->scene.players[1].setInputs(p2Recording[-1 - playbackCursorReverse]);
+    playbackCursorReverse++;
+    if (playbackCursorReverse > 60*60)
+        playbackCursorReverse = 0;
 }
 
 void DevGui::_stopPlayback()
 {
-    _stopRecording();
     isPlaying = false;
+    playbackCursorReverse = 0;
 }

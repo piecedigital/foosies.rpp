@@ -54,14 +54,15 @@ private:
     void _displayPlayerInputHistory(int playerId);
     void _displayAvailableControllers();
     void _displayPlayerController(int playerId);
+    void _displayRecordingState();
     void _displayRenderWindow();
 
     void _saveGameState();
     void _loadGameState();
     void _toggleUpdate();
     void _stepUpdate(int allowance = 1);
-    bool isRecording;
-    bool isPlaying;
+    bool isRecording = false;
+    bool isPlaying = false;
     PlayerInput p2Recording[60 * 60];
     int playbackCursorReverse = 0;
     void _toggleRecording();
