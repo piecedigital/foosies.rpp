@@ -330,6 +330,11 @@ void DevGui::_record()
         p2Recording[i] = newInput;
         newInput = currentInput;
     }
+    recordingSize++;
+    if (recordingSize > 60*60)
+    {
+        recordingSize = 60*60;
+    }
 }
 
 void DevGui::_stopRecording()
@@ -347,9 +352,9 @@ void DevGui::_startPlayback()
 
 void DevGui::_play()
 {
-    game->scene.players[1].setInputs(p2Recording[-1 - playbackCursorReverse]);
+    game->scene.players[1].setInputs(p2Recording[recordingSize - 1 - playbackCursorReverse]);
     playbackCursorReverse++;
-    if (playbackCursorReverse > 60*60)
+    if (playbackCursorReverse > recordingSize)
         playbackCursorReverse = 0;
 }
 

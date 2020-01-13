@@ -63,7 +63,8 @@ private:
     void _stepUpdate(int allowance = 1);
     bool isRecording = false;
     bool isPlaying = false;
-    PlayerInput p2Recording[60 * 60];
+    PlayerInput p2Recording[60 * 60] = {0};
+    int recordingSize = 0;
     int playbackCursorReverse = 0;
     void _toggleRecording();
     void _togglePlayback();
