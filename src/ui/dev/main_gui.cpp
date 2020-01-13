@@ -314,6 +314,7 @@ void DevGui::_startRecording()
 {
     _stopPlayback();
     isRecording = true;
+    recordingSize = 0;
     game->scene.players[1].controllerId = 0; // game->scene.players[0].controllerId;
     game->scene.players[0].controllerId = -1;
 }
