@@ -3,7 +3,6 @@
 #include <iostream>
 #include <fstream>
 #include "../../deps/raylib/raylib.h"
-#include "../../deps/raylib/external/miniaudio.h"
 
 ImVec4 xGREEN = {(float)GREEN.r / 255 - 0.1, (float)GREEN.g / 255 - 0.1, (float)GREEN.b / 255 - 0.1, (float)GREEN.a / 255};
 ImVec4 xGREENHover = {(float)GREEN.r / 255, (float)GREEN.g / 255, (float)GREEN.b / 255, (float)GREEN.a / 255};
