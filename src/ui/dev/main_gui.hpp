@@ -60,4 +60,12 @@ private:
     void _loadGameState();
     void _toggleUpdate();
     void _stepUpdate(int allowance = 1);
+    bool isRecording;
+    bool isPlaying;
+    PlayerInput p2Recording[60 * 60];
+    void _startRecording();
+    void _record();
+    void _stopRecording();
+    void _playRecording();
+    void _play();
 };

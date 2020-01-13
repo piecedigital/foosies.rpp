@@ -49,6 +49,10 @@ void DevGui::imguiUpdate()
     _displayPlayerInputHistory(0);
     _displayPlayerInputHistory(1);
     _displayStateManipButtons();
+    if (isRecording)
+        _record();
+    if (isPlaying)
+        _play();
     _displayAvailableControllers();
     _displayPlayerController(0);
     _displayPlayerController(1);
@@ -143,6 +147,27 @@ void DevGui::_displayStateManipButtons()
     if (ImGui::Button("Step Update") || IsKeyPressed(KEY_V))
     {
         _stepUpdate();
+    }
+
+    ImGui::NextColumn();
+
+    if (ImGui::Button("Record") || IsKeyPressed(KEY_R))
+    {
+        _startRecording();
+    }
+
+    ImGui::NextColumn();
+
+    if (ImGui::Button("Stop Record") || IsKeyPressed(KEY_F))
+    {
+        _stopRecording();
+    }
+
+    ImGui::NextColumn();
+
+    if (ImGui::Button("Stop Record") || IsKeyPressed(KEY_G))
+    {
+        _playRecording();
     }
 
     ImGui::End();
@@ -248,4 +273,43 @@ void DevGui::_stepUpdate(int allowance)
 {
     game->scene.willStep = false;
     game->scene.stepAllowance = allowance;
+}
+
+void DevGui::_startRecording()
+{
+    isRecording = true;
+    game->scene.players[1].controllerId = game->scene.players[0].controllerId;
+    game->scene.players[0].controllerId = -1;
+}
+
+void DevGui::_record()
+{
+    PlayerInput input = game->gameState.playerData[1].input;
+
+    PlayerInput currentInput;
+    PlayerInput newInput = input;
+    for (int i = 0; i < 60*60; i++)
+    {
+        currentInput = p2Recording[i];
+        p2Recording[i] = newInput;
+        newInput = currentInput;
+    }
+}
+
+void DevGui::_stopRecording()
+{
+    isRecording = false;
+    game->scene.players[0].controllerId = game->scene.players[1].controllerId;
+    game->scene.players[1].controllerId = -1;
+}
+
+void DevGui::_playRecording()
+{
+    _stopRecording();
+    isPlaying = true;
+}
+
+void DevGui::_play()
+{
+
 }
