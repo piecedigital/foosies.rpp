@@ -50,9 +50,13 @@ void DevGui::imguiUpdate()
     _displayPlayerInputHistory(1);
     _displayStateManipButtons();
     if (isRecording)
+    {
         _record();
-    if (isPlaying)
+    }
+    else if (isPlaying)
+    {
         _play();
+    }
     _displayAvailableControllers();
     _displayPlayerController(0);
     _displayPlayerController(1);
@@ -151,23 +155,16 @@ void DevGui::_displayStateManipButtons()
 
     ImGui::NextColumn();
 
-    if (ImGui::Button("Record") || IsKeyPressed(KEY_R))
+    if (ImGui::Button("Toggle Record") || IsKeyPressed(KEY_R))
     {
-        _startRecording();
+        _toggleRecording();
     }
 
     ImGui::NextColumn();
 
-    if (ImGui::Button("Stop Record") || IsKeyPressed(KEY_F))
+    if (ImGui::Button("Toggle Playback") || IsKeyPressed(KEY_F))
     {
-        _stopRecording();
-    }
-
-    ImGui::NextColumn();
-
-    if (ImGui::Button("Stop Record") || IsKeyPressed(KEY_G))
-    {
-        _playRecording();
+        _togglePlayback();
     }
 
     ImGui::End();
@@ -275,10 +272,38 @@ void DevGui::_stepUpdate(int allowance)
     game->scene.stepAllowance = allowance;
 }
 
+void DevGui::_toggleRecording()
+{
+    _stopPlayback();
+
+    if (isRecording)
+    {
+        _stopRecording();
+    }
+    else
+    {
+        _startRecording();
+    }
+}
+
+void DevGui::_togglePlayback()
+{
+    _stopRecording();
+
+    if (isPlaying)
+    {
+        _stopPlayback();
+    }
+    else
+    {
+        _startPlayback();
+    }
+}
+
 void DevGui::_startRecording()
 {
     isRecording = true;
-    game->scene.players[1].controllerId = game->scene.players[0].controllerId;
+    game->scene.players[1].controllerId = 0; // game->scene.players[0].controllerId;
     game->scene.players[0].controllerId = -1;
 }
 
@@ -299,11 +324,11 @@ void DevGui::_record()
 void DevGui::_stopRecording()
 {
     isRecording = false;
-    game->scene.players[0].controllerId = game->scene.players[1].controllerId;
+    game->scene.players[0].controllerId = 0; // game->scene.players[1].controllerId;
     game->scene.players[1].controllerId = -1;
 }
 
-void DevGui::_playRecording()
+void DevGui::_startPlayback()
 {
     _stopRecording();
     isPlaying = true;
@@ -318,4 +343,10 @@ void DevGui::_play()
         if (playbackCursorReverse > 60*60)
             playbackCursorReverse = 0;
     }
+}
+
+void DevGui::_stopPlayback()
+{
+    _stopRecording();
+    isPlaying = false;
 }
