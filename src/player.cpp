@@ -68,30 +68,30 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
     if (normInput.DIR_H == -1)
     {
         setFlag(*playerInput, PlayerInput::DIR_LEFT);
-        if (playerData->actionFace == 1)
-        {
-            setFlag(*playerInput, PlayerInput::DIR_BACK);
-            setFlag(*playerInput, PlayerInput::DIR_ANY_BACK);
-        }
-        else
-        {
-            setFlag(*playerInput, PlayerInput::DIR_TOWARD);
-            setFlag(*playerInput, PlayerInput::DIR_ANY_TOWARD);
-        }
+        // if (playerData->actionFace == 1)
+        // {
+        //     setFlag(*playerInput, PlayerInput::DIR_BACK);
+        //     setFlag(*playerInput, PlayerInput::DIR_ANY_BACK);
+        // }
+        // else
+        // {
+        //     setFlag(*playerInput, PlayerInput::DIR_TOWARD);
+        //     setFlag(*playerInput, PlayerInput::DIR_ANY_TOWARD);
+        // }
     }
     if (normInput.DIR_H == 1)
     {
         setFlag(*playerInput, PlayerInput::DIR_RIGHT);
-        if (playerData->actionFace == 1)
-        {
-            setFlag(*playerInput, PlayerInput::DIR_TOWARD);
-            setFlag(*playerInput, PlayerInput::DIR_ANY_TOWARD);
-        }
-        else
-        {
-            setFlag(*playerInput, PlayerInput::DIR_BACK);
-            setFlag(*playerInput, PlayerInput::DIR_ANY_BACK);
-        }
+        // if (playerData->actionFace == 1)
+        // {
+        //     setFlag(*playerInput, PlayerInput::DIR_TOWARD);
+        //     setFlag(*playerInput, PlayerInput::DIR_ANY_TOWARD);
+        // }
+        // else
+        // {
+        //     setFlag(*playerInput, PlayerInput::DIR_BACK);
+        //     setFlag(*playerInput, PlayerInput::DIR_ANY_BACK);
+        // }
     }
     if (normInput.DIR_V == -1)
     {
@@ -130,6 +130,41 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
 
 void PlayerController::setInputs(PlayerInput playerInput)
 {
+    if (hasFlag(playerInput, PlayerInput::DIR_LEFT))
+    {
+        if (playerData->actionFace == 1)
+        {
+            setFlag(playerInput, PlayerInput::DIR_BACK);
+            setFlag(playerInput, PlayerInput::DIR_ANY_BACK);
+            unsetFlag(playerInput, PlayerInput::DIR_TOWARD);
+            unsetFlag(playerInput, PlayerInput::DIR_ANY_TOWARD);
+        }
+        else
+        {
+            unsetFlag(playerInput, PlayerInput::DIR_BACK);
+            unsetFlag(playerInput, PlayerInput::DIR_ANY_BACK);
+            setFlag(playerInput, PlayerInput::DIR_TOWARD);
+            setFlag(playerInput, PlayerInput::DIR_ANY_TOWARD);
+        }
+    }
+    else if (hasFlag(playerInput, PlayerInput::DIR_RIGHT))
+    {
+        if (playerData->actionFace == 1)
+        {
+            unsetFlag(playerInput, PlayerInput::DIR_BACK);
+            unsetFlag(playerInput, PlayerInput::DIR_ANY_BACK);
+            setFlag(playerInput, PlayerInput::DIR_TOWARD);
+            setFlag(playerInput, PlayerInput::DIR_ANY_TOWARD);
+        }
+        else
+        {
+            setFlag(playerInput, PlayerInput::DIR_BACK);
+            setFlag(playerInput, PlayerInput::DIR_ANY_BACK);
+            unsetFlag(playerInput, PlayerInput::DIR_TOWARD);
+            unsetFlag(playerInput, PlayerInput::DIR_ANY_TOWARD);
+        }
+    }
+
     if (_noDirInput())
     {
         setFlag(playerInput, PlayerInput::NO_DIR);

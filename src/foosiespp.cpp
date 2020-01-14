@@ -187,7 +187,6 @@ void Game::_dispatchNormalizedInputs(PlayerController &player)
         player.normalizedToPlayerInput(controllers[player.controllerId].inputs);
 #endif
     }
-
 }
 
 void Game::_drawScene()

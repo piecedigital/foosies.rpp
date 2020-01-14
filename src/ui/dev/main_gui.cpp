@@ -155,17 +155,25 @@ void DevGui::_displayStateManipButtons()
 
     ImGui::NextColumn();
 
+    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Button, isRecording ? xGREEN : xRED);
+    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ButtonHovered, isRecording ? xGREENHover : xREDHover);
+    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Text, isRecording ? xBLACK : xWHITE);
     if (ImGui::Button("Toggle Record") || IsKeyPressed(KEY_R))
     {
         _toggleRecording();
     }
+    ImGui::PopStyleColor(3);
 
     ImGui::NextColumn();
 
+    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Button, isPlaying ? xGREEN : xRED);
+    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ButtonHovered, isPlaying ? xGREENHover : xREDHover);
+    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Text, isPlaying ? xBLACK : xWHITE);
     if (ImGui::Button("Toggle Playback") || IsKeyPressed(KEY_F))
     {
         _togglePlayback();
     }
+    ImGui::PopStyleColor(3);
 
     ImGui::End();
 }
@@ -363,4 +371,5 @@ void DevGui::_stopPlayback()
 {
     isPlaying = false;
     playbackCursorReverse = 0;
+    game->scene.players[1].setInputs((PlayerInput)0);
 }
