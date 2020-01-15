@@ -159,6 +159,9 @@
     <ClInclude Include="src\entity.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\model.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="bin\ggponet.lib" />
@@ -234,6 +237,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\actions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

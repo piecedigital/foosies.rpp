@@ -46,6 +46,7 @@ public:
 private:
     void _aggregateGamepadInputs();
     void _dispatchNormalizedInputs(PlayerController &player);
+    void _updateCamera();
     void _drawScene();
     void _drawUI();
 

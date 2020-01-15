@@ -63,6 +63,7 @@
     <ClInclude Include="src\entity.hpp" />
     <ClInclude Include="src\foosiespp.hpp" />
     <ClInclude Include="src\globals.hpp" />
+    <ClInclude Include="src\model.hpp" />
     <ClInclude Include="src\player.hpp" />
     <ClInclude Include="src\session.hpp" />
     <ClInclude Include="src\ui\dev\main_gui.hpp" />
@@ -92,6 +93,7 @@
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\foosiespp.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\model.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\session.cpp" />
     <ClCompile Include="src\ui\dev\main_gui.cpp" />

@@ -76,26 +76,26 @@ bool Actions::checkMove(Move *move, PlayerInput *playerInputHistory)
 
 Move* Actions::detectCommand(PlayerInput *playerInputHistory, MoveList *movelist)
 {
-    // if (checkMove(movelist->HCF_Precise, playerInputHistory))
-    //     return movelist->HCF_Precise;
-    // if (checkMove(movelist->HCB_Precise, playerInputHistory))
-    //     return movelist->HCB_Precise;
-    // if (checkMove(movelist->DPF_Precise, playerInputHistory))
-    //     return movelist->DPF_Precise;
-    // if (checkMove(movelist->DPF, playerInputHistory))
-    //     return movelist->DPF;
-    // if (checkMove(movelist->DPB_Precise, playerInputHistory))
-    //     return movelist->DPB_Precise;
-    // if (checkMove(movelist->DPB, playerInputHistory))
-    //     return movelist->DPB;
+    if (checkMove(movelist->HCF_Precise, playerInputHistory))
+        return movelist->HCF_Precise;
+    if (checkMove(movelist->HCB_Precise, playerInputHistory))
+        return movelist->HCB_Precise;
+    if (checkMove(movelist->DPF_Precise, playerInputHistory))
+        return movelist->DPF_Precise;
+    if (checkMove(movelist->DPF, playerInputHistory))
+        return movelist->DPF;
+    if (checkMove(movelist->DPB_Precise, playerInputHistory))
+        return movelist->DPB_Precise;
+    if (checkMove(movelist->DPB, playerInputHistory))
+        return movelist->DPB;
     if (checkMove(movelist->QCF_Precise, playerInputHistory))
         return movelist->QCF_Precise;
-    // if (checkMove(movelist->QCB_Precise, playerInputHistory))
-    //     return movelist->QCB_Precise;
-    // if (checkMove(movelist->FF, playerInputHistory))
-    //     return movelist->FF;
-    // if (checkMove(movelist->BB, playerInputHistory))
-    //     return movelist->BB;
+    if (checkMove(movelist->QCB_Precise, playerInputHistory))
+        return movelist->QCB_Precise;
+    if (checkMove(movelist->FF, playerInputHistory))
+        return movelist->FF;
+    if (checkMove(movelist->BB, playerInputHistory))
+        return movelist->BB;
 
     return NULL;
 }

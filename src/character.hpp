@@ -7,19 +7,15 @@
 #include "box.hpp"
 #include "globals.hpp"
 #include "actions.hpp"
+#include "model.hpp"
 
 class Character
 {
 public:
-    int bodyWidth;
-    int bodyHeight;
-    Color color;
-    Model model;
-    ModelAnimation anim;
+    ModelWrapper model;
     PlayerData **playerData;
     PlayerBoxes **playerBoxes;
     MoveList moveList;
-    float lightPos[3];
 
     Character();
     ~Character();

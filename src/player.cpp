@@ -125,6 +125,7 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
     //     setFlag(*playerInput, PlayerInput::START);
     // if (normInput.HOME)
     //     setFlag(*playerInput, PlayerInput::HOME);
+
     setInputs(*playerInput);
 };
 
@@ -163,6 +164,35 @@ void PlayerController::setInputs(PlayerInput playerInput)
             unsetFlag(playerInput, PlayerInput::DIR_TOWARD);
             unsetFlag(playerInput, PlayerInput::DIR_ANY_TOWARD);
         }
+    }
+
+    if (hasFlag(playerInput, PlayerInput::DIR_UP) &&
+        hasFlag(playerInput, PlayerInput::DIR_BACK))
+    {
+        setFlag(playerInput, PlayerInput::DIR_UPBACK);
+        unsetFlag(playerInput, PlayerInput::DIR_UP);
+        unsetFlag(playerInput, PlayerInput::DIR_BACK);
+    }
+    else if (hasFlag(playerInput, PlayerInput::DIR_UP) &&
+        hasFlag(playerInput, PlayerInput::DIR_TOWARD))
+    {
+        setFlag(playerInput, PlayerInput::DIR_UPTOWARD);
+        unsetFlag(playerInput, PlayerInput::DIR_UP);
+        unsetFlag(playerInput, PlayerInput::DIR_TOWARD);
+    }
+    else if (hasFlag(playerInput, PlayerInput::DIR_DOWN) &&
+        hasFlag(playerInput, PlayerInput::DIR_BACK))
+    {
+        setFlag(playerInput, PlayerInput::DIR_DOWNBACK);
+        unsetFlag(playerInput, PlayerInput::DIR_DOWN);
+        unsetFlag(playerInput, PlayerInput::DIR_BACK);
+    }
+    else if (hasFlag(playerInput, PlayerInput::DIR_DOWN) &&
+        hasFlag(playerInput, PlayerInput::DIR_TOWARD))
+    {
+        setFlag(playerInput, PlayerInput::DIR_DOWNTOWARD);
+        unsetFlag(playerInput, PlayerInput::DIR_DOWN);
+        unsetFlag(playerInput, PlayerInput::DIR_TOWARD);
     }
 
     if (_noDirInput())
@@ -207,11 +237,11 @@ void PlayerController::processInputs()
         {
             int directionSign = (hasFlag(playerData->input, PlayerInput::DIR_LEFT) ? -1 : 1);
 
-            if (hasFlag(playerData->input, PlayerInput::DIR_TOWARD))
+            if (hasFlag(playerData->input, PlayerInput::DIR_ANY_TOWARD))
             {
                 playerData->physical.HSpeed = 10 * directionSign;
             }
-            else if (hasFlag(playerData->input, PlayerInput::DIR_BACK))
+            else if (hasFlag(playerData->input, PlayerInput::DIR_ANY_BACK))
             {
                 playerData->physical.HSpeed = 6 * directionSign;
             }
@@ -260,9 +290,9 @@ void PlayerController::updateBoxes()
     int crouchModifier = _isCrouched() ? 2 : 1;
     playerBoxes->pushBoxArray[0].updateBox(
         playerData->physical.x,
-        playerData->physical.y + ((charMan[0].bodyHeight / 2) / (crouchModifier)),
-        charMan[0].bodyWidth,
-        charMan[0].bodyHeight / crouchModifier);
+        playerData->physical.y + ((charMan[0].model.bodyHeight / 2) / (crouchModifier)),
+        charMan[0].model.bodyWidth,
+        charMan[0].model.bodyHeight / crouchModifier);
 }
 
 void PlayerController::checkCollisions(PlayerController *otherPlayer, int stageHalfWidth)
