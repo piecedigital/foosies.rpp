@@ -5,7 +5,7 @@
 #include "box.hpp"
 
 #define INPUT_HISTORY_MAX 30
-#define INPUT_BUFFER_MAX 1
+#define INPUT_BUFFER_MAX 3
 
 // structs
 struct Physical

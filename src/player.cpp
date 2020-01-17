@@ -68,30 +68,10 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
     if (normInput.DIR_H == -1)
     {
         setFlag(*playerInput, PlayerInput::DIR_LEFT);
-        // if (playerData->actionFace == 1)
-        // {
-        //     setFlag(*playerInput, PlayerInput::DIR_BACK);
-        //     setFlag(*playerInput, PlayerInput::DIR_ANY_BACK);
-        // }
-        // else
-        // {
-        //     setFlag(*playerInput, PlayerInput::DIR_TOWARD);
-        //     setFlag(*playerInput, PlayerInput::DIR_ANY_TOWARD);
-        // }
     }
     if (normInput.DIR_H == 1)
     {
         setFlag(*playerInput, PlayerInput::DIR_RIGHT);
-        // if (playerData->actionFace == 1)
-        // {
-        //     setFlag(*playerInput, PlayerInput::DIR_TOWARD);
-        //     setFlag(*playerInput, PlayerInput::DIR_ANY_TOWARD);
-        // }
-        // else
-        // {
-        //     setFlag(*playerInput, PlayerInput::DIR_BACK);
-        //     setFlag(*playerInput, PlayerInput::DIR_ANY_BACK);
-        // }
     }
     if (normInput.DIR_V == -1)
     {
@@ -135,17 +115,46 @@ void PlayerController::setInputs(PlayerInput playerInput)
     {
         if (playerData->actionFace == 1)
         {
-            setFlag(playerInput, PlayerInput::DIR_BACK);
-            setFlag(playerInput, PlayerInput::DIR_ANY_BACK);
             unsetFlag(playerInput, PlayerInput::DIR_TOWARD);
             unsetFlag(playerInput, PlayerInput::DIR_ANY_TOWARD);
+
+            setFlag(playerInput, PlayerInput::DIR_ANY_BACK);
+
+            if (hasFlag(playerInput, PlayerInput::DIR_UP))
+            {
+                unsetFlag(playerInput, PlayerInput::DIR_UP);
+                setFlag(playerInput, PlayerInput::DIR_UPBACK);
+            }
+            else if (hasFlag(playerInput, PlayerInput::DIR_DOWN))
+            {
+                unsetFlag(playerInput, PlayerInput::DIR_DOWN);
+                setFlag(playerInput, PlayerInput::DIR_DOWNBACK);
+            }
+            else
+            {
+                setFlag(playerInput, PlayerInput::DIR_BACK);
+            }
         }
         else
         {
             unsetFlag(playerInput, PlayerInput::DIR_BACK);
             unsetFlag(playerInput, PlayerInput::DIR_ANY_BACK);
-            setFlag(playerInput, PlayerInput::DIR_TOWARD);
+
             setFlag(playerInput, PlayerInput::DIR_ANY_TOWARD);
+            if (hasFlag(playerInput, PlayerInput::DIR_UP))
+            {
+                unsetFlag(playerInput, PlayerInput::DIR_UP);
+                setFlag(playerInput, PlayerInput::DIR_UPTOWARD);
+            }
+            else if (hasFlag(playerInput, PlayerInput::DIR_DOWN))
+            {
+                unsetFlag(playerInput, PlayerInput::DIR_DOWN);
+                setFlag(playerInput, PlayerInput::DIR_DOWNTOWARD);
+            }
+            else
+            {
+                setFlag(playerInput, PlayerInput::DIR_TOWARD);
+            }
         }
     }
     else if (hasFlag(playerInput, PlayerInput::DIR_RIGHT))
@@ -154,45 +163,44 @@ void PlayerController::setInputs(PlayerInput playerInput)
         {
             unsetFlag(playerInput, PlayerInput::DIR_BACK);
             unsetFlag(playerInput, PlayerInput::DIR_ANY_BACK);
-            setFlag(playerInput, PlayerInput::DIR_TOWARD);
+
             setFlag(playerInput, PlayerInput::DIR_ANY_TOWARD);
+            if (hasFlag(playerInput, PlayerInput::DIR_UP))
+            {
+                unsetFlag(playerInput, PlayerInput::DIR_UP);
+                setFlag(playerInput, PlayerInput::DIR_UPTOWARD);
+            }
+            else if (hasFlag(playerInput, PlayerInput::DIR_DOWN))
+            {
+                unsetFlag(playerInput, PlayerInput::DIR_DOWN);
+                setFlag(playerInput, PlayerInput::DIR_DOWNTOWARD);
+            }
+            else
+            {
+                setFlag(playerInput, PlayerInput::DIR_TOWARD);
+            }
         }
         else
         {
-            setFlag(playerInput, PlayerInput::DIR_BACK);
-            setFlag(playerInput, PlayerInput::DIR_ANY_BACK);
             unsetFlag(playerInput, PlayerInput::DIR_TOWARD);
             unsetFlag(playerInput, PlayerInput::DIR_ANY_TOWARD);
-        }
-    }
 
-    if (hasFlag(playerInput, PlayerInput::DIR_UP) &&
-        hasFlag(playerInput, PlayerInput::DIR_BACK))
-    {
-        setFlag(playerInput, PlayerInput::DIR_UPBACK);
-        unsetFlag(playerInput, PlayerInput::DIR_UP);
-        unsetFlag(playerInput, PlayerInput::DIR_BACK);
-    }
-    else if (hasFlag(playerInput, PlayerInput::DIR_UP) &&
-        hasFlag(playerInput, PlayerInput::DIR_TOWARD))
-    {
-        setFlag(playerInput, PlayerInput::DIR_UPTOWARD);
-        unsetFlag(playerInput, PlayerInput::DIR_UP);
-        unsetFlag(playerInput, PlayerInput::DIR_TOWARD);
-    }
-    else if (hasFlag(playerInput, PlayerInput::DIR_DOWN) &&
-        hasFlag(playerInput, PlayerInput::DIR_BACK))
-    {
-        setFlag(playerInput, PlayerInput::DIR_DOWNBACK);
-        unsetFlag(playerInput, PlayerInput::DIR_DOWN);
-        unsetFlag(playerInput, PlayerInput::DIR_BACK);
-    }
-    else if (hasFlag(playerInput, PlayerInput::DIR_DOWN) &&
-        hasFlag(playerInput, PlayerInput::DIR_TOWARD))
-    {
-        setFlag(playerInput, PlayerInput::DIR_DOWNTOWARD);
-        unsetFlag(playerInput, PlayerInput::DIR_DOWN);
-        unsetFlag(playerInput, PlayerInput::DIR_TOWARD);
+            setFlag(playerInput, PlayerInput::DIR_ANY_BACK);
+            if (hasFlag(playerInput, PlayerInput::DIR_UP))
+            {
+                unsetFlag(playerInput, PlayerInput::DIR_UP);
+                setFlag(playerInput, PlayerInput::DIR_UPBACK);
+            }
+            else if (hasFlag(playerInput, PlayerInput::DIR_DOWN))
+            {
+                unsetFlag(playerInput, PlayerInput::DIR_DOWN);
+                setFlag(playerInput, PlayerInput::DIR_DOWNBACK);
+            }
+            else
+            {
+                setFlag(playerInput, PlayerInput::DIR_BACK);
+            }
+        }
     }
 
     if (_noDirInput())

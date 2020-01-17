@@ -9,8 +9,8 @@ Character::Character()
     moveList.DPF_Precise->commandSequence = Actions::commandsTypes.DPF_Precise;
     moveList.DPF_Precise->sequenceSize = Actions::commandsTypes.DPSize;
 
-    // moveList.DPF = moveList.DPF_Precise;
-    // moveList.DPF->commandSequence = Actions::commandsTypes.DPF;
+    moveList.DPF = moveList.DPF_Precise;
+    moveList.DPF->commandSequence = Actions::commandsTypes.DPF;
 
     moveList.QCF_Precise = new Move;
     moveList.QCF_Precise->name = "Hadouken";

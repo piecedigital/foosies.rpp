@@ -8,7 +8,7 @@ bool Actions::checkMove(Move *move, PlayerInput *playerInputHistory)
     int inputCurser = 0;
     bool buttonWithinBuffer = false;
 
-    // int inputSpacingMax = 5;
+    int maxTravelDistance = 10;
     int spaceTravelled = 0;
 
     // int discrepencyMax = 2;
@@ -34,17 +34,17 @@ bool Actions::checkMove(Move *move, PlayerInput *playerInputHistory)
             {
                 inputsMatched++;
 
-                std::cout
-                    << "i: " << i
-                    << ", Cursor: " << inputCurser
-                    << " | "
-                    << playerInputHistory[i]
-                    << " & "
-                    << move->commandSequence[(move->sequenceSize - 1) - inputCurser]
-                    << " = "
-                    << (playerInputHistory[i] & move->commandSequence[(move->sequenceSize - 1) - inputCurser])
-                    << " | Match: " << inputsMatched
-                    << std::endl;
+                // std::cout
+                //     << "i: " << i
+                //     << ", Cursor: " << inputCurser
+                //     << " | "
+                //     << playerInputHistory[i]
+                //     << " & "
+                //     << move->commandSequence[(move->sequenceSize - 1) - inputCurser]
+                //     << " = "
+                //     << (playerInputHistory[i] & move->commandSequence[(move->sequenceSize - 1) - inputCurser])
+                //     << " | Match: " << inputsMatched
+                //     << std::endl;
 
                 inputCurser++;
                 spaceTravelled = 0;
@@ -52,15 +52,10 @@ bool Actions::checkMove(Move *move, PlayerInput *playerInputHistory)
             else
             {
                 spaceTravelled++;
-                // std::cout
-                //     << "i: " << i
-                //     << " | "
-                //     << playerInputHistory[i]
-                //     << " & "
-                //     << move->commandSequence[(move->sequenceSize - 1) - inputCurser]
-                //     << " = "
-                //     << (playerInputHistory[i] & move->commandSequence[(move->sequenceSize - 1) - inputCurser])
-                //     << std::endl;
+                if (spaceTravelled >= maxTravelDistance)
+                {
+                    break;
+                }
             }
 
             if (inputsMatched == move->sequenceSize)
