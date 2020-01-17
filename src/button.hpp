@@ -2,7 +2,7 @@
 #define BUTTON_H
 
 #include <string>
-#include "deps/raylib/raylib.h";
+#include "deps/raylib/raylib.h"
 
 struct ButtonCallbacks
 {

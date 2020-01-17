@@ -1,7 +1,7 @@
 #ifndef CUSTOM_TYPES_H
 #define CUSTOM_TYPES_H
 
-#include "deps/raylib/raylib.h";
+#include "deps/raylib/raylib.h"
 #include "box.hpp"
 
 #define INPUT_HISTORY_MAX 30
@@ -145,21 +145,22 @@ struct GameState
     PlayerProjectiles playerProjectiles[2];
 };
 
-inline int fGetTextWidth(const char* text)
-{
-    int lineCount = 0;
-    const char **splitText = TextSplit(text, (char)"\n", &lineCount);
+// inline int fGetTextWidth(const char* text)
+// {
+//     int lineCount = 0;
+//     char newLine[2] = "\n";
+//     const char **splitText = TextSplit(text, newLine, &lineCount);
 
-    int longestLine = 0;
+//     int longestLine = 0;
 
-    for (int i = 0; i < lineCount; i++)
-    {
-        const char *line = (*splitText) + i;
-        int length = TextLength(line);
-        if (length > longestLine) longestLine = length;
-    }
+//     for (int i = 0; i < lineCount; i++)
+//     {
+//         const char *line = (*splitText) + i;
+//         int length = TextLength(line);
+//         if (length > longestLine) longestLine = length;
+//     }
 
-    return longestLine;
-}
+//     return longestLine;
+// }
 
 #endif

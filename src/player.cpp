@@ -99,12 +99,6 @@ void PlayerController::normalizedToPlayerInput(NormalizedInput normInput)
         setFlag(*playerInput, PlayerInput::BTN_MACRO2);
     if (normInput.TRIGGER_R)
         setFlag(*playerInput, PlayerInput::BTN_ROUNDHOUSE);
-    // if (normInput.BACK)
-    //     setFlag(*playerInput, PlayerInput::BACK);
-    // if (normInput.START)
-    //     setFlag(*playerInput, PlayerInput::START);
-    // if (normInput.HOME)
-    //     setFlag(*playerInput, PlayerInput::HOME);
 
     setInputs(*playerInput);
 };
@@ -331,6 +325,20 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer, int stageH
             int selfHSpeed = std::abs(playerData->physical.HSpeed);
             int otherHSpeed = std::abs(otherPlayer->playerData->physical.HSpeed);
             int highestSpeed = std::max<int>(selfHSpeed, otherHSpeed);
+
+            if (
+                (playerData->physical.HSpeed > 0 && otherPlayer->playerData->physical.HSpeed > 0) ||
+                (playerData->physical.HSpeed < 0 && otherPlayer->playerData->physical.HSpeed < 0))
+            {
+                if (selfHSpeed == highestSpeed)
+                {
+                    otherHSpeed = 0;
+                }
+                if (otherHSpeed == highestSpeed)
+                {
+                    selfHSpeed = 0;
+                }
+            }
 
             float selfPercentageOfHighest = selfHSpeed == 0 ? 0.f : (float)highestSpeed / (float)selfHSpeed;
             float otherPercentageOfHighest = otherHSpeed == 0 ? 0.f : (float)highestSpeed / (float)otherHSpeed;

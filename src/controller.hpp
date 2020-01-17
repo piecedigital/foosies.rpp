@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include "deps/raylib/raylib.h";
+#include "deps/raylib/raylib.h"
 #include "globals.hpp"
 
 #define MAX_KEYBOARDS 1

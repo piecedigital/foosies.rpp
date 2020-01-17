@@ -3,7 +3,7 @@
 
 #include <string>
 #include <iostream>
-#include "deps/raylib/raylib.h";
+#include "deps/raylib/raylib.h"
 #include "box.hpp"
 #include "globals.hpp"
 #include "actions.hpp"

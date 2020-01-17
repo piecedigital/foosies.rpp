@@ -1,0 +1,2 @@
+mkdir output
+g++ -o output/foosiespp.exe src/**.cpp -std=c++17 -Isrc -Ibin -Isrc/deps/raylib -Isrc/deps/raylib/external/glfw/include -Isrc/deps/raylib/external/glfw/deps/mingw -Lsrc -Lbin -lggponet -lopengl32 -lgdi32 -lwinmm -lstdc++ -DWIN32 -D_WIN32 -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_DEBUG -D_CONSOLE
