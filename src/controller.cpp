@@ -119,35 +119,35 @@ void Controller::pollNormalizedInputs()
 bool Controller::_IsInputDown(std::string btn)
 {
     if (btn == "up")
-        return (name == "Keyboard") ? IsKeyDown(KEY_W) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_FACE_UP);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_W) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_FACE_UP);
     if (btn == "down")
-        return (name == "Keyboard") ? IsKeyDown(KEY_S) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_FACE_DOWN);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_S) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_FACE_DOWN);
     if (btn == "left")
-        return (name == "Keyboard") ? IsKeyDown(KEY_A) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_A) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
     if (btn == "right")
-        return (name == "Keyboard") ? IsKeyDown(KEY_D) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_D) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
     if (btn == "face_up")
-        return (name == "Keyboard") ? IsKeyDown(KEY_U) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_RIGHT_FACE_UP);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_U) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_RIGHT_FACE_UP);
     if (btn == "face_down")
-        return (name == "Keyboard") ? IsKeyDown(KEY_H) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_RIGHT_FACE_DOWN);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_H) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_RIGHT_FACE_DOWN);
     if (btn == "face_left")
-        return (name == "Keyboard") ? IsKeyDown(KEY_Y) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_RIGHT_FACE_LEFT);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_Y) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_RIGHT_FACE_LEFT);
     if (btn == "face_right")
-        return (name == "Keyboard") ? IsKeyDown(KEY_J) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_J) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT);
     if (btn == "shoulder_left")
-        return (name == "Keyboard") ? IsKeyDown(KEY_O) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_TRIGGER_1);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_O) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_TRIGGER_1);
     if (btn == "shoulder_right")
-        return (name == "Keyboard") ? IsKeyDown(KEY_I) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_RIGHT_TRIGGER_1);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_I) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_RIGHT_TRIGGER_1);
     if (btn == "trigger_left")
-        return (name == "Keyboard") ? IsKeyDown(KEY_L) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_TRIGGER_2);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_L) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_LEFT_TRIGGER_2);
     if (btn == "trigger_right")
-        return (name == "Keyboard") ? IsKeyDown(KEY_K) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_RIGHT_TRIGGER_2);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_K) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_RIGHT_TRIGGER_2);
     if (btn == "back")
-        return (name == "Keyboard") ? IsKeyDown(KEY_BACK) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_MIDDLE_LEFT);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_BACK) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_MIDDLE_LEFT);
     if (btn == "home")
-        return (name == "Keyboard") ? IsKeyDown(KEY_ESCAPE) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_MIDDLE);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_ESCAPE) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_MIDDLE);
     if (btn == "start")
-        return (name == "Keyboard") ? IsKeyDown(KEY_ENTER) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_MIDDLE_RIGHT);
+        return (controllerType == ControllerType::keyboard) ? IsKeyDown(KEY_ENTER) : IsGamepadButtonDown(padId, GAMEPAD_BUTTON_MIDDLE_RIGHT);
     return false;
 }
 
@@ -156,35 +156,35 @@ bool Controller::_IsInputPressed(std::string btn)
     // @TODO: Filter these checked keys/buttons through a map
     // Map should be separated by player side and device
     if (btn == "up")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_W) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_UP);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_W) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_UP);
     if (btn == "down")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_S) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_DOWN);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_S) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_DOWN);
     if (btn == "left")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_A) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_A) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
     if (btn == "right")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_D) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_D) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
     if (btn == "face_up")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_U) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_UP);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_U) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_UP);
     if (btn == "face_down")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_H) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_DOWN);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_H) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_DOWN);
     if (btn == "face_left")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_Y) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_LEFT);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_Y) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_LEFT);
     if (btn == "face_right")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_J) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_J) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT);
     if (btn == "shoulder_left")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_O) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_TRIGGER_1);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_O) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_TRIGGER_1);
     if (btn == "shoulder_right")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_I) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_TRIGGER_1);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_I) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_TRIGGER_1);
     if (btn == "trigger_left")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_L) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_TRIGGER_2);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_L) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_LEFT_TRIGGER_2);
     if (btn == "trigger_right")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_K) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_TRIGGER_2);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_K) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_RIGHT_TRIGGER_2);
     if (btn == "back")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_BACK) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_MIDDLE_LEFT);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_BACK) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_MIDDLE_LEFT);
     if (btn == "home")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_ESCAPE) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_MIDDLE);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_ESCAPE) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_MIDDLE);
     if (btn == "start")
-        return (name == "Keyboard") ? IsKeyPressed(KEY_ENTER) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_MIDDLE_RIGHT);
+        return (controllerType == ControllerType::keyboard) ? IsKeyPressed(KEY_ENTER) : IsGamepadButtonPressed(padId, GAMEPAD_BUTTON_MIDDLE_RIGHT);
     return false;
 }
 
