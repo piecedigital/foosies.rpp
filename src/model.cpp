@@ -54,6 +54,25 @@ void ModelController::init(const char *folder)
     model.materials[0].shader = shader;
 }
 
+void ModelController::setAnimation(int animationId)
+{
+    currentAnim = animationId;
+    UpdateModelAnimation(model, animations[currentAnim], 0);
+}
+
+void ModelController::setAnimationFrame(int frame)
+{
+    UpdateModelAnimation(model, animations[currentAnim], frame);
+}
+
+void ModelController::setAnimationFrameArray(int *frameArray)
+{}
+
+void ModelController::setAnimationLoop(bool willLoop)
+{
+    animationWillLoop = willLoop;
+}
+
 void ModelController::render(Vector3 translation, int rotation)
 {
     // SetShaderValue(model.materials[0].shader, GetShaderLocation(model.materials[0].shader, "lightPosition"), lightPos, UNIFORM_VEC3);

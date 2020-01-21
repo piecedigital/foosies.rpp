@@ -12,12 +12,44 @@ public:
     Color color;
     Model model;
     int animCount;
-    ModelAnimation *anim;
+    ModelAnimation *animations;
+    int currentAnim;
+    int currentAnimFrame;
+    int currentAnimFrameTotal;
+    int *currentAnimFrameArray;
+    bool animationWillLoop;
 
     ModelController();
 
     void init(const char *folder);
+    /**
+     * Sets new animation.
+     *
+     * Nullifies the existing animation frame array.
+     */
+    void setAnimation(int animationId);
+
+    /**
+     * Sets new animation.
+     *
+     * Nullifies the existing animation frame array.
+     */
+    // void setAnimation(const char* animationName);
+
+    void setAnimationFrame(int frame);
+
+    /**
+     * Sets a list of frames from an existing animation.
+     */
+    void setAnimationFrameArray(int *frameArray);
+
+    /**
+     * Sets whether the animation will loop.
+     */
+    void setAnimationLoop(bool willLoop);
+
     void render(Vector3 translation, int rotation);
+
     void unload();
 };
 
