@@ -3,7 +3,7 @@
 
 #include "deps/raylib/raylib.h"
 
-class ModelWrapper
+class ModelController
 {
 public:
     int bodyWidth;
@@ -11,11 +11,12 @@ public:
     float lightPos[3];
     Color color;
     Model model;
-    ModelAnimation anim;
+    int animCount;
+    ModelAnimation *anim;
 
-    ModelWrapper();
-    ~ModelWrapper();
+    ModelController();
 
+    void init(const char *folder);
     void render(Vector3 translation, int rotation);
     void unload();
 };

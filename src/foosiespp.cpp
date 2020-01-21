@@ -156,7 +156,6 @@ void Game::_aggregateGamepadInputs()
         if (controllers[controllerId].controllerType == ControllerType::keyboard)
         {
             controllers[controllerId].pollNormalizedInputs();
-            std::cout << controllers[controllerId].inputs.DIR_V << std::endl;
         }
         else if (IsGamepadAvailable(controllers[controllerId].padId))
         {

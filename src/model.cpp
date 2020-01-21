@@ -1,14 +1,23 @@
 #include "model.hpp"
+#include <string>
+#include <iostream>
 
-ModelWrapper::ModelWrapper()
+ModelController::ModelController()
 {
     bodyWidth = 100;
     bodyHeight = 200;
     color = BLACK;
-    model = LoadModel("assets/models/characters/d-func/d-func.obj");
+};
 
-    Texture baseColor = LoadTexture("assets/models/characters/d-func/Skin Base Color.png");
-    Texture bumpMap = LoadTexture("assets/models/characters/d-func/Skin Bump.png");
+void ModelController::init(const char *folder)
+{
+    bodyWidth = 100;
+    bodyHeight = 200;
+    color = BLACK;
+    model = LoadModel(std::string(folder).append("/model.gltf").c_str());
+    // anim = LoadModelAnimations(std::string(folder).append("/model.gltf").c_str(), &animCount);
+    Texture baseColor = LoadTexture(std::string(folder).append("/Texture.png").c_str());
+    Texture bumpMap = LoadTexture(std::string(folder).append("/Bump.png").c_str());
 
     Shader shader = LoadShader("assets/shaders/toon.vs", "assets/shaders/toon.fs");
 
@@ -44,19 +53,15 @@ ModelWrapper::ModelWrapper()
 
     model.materials[0].shader = shader;
 }
-ModelWrapper::~ModelWrapper()
-{
-    unload();
-}
 
-void ModelWrapper::render(Vector3 translation, int rotation)
+void ModelController::render(Vector3 translation, int rotation)
 {
     // SetShaderValue(model.materials[0].shader, GetShaderLocation(model.materials[0].shader, "lightPosition"), lightPos, UNIFORM_VEC3);
     DrawModelEx(model, translation, {0.f, 1.f, 0.f}, (90.f * rotation), {1.f, 1.f, 1.f}, WHITE);
     DrawModelWiresEx(model, translation, {0.f, 1.f, 0.f}, (90.f * rotation), {1.f, 1.f, 1.f}, color);
 }
 
-void ModelWrapper::unload()
+void ModelController::unload()
 {
     UnloadModel(model);
 }

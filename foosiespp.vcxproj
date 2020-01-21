@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="bin\ggponet.h" />
     <ClInclude Include="src\actions.hpp" />
+    <ClInclude Include="src\asset-manager.hpp" />
     <ClInclude Include="src\box.hpp" />
     <ClInclude Include="src\button.hpp" />
     <ClInclude Include="src\character.hpp" />
@@ -73,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\actions.cpp" />
+    <ClCompile Include="src\asset-manager.cpp" />
     <ClCompile Include="src\box.cpp" />
     <ClCompile Include="src\button.cpp" />
     <ClCompile Include="src\character.cpp" />

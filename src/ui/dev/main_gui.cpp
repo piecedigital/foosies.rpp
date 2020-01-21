@@ -109,11 +109,11 @@ void DevGui::_displayPlayerTweakers(int playerId)
 {
     ImGui::Begin(std::string("Player ").append(std::to_string(playerId)).append(" Tweaker").c_str());
 
-    ImGui::SliderInt("Body Width", &game->scene.players[playerId].charMan[0].model.bodyWidth, 100, 200);
-    ImGui::SliderInt("Body Height", &game->scene.players[playerId].charMan[0].model.bodyHeight, 100, 400);
-    ImGui::SliderFloat("Light X", &game->scene.players[playerId].charMan[0].model.lightPos[0], -10.f, 10.f);
-    ImGui::SliderFloat("Light Y", &game->scene.players[playerId].charMan[0].model.lightPos[1], -10.f, 10.f);
-    ImGui::SliderFloat("Light Z", &game->scene.players[playerId].charMan[0].model.lightPos[2], -10.f, 10.f);
+    ImGui::SliderInt("Body Width", &game->scene.players[playerId].charMan[0].model->bodyWidth, 100, 200);
+    ImGui::SliderInt("Body Height", &game->scene.players[playerId].charMan[0].model->bodyHeight, 100, 400);
+    ImGui::SliderFloat("Light X", &game->scene.players[playerId].charMan[0].model->lightPos[0], -10.f, 10.f);
+    ImGui::SliderFloat("Light Y", &game->scene.players[playerId].charMan[0].model->lightPos[1], -10.f, 10.f);
+    ImGui::SliderFloat("Light Z", &game->scene.players[playerId].charMan[0].model->lightPos[2], -10.f, 10.f);
 
     ImGui::End();
 }

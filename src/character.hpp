@@ -12,7 +12,7 @@
 class Character
 {
 public:
-    ModelWrapper model;
+    ModelController *model;
     PlayerData **playerData;
     PlayerBoxes **playerBoxes;
     MoveList moveList;

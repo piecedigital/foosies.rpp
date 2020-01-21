@@ -1,8 +1,12 @@
 #include <vector>
 #include "character.hpp"
+#include "asset-manager.hpp"
 
 Character::Character()
 {
+    model = AssetManager::addModel("assets/models/characters/d-func");
+    // model = new ModelController;
+    model->init("assets/models/characters/d-func");
     moveList.DPF_Precise = new Move;
     moveList.DPF_Precise->name = "Dragon Punch";
     moveList.DPF_Precise->triggerBtn = (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE);
@@ -29,7 +33,7 @@ void Character::render()
     {
         _convertTranslation();
 
-        model.render((*playerData)->transform.translation, (*playerData)->actionFace);
+        model->render((*playerData)->transform.translation, (*playerData)->actionFace);
     }
 
     if (playerBoxes != NULL && *playerBoxes != NULL)
