@@ -14,8 +14,9 @@ void ModelController::init(const char *folder)
     bodyWidth = 100;
     bodyHeight = 200;
     color = BLACK;
-    model = LoadModel(std::string(folder).append("/model.gltf").c_str());
-    // anim = LoadModelAnimations(std::string(folder).append("/model.gltf").c_str(), &animCount);
+    // model = LoadModel(std::string(folder).append("/model.gltf").c_str());
+    model = LoadModel(std::string(folder).append("/model.iqm").c_str());
+    animations = LoadModelAnimations(std::string(folder).append("/model.iqm").c_str(), &animCount);
     Texture baseColor = LoadTexture(std::string(folder).append("/Texture.png").c_str());
     Texture bumpMap = LoadTexture(std::string(folder).append("/Bump.png").c_str());
 
@@ -76,8 +77,11 @@ void ModelController::setAnimationLoop(bool willLoop)
 void ModelController::render(Vector3 translation, int rotation)
 {
     // SetShaderValue(model.materials[0].shader, GetShaderLocation(model.materials[0].shader, "lightPosition"), lightPos, UNIFORM_VEC3);
-    DrawModelEx(model, translation, {0.f, 1.f, 0.f}, (90.f * rotation), {1.f, 1.f, 1.f}, WHITE);
-    DrawModelWiresEx(model, translation, {0.f, 1.f, 0.f}, (90.f * rotation), {1.f, 1.f, 1.f}, color);
+    DrawModelExPlus(model, translation, {0.f, 1.f, 0.f}, {
+        90.f,
+        (90.f * rotation * -1),
+        0,
+    }, {1.f, 1.f, 1.f}, WHITE);
 }
 
 void ModelController::unload()
