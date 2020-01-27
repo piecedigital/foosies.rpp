@@ -162,7 +162,13 @@
     <ClInclude Include="src\model.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\asset-manager.hpp">
+    <ClInclude Include="src\asset_manager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\json_handler.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deps\nlohmann\json.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -245,7 +251,10 @@
     <ClCompile Include="src\model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\asset-manager.cpp">
+    <ClCompile Include="src\asset_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\json_handler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -53,21 +53,29 @@ void ModelController::init(const char *folder)
     model.materials[0].maps[MAP_HEIGHT].value = 1.f;
 
     model.materials[0].shader = shader;
+
+    UpdateModelAnimation(model, animations[0], 0);
 }
 
 void ModelController::setAnimation(int animationId)
 {
     currentAnim = animationId;
+    currentAnimFrame = 0;
+    currentAnimFrameCount = animations[currentAnim].frameCount;
     UpdateModelAnimation(model, animations[currentAnim], 0);
 }
 
 void ModelController::setAnimationFrame(int frame)
 {
+    currentAnimFrame = frame;
     UpdateModelAnimation(model, animations[currentAnim], frame);
 }
 
-void ModelController::setAnimationFrameArray(int *frameArray)
-{}
+void ModelController::setAnimationFrameArray(int *frameArray, int frameCount)
+{
+    currentAnimFrameArray = frameArray;
+    currentAnimFrameCount = frameCount;
+}
 
 void ModelController::setAnimationLoop(bool willLoop)
 {
@@ -77,6 +85,9 @@ void ModelController::setAnimationLoop(bool willLoop)
 void ModelController::render(Vector3 translation, int rotation)
 {
     // SetShaderValue(model.materials[0].shader, GetShaderLocation(model.materials[0].shader, "lightPosition"), lightPos, UNIFORM_VEC3);
+    currentAnimFrameCount = animations[currentAnim].frameCount;
+    UpdateModelAnimation(model, animations[currentAnim], currentAnimFrame);
+
     DrawModelExPlus(model, translation, {0.f, 1.f, 0.f}, {
         90.f,
         (90.f * rotation * -1),

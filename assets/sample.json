@@ -1,0 +1,9 @@
+{
+    "name": "foobar",
+    "age": 20,
+    "owns": {
+        "name": "foobar",
+        "age": 20,
+        "likes": [1,2,3]
+    }
+}

@@ -15,7 +15,7 @@ public:
     ModelAnimation *animations;
     int currentAnim;
     int currentAnimFrame;
-    int currentAnimFrameTotal;
+    int currentAnimFrameCount;
     int *currentAnimFrameArray;
     bool animationWillLoop;
 
@@ -41,7 +41,7 @@ public:
     /**
      * Sets a list of frames from an existing animation.
      */
-    void setAnimationFrameArray(int *frameArray);
+    void setAnimationFrameArray(int *frameArray, int frameCount);
 
     /**
      * Sets whether the animation will loop.
