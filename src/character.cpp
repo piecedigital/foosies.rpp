@@ -1,6 +1,6 @@
 #include <vector>
 #include "character.hpp"
-#include "asset-manager.hpp"
+#include "asset_manager.hpp"
 
 Character::Character()
 {
