@@ -7,20 +7,37 @@ Character::Character()
     model = AssetManager::addModel("assets/models/characters/d-func");
     // model = new ModelController;
     model->init("assets/models/characters/d-func");
-    moveList.DPF_Precise = new Move;
-    moveList.DPF_Precise->name = "Dragon Punch";
-    moveList.DPF_Precise->triggerBtn = (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE);
-    moveList.DPF_Precise->commandSequence = Actions::commandsTypes.DPF_Precise;
-    moveList.DPF_Precise->sequenceSize = Actions::commandsTypes.DPSize;
 
-    moveList.DPF = moveList.DPF_Precise;
+    moveList.DPF_Precise = new Move{
+        "Dragon Punch",
+        (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
+        Actions::commandsTypes.DPF_Precise,
+        Actions::commandsTypes.DPSize,
+    };
+
+    moveList.DPF = &(*moveList.DPF_Precise);
     moveList.DPF->commandSequence = Actions::commandsTypes.DPF;
 
-    moveList.QCF_Precise = new Move;
-    moveList.QCF_Precise->name = "Hadouken";
-    moveList.QCF_Precise->triggerBtn = (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE);
-    moveList.QCF_Precise->commandSequence = Actions::commandsTypes.QCF_Precise;
-    moveList.QCF_Precise->sequenceSize = Actions::commandsTypes.QCSize;
+    moveList.QCF_Precise = new Move{
+        "Hadouken",
+        (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
+        Actions::commandsTypes.QCF_Precise,
+        Actions::commandsTypes.QCSize,
+    };
+
+    moveList.FF = new Move{
+        "Forward Dash",
+        (PlayerInput)(PlayerInput::DIR_TOWARD),
+        Actions::commandsTypes.FF,
+        Actions::commandsTypes.FFSize,
+    };
+
+    moveList.BB = new Move{
+        "Back Dash",
+        (PlayerInput)(PlayerInput::DIR_BACK),
+        Actions::commandsTypes.BB,
+        Actions::commandsTypes.BBSize,
+    };
 }
 Character::~Character()
 {
