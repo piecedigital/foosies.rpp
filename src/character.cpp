@@ -4,6 +4,10 @@
 
 Character::Character()
 {
+    towardHSpeed = 10;
+    backHSpeed = 6;
+    accellerationH = 2;
+
     model = AssetManager::addModel("assets/models/characters/d-func");
     // model = new ModelController;
     model->init("assets/models/characters/d-func");

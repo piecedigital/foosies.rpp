@@ -77,6 +77,9 @@ void Game::update()
     {
         scene.stepAllowance--;
 
+        scene.players[0].updatePhysics();
+        scene.players[1].updatePhysics();
+
         scene.players[0].updateFacing(&scene.players[1]);
         scene.players[1].updateFacing(&scene.players[0]);
 
@@ -88,9 +91,6 @@ void Game::update()
 
         scene.players[0].calcPhysics(&scene.players[1], scene.stageHalfWidth);
         scene.players[1].calcPhysics(&scene.players[0], scene.stageHalfWidth);
-
-        scene.players[0].updatePhysics();
-        scene.players[1].updatePhysics();
 
         scene.players[0].updateBoxes();
         scene.players[1].updateBoxes();

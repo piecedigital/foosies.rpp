@@ -1,6 +1,7 @@
 #include <algorithm>
 #include "deps/raylib/raylib.h"
 #include "player.hpp"
+#include <iostream>
 
 PlayerController::PlayerController()
 {
@@ -232,7 +233,7 @@ void PlayerController::processInputs()
         else if (hasFlag(playerData->input, PlayerInput::DIR_ANY_DOWN))
         {
             crouched = true;
-            playerData->physical.HSpeed = 0;
+            // playerData->physical.HSpeed = 0;
         }
 
         if (!_isCrouched())
@@ -241,15 +242,19 @@ void PlayerController::processInputs()
 
             if (hasFlag(playerData->input, PlayerInput::DIR_ANY_TOWARD))
             {
-                playerData->physical.HSpeed = 10 * directionSign;
+                playerData->physical.HSpeed += charMan->accellerationH * directionSign;
+                if (std::abs(playerData->physical.HSpeed) > charMan->towardHSpeed)
+                {
+                    playerData->physical.HSpeed = (charMan->towardHSpeed) * directionSign;
+                }
             }
             else if (hasFlag(playerData->input, PlayerInput::DIR_ANY_BACK))
             {
-                playerData->physical.HSpeed = 6 * directionSign;
-            }
-            else
-            {
-                playerData->physical.HSpeed = 0;
+                playerData->physical.HSpeed += charMan->accellerationH * directionSign;
+                if (std::abs(playerData->physical.HSpeed) > charMan->backHSpeed)
+                {
+                    playerData->physical.HSpeed = (charMan->backHSpeed) * directionSign;
+                }
             }
         }
     }
@@ -397,6 +402,10 @@ void PlayerController::calcPhysics(PlayerController *otherPlayer, int stageHalfW
     }
 
     playerData->physical.y += playerData->physical.VSpeed;
+    if (playerData->physical.y < 0)
+    {
+        playerData->physical.y = 0;
+    }
 }
 
 void PlayerController::updatePhysics()
@@ -425,8 +434,15 @@ void PlayerController::updatePhysics()
     }
     else
     {
+        if (playerData->physical.HSpeed > 0)
+        {
+            playerData->physical.HSpeed -= charMan->accellerationH / 2;
+        }
+        else if (playerData->physical.HSpeed < 0)
+        {
+            playerData->physical.HSpeed += charMan->accellerationH / 2;
+        }
         playerData->physical.VSpeed = 0;
-        playerData->physical.y = 0;
     }
 }
 

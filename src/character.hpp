@@ -16,6 +16,9 @@ public:
     PlayerData **playerData;
     PlayerBoxes **playerBoxes;
     MoveList moveList;
+    int towardHSpeed;
+    int backHSpeed;
+    int accellerationH;
 
     Character();
     ~Character();
