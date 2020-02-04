@@ -222,27 +222,44 @@ void PlayerController::setInputs(PlayerInput playerInput)
 
 void PlayerController::processInputs()
 {
+    _processMovementInput();
+
+    Actions::detectCommand(inputHistory, &charMan->moveList);
+}
+
+void PlayerController::_processMovementInput()
+{
+
     if (_isGrounded())
     {
         crouched = false;
 
-        if (hasFlag(playerData->input, PlayerInput::DIR_ANY_UP))
+        if (_isJumping())
         {
-            playerData->physical.VSpeed = playerData->physical.jumpSpeed;
+            preJumpFrame++;
+            if (preJumpFrame >= preJumpFrames)
+            {
+                playerData->physical.VSpeed = playerData->physical.jumpSpeed;
+            }
+        }
+        else if (hasFlag(playerData->input, PlayerInput::DIR_ANY_UP))
+        {
+            _setIntentionToJump();
         }
         else if (hasFlag(playerData->input, PlayerInput::DIR_ANY_DOWN))
         {
             crouched = true;
-            // playerData->physical.HSpeed = 0;
         }
 
         if (!_isCrouched())
         {
             int directionSign = (hasFlag(playerData->input, PlayerInput::DIR_LEFT) ? -1 : 1);
 
+            int isAirbornDivider = (2 * (playerData->physical.VSpeed > 0));
+
             if (hasFlag(playerData->input, PlayerInput::DIR_ANY_TOWARD))
             {
-                playerData->physical.HSpeed += charMan->accellerationH * directionSign;
+                playerData->physical.HSpeed += (charMan->accellerationH / isAirbornDivider) * directionSign;
                 if (std::abs(playerData->physical.HSpeed) > charMan->towardHSpeed)
                 {
                     playerData->physical.HSpeed = (charMan->towardHSpeed) * directionSign;
@@ -250,7 +267,7 @@ void PlayerController::processInputs()
             }
             else if (hasFlag(playerData->input, PlayerInput::DIR_ANY_BACK))
             {
-                playerData->physical.HSpeed += charMan->accellerationH * directionSign;
+                playerData->physical.HSpeed += (charMan->accellerationH / isAirbornDivider) * directionSign;
                 if (std::abs(playerData->physical.HSpeed) > charMan->backHSpeed)
                 {
                     playerData->physical.HSpeed = (charMan->backHSpeed) * directionSign;
@@ -258,8 +275,6 @@ void PlayerController::processInputs()
             }
         }
     }
-
-    Actions::detectCommand(inputHistory, &charMan->moveList);
 }
 
 bool PlayerController::_noDirInput()
@@ -454,4 +469,15 @@ bool PlayerController::_isGrounded()
 bool PlayerController::_isCrouched()
 {
     return _isGrounded() && crouched;//hasFlag(playerData->input, PlayerInput::DIR_ANY_DOWN);
+}
+
+void PlayerController::_setIntentionToJump()
+{
+    intentionToJump = true;
+    preJumpFrame = 0;
+}
+
+bool PlayerController::_isJumping()
+{
+    return intentionToJump && preJumpFrame < preJumpFrames;
 }

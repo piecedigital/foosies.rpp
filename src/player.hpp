@@ -13,13 +13,15 @@
 class PlayerController : public Entity
 {
 public:
+    int preJumpFrames = 4;
+    int preJumpFrame = 4;
+    bool intentionToJump;
     bool crouched;
     GGPOPlayer ggpoPlayer;
     PlayerData *playerData;
     PlayerBoxes *playerBoxes;
     PlayerProjectiles *playerProjectiles;
     Character charMan[1];
-
     /**
      * The id of the controller passing inputs to the player
      * -1 is the default, meaning no controller
@@ -36,6 +38,7 @@ public:
     void normalizedToPlayerInput(NormalizedInput input);
     void setInputs(PlayerInput playerInput);
     void processInputs();
+    void _processMovementInput();
     void updateBoxes();
     void checkCollisions(PlayerController *otherPlayer, int stageHalfWidth);
     void calcPhysics(PlayerController *otherPlayer, int stageHalfWidth);
@@ -44,6 +47,8 @@ public:
 private:
     bool _isGrounded();
     bool _isCrouched();
+    void _setIntentionToJump();
+    bool _isJumping();
     bool _noDirInput();
     bool _noBtnInput();
 };
