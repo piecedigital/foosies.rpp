@@ -257,51 +257,35 @@ void PlayerController::_processMovementInput()
 
             bool isAirborn = playerData->physical.VSpeed > 0;
             int isAirbornDivider = (playerData->physical.VSpeed > 0) ? 2 : 1;
+            int appliedHSpeed = 0;
 
             if (hasFlag(playerData->input, PlayerInput::DIR_ANY_TOWARD))
             {
-                if (isAirbornDivider)
-                {
-                    playerData->physical.HSpeed = charMan->towardHSpeed * directionSign;
-                }
-                else
-                {
-                    if (
-                        directionSign < 0 && !playerData->physical.HSpeed < 0 ||
-                        directionSign > 0 && !playerData->physical.HSpeed > 0
-                    )
-                    {
-                        playerData->physical.HSpeed = 0;
-                    }
-
-                    playerData->physical.HSpeed += (charMan->accellerationH / isAirbornDivider) * directionSign;
-                    if (std::abs(playerData->physical.HSpeed) > charMan->towardHSpeed)
-                    {
-                        playerData->physical.HSpeed = (charMan->towardHSpeed) * directionSign;
-                    }
-                }
+                appliedHSpeed = charMan->towardHSpeed;
             }
             else if (hasFlag(playerData->input, PlayerInput::DIR_ANY_BACK))
             {
-                if (isAirborn)
-                {
-                    playerData->physical.HSpeed = charMan->backHSpeed * directionSign;
-                }
-                else
-                {
-                    if (
-                        directionSign < 0 && !playerData->physical.HSpeed < 0 ||
-                        directionSign > 0 && !playerData->physical.HSpeed > 0
-                    )
-                    {
-                        playerData->physical.HSpeed = 0;
-                    }
+                appliedHSpeed = charMan->backHSpeed;
+            }
 
-                    playerData->physical.HSpeed += (charMan->accellerationH / isAirbornDivider) * directionSign;
-                    if (std::abs(playerData->physical.HSpeed) > charMan->backHSpeed)
-                    {
-                        playerData->physical.HSpeed = (charMan->backHSpeed) * directionSign;
-                    }
+            if (isAirborn)
+            {
+                playerData->physical.HSpeed = appliedHSpeed * directionSign;
+            }
+            else
+            {
+                if (
+                    directionSign < 0 && !playerData->physical.HSpeed < 0 ||
+                    directionSign > 0 && !playerData->physical.HSpeed > 0
+                )
+                {
+                    playerData->physical.HSpeed = 0;
+                }
+
+                playerData->physical.HSpeed += (charMan->accellerationH / isAirbornDivider) * directionSign;
+                if (std::abs(playerData->physical.HSpeed) > appliedHSpeed)
+                {
+                    playerData->physical.HSpeed = (appliedHSpeed) * directionSign;
                 }
             }
         }
