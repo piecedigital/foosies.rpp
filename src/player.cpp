@@ -258,6 +258,7 @@ void PlayerController::_processMovementInput()
             bool isAirborn = playerData->physical.VSpeed > 0;
             int isAirbornDivider = (playerData->physical.VSpeed > 0) ? 2 : 1;
             int appliedHSpeed = 0;
+            bool noH = false;
 
             if (hasFlag(playerData->input, PlayerInput::DIR_ANY_TOWARD))
             {
@@ -267,25 +268,33 @@ void PlayerController::_processMovementInput()
             {
                 appliedHSpeed = charMan->backHSpeed;
             }
-
-            if (isAirborn)
-            {
-                playerData->physical.HSpeed = appliedHSpeed * directionSign;
-            }
             else
             {
-                if (
-                    directionSign < 0 && !playerData->physical.HSpeed < 0 ||
-                    directionSign > 0 && !playerData->physical.HSpeed > 0
-                )
-                {
-                    playerData->physical.HSpeed = 0;
-                }
+                noH = true;
+            }
 
-                playerData->physical.HSpeed += (charMan->accellerationH / isAirbornDivider) * directionSign;
-                if (std::abs(playerData->physical.HSpeed) > appliedHSpeed)
+
+            if (!noH)
+            {
+                if (isAirborn)
                 {
-                    playerData->physical.HSpeed = (appliedHSpeed) * directionSign;
+                    playerData->physical.HSpeed = appliedHSpeed * directionSign;
+                }
+                else
+                {
+                    if (
+                        directionSign < 0 && !playerData->physical.HSpeed < 0 ||
+                        directionSign > 0 && !playerData->physical.HSpeed > 0
+                    )
+                    {
+                        playerData->physical.HSpeed = 0;
+                    }
+
+                    playerData->physical.HSpeed += (charMan->accellerationH / isAirbornDivider) * directionSign;
+                    if (std::abs(playerData->physical.HSpeed) > appliedHSpeed)
+                    {
+                        playerData->physical.HSpeed = (appliedHSpeed) * directionSign;
+                    }
                 }
             }
         }
