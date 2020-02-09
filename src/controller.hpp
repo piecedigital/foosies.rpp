@@ -19,9 +19,10 @@ class Controller
 {
 public:
     int padId = -1;
-    ControllerType controllerType = ControllerType::keyboard;
+    bool buttonPressed;
     bool available = false;
     const char *name = "";
+    ControllerType controllerType = ControllerType::keyboard;
     NormalizedInput inputs = {0};
 
     Controller(unsigned int padId, ControllerType type, const char *name);
@@ -31,7 +32,6 @@ public:
 
     bool _IsInputDown(std::string button);
     bool _IsInputPressed(std::string button);
-    void _axisRecalculate();
     bool _IsAxisTilted(std::string direction);
     bool _IsAxisJustTilted(std::string direction);
 
@@ -44,6 +44,7 @@ private:
     float axisChangedV;
 
     void _resetInputs();
+    void _axisRecalculate();
 };
 
 #endif

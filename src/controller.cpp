@@ -30,23 +30,6 @@ Controller::~Controller()
     name = NULL;
 }
 
-void Controller::_resetInputs()
-{
-    inputs.DIR_H = 0;
-    inputs.DIR_V = 0;
-    inputs.FACE_UP = false;
-    inputs.FACE_DOWN = false;
-    inputs.FACE_LEFT = false;
-    inputs.FACE_RIGHT = false;
-    inputs.SHOULDER_L = false;
-    inputs.SHOULDER_R = false;
-    inputs.TRIGGER_L = false;
-    inputs.TRIGGER_R = false;
-    inputs.BACK = false;
-    inputs.START = false;
-    inputs.HOME = false;
-}
-
 void Controller::pollNormalizedInputs()
 {
     _resetInputs();
@@ -72,46 +55,57 @@ void Controller::pollNormalizedInputs()
     }
     if (_IsInputPressed("face_up"))
     {
+        buttonPressed = true;
         inputs.FACE_UP = true;
     }
     if (_IsInputPressed("face_down"))
     {
+        buttonPressed = true;
         inputs.FACE_DOWN = true;
     }
     if (_IsInputPressed("face_left"))
     {
+        buttonPressed = true;
         inputs.FACE_LEFT = true;
     }
     if (_IsInputPressed("face_right"))
     {
+        buttonPressed = true;
         inputs.FACE_RIGHT = true;
     }
     if (_IsInputPressed("shoulder_left"))
     {
+        buttonPressed = true;
         inputs.SHOULDER_L = true;
     }
     if (_IsInputPressed("shoulder_right"))
     {
+        buttonPressed = true;
         inputs.SHOULDER_R = true;
     }
     if (_IsInputPressed("trigger_left"))
     {
+        buttonPressed = true;
         inputs.TRIGGER_L = true;
     }
     if (_IsInputPressed("trigger_right"))
     {
+        buttonPressed = true;
         inputs.TRIGGER_R = true;
     }
     if (_IsInputPressed("back"))
     {
+        buttonPressed = true;
         inputs.BACK = true;
     }
     if (_IsInputPressed("home"))
     {
+        buttonPressed = true;
         inputs.HOME = true;
     }
     if (_IsInputPressed("start"))
     {
+        buttonPressed = true;
         inputs.START = true;
     }
 }
@@ -188,33 +182,6 @@ bool Controller::_IsInputPressed(std::string btn)
     return false;
 }
 
-void Controller::_axisRecalculate()
-{
-    float axisH = GetGamepadAxisMovement(padId, GAMEPAD_AXIS_LEFT_X);
-    float axisV = GetGamepadAxisMovement(padId, GAMEPAD_AXIS_LEFT_Y);
-
-    if (axisH < -axisThresholdH)
-    {
-        axisChangedH = (axisAbsoluteH != -1);
-        axisAbsoluteH = -1;
-    }
-    else if (axisH > axisThresholdH)
-    {
-        axisChangedH = (axisAbsoluteH != 1);
-        axisAbsoluteH = 1;
-    }
-    if (axisV < -axisThresholdV)
-    {
-        axisChangedV = (axisAbsoluteV != -1);
-        axisAbsoluteV = -1;
-    }
-    else if (axisV > axisThresholdV)
-    {
-        axisChangedV = (axisAbsoluteV != 1);
-        axisAbsoluteV = 1;
-    }
-}
-
 bool Controller::_IsAxisTilted(std::string direction)
 {
     if (direction == "up")
@@ -239,4 +206,62 @@ bool Controller::_IsAxisJustTilted(std::string direction)
     if (direction == "right")
         return (axisAbsoluteH > axisThresholdH && axisChangedH);
     return false;
+}
+
+void Controller::_resetInputs()
+{
+    buttonPressed = false;
+    inputs.DIR_H = 0;
+    inputs.DIR_V = 0;
+    inputs.FACE_UP = false;
+    inputs.FACE_DOWN = false;
+    inputs.FACE_LEFT = false;
+    inputs.FACE_RIGHT = false;
+    inputs.SHOULDER_L = false;
+    inputs.SHOULDER_R = false;
+    inputs.TRIGGER_L = false;
+    inputs.TRIGGER_R = false;
+    inputs.BACK = false;
+    inputs.START = false;
+    inputs.HOME = false;
+}
+
+void Controller::_axisRecalculate()
+{
+    float axisH = GetGamepadAxisMovement(padId, GAMEPAD_AXIS_LEFT_X);
+    float axisV = GetGamepadAxisMovement(padId, GAMEPAD_AXIS_LEFT_Y);
+
+    if (axisH < -axisThresholdH)
+    {
+        axisChangedH = (axisAbsoluteH != -1);
+        axisAbsoluteH = -1;
+    }
+    else if (axisH > axisThresholdH)
+    {
+        axisChangedH = (axisAbsoluteH != 1);
+        axisAbsoluteH = 1;
+    }
+    else
+    {
+        axisChangedH = (axisAbsoluteH != 0);
+        axisAbsoluteH = 0;
+    }
+
+
+    if (axisV < -axisThresholdV)
+    {
+        axisChangedV = (axisAbsoluteV != -1);
+        axisAbsoluteV = -1;
+    }
+    else if (axisV > axisThresholdV)
+    {
+        axisChangedV = (axisAbsoluteV != 1);
+        axisAbsoluteV = 1;
+    }
+    else
+    {
+        axisChangedV = (axisAbsoluteV != 0);
+        axisAbsoluteV = 0;
+    }
+
 }

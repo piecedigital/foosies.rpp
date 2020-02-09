@@ -44,7 +44,8 @@ public:
     void deleteSession();
 
 private:
-    void _aggregateGamepadInputs();
+    void _pollControllerInputs();
+    void _insureControllerAssignment(PlayerController &player1, PlayerController &player2);
     void _dispatchNormalizedInputs(PlayerController &player);
     void _updateCamera();
     void _drawScene();

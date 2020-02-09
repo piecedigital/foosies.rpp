@@ -5,7 +5,7 @@
 
 PlayerController::PlayerController()
 {
-    controllerId = -2;
+    controllerId = -1;
 }
 
 PlayerController::~PlayerController()
@@ -272,7 +272,6 @@ void PlayerController::_processMovementInput()
             {
                 noH = true;
             }
-
 
             if (!noH)
             {

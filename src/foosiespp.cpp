@@ -15,11 +15,9 @@ Game::Game()
         }
     }
 
-
     scene.players[0].init(gameState.inputHistory[0], &gameState.playerData[0], &gameState.playerBoxes[0], &gameState.playerProjectiles[0]);
     scene.players[1].init(gameState.inputHistory[1], &gameState.playerData[1], &gameState.playerBoxes[1], &gameState.playerProjectiles[1]);
 
-    scene.players[0].controllerId = 0;
     scene.players[1].playerData->sideFace = -1;
     scene.players[1].playerData->actionFace = -1;
 
@@ -59,7 +57,7 @@ int Game::init()
 #endif
     while (!WindowShouldClose())
     {
-        _aggregateGamepadInputs();
+        _pollControllerInputs();
 
         // update the state
         update();
@@ -82,6 +80,8 @@ void Game::update()
 
         scene.players[0].updateFacing(&scene.players[1]);
         scene.players[1].updateFacing(&scene.players[0]);
+
+        _insureControllerAssignment(scene.players[0], scene.players[1]);
 
         _dispatchNormalizedInputs(scene.players[0]);
         _dispatchNormalizedInputs(scene.players[1]);
@@ -146,7 +146,7 @@ void Game::deleteSession()
     }
 }
 
-void Game::_aggregateGamepadInputs()
+void Game::_pollControllerInputs()
 {
     unsigned int maxPads = MAX_KEYBOARDS + MAX_GAMEPADS;
 
@@ -167,6 +167,43 @@ void Game::_aggregateGamepadInputs()
         {
             controllers[controllerId].available = false;
             controllers[controllerId].name = "";
+            for (int i = 0; i < 2; i++)
+            {
+                if (scene.players[i].controllerId == controllerId)
+                {
+                    scene.players[i].controllerId = -1;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void Game::_insureControllerAssignment(PlayerController &player1, PlayerController &player2)
+{
+    unsigned int maxPads = MAX_KEYBOARDS + MAX_GAMEPADS;
+
+    if (player1.controllerId < 0)
+    {
+        for (unsigned int controllerId = 0; controllerId < maxPads; controllerId++)
+        {
+            if (controllerId != player2.controllerId && controllers[controllerId].buttonPressed)
+            {
+                player1.controllerId = controllerId;
+                break;
+            }
+        }
+    }
+
+    if (player2.controllerId < 0)
+    {
+        for (unsigned int controllerId = 0; controllerId < maxPads; controllerId++)
+        {
+            if (controllerId != player1.controllerId && controllers[controllerId].buttonPressed)
+            {
+                player2.controllerId = controllerId;
+                break;
+            }
         }
     }
 }
