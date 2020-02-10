@@ -5,6 +5,8 @@
 
 using JSON = nlohmann::json;
 
+typedef struct FrameData;
+
 struct frameWindow
 {
     int firstFrameOfWindow;
@@ -68,15 +70,6 @@ struct InvincibilityWindow : frameWindow
 struct CounterHitStateWindow : frameWindow
 {
     bool isCounterHitable = false;
-};
-
-struct OverheadWindow : frameWindow
-{
-    bool isOverhead = false;
-};
-
-struct CounterHitOverrideWindow : frameWindow
-{
     float damageMultiplier = 1.2f;
     float stunMultiplier = 1.2f;
     float hitStunMultiplier = 1.2f;
@@ -85,6 +78,11 @@ struct CounterHitOverrideWindow : frameWindow
     FrameData *counterHitOnlyCancellables;
     float Multiplier = 1.2f;
     KnockdownType knockdownTypeOverride = KnockdownType::HARD;
+};
+
+struct OverheadWindow : frameWindow
+{
+    bool isOverhead = false;
 };
 
 struct PropulsionWindow : frameWindow
@@ -122,8 +120,6 @@ public:
     int invincibilityWindowSize;
     CounterHitStateWindow *counterHitStateWindow;
     int counterHitStateWindowSize;
-    CounterHitOverrideWindow *counterHitOverrideWindow;
-    int counterHitOverrideWindowSize;
     OverheadWindow *overheadWindow;
     int overheadWindowSize;
     PropulsionWindow *propulsionWindow;
@@ -143,7 +139,6 @@ public:
         // cancellableWindow
         // invincibilityWindow
         // counterHitStateWindow
-        // counterHitOverrideWindow
         // overheadWindow
         // propulsionWindow
         if (json.contains("frameBoxData"))
