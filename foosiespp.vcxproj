@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="bin\ggponet.h" />
     <ClInclude Include="src\deps\nlohmann\json.hpp" />
+    <ClInclude Include="src\frame_data.hpp" />
     <ClInclude Include="src\json_handler.hpp" />
     <ClInclude Include="src\actions.hpp" />
     <ClInclude Include="src\asset_manager.hpp" />
@@ -75,6 +76,7 @@
     <Library Include="bin\ggponet.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\frame_data.cpp" />
     <ClCompile Include="src\json_handler.cpp" />
     <ClCompile Include="src\actions.cpp" />
     <ClCompile Include="src\asset_manager.cpp" />
