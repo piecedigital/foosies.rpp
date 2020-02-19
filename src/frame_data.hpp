@@ -5,8 +5,6 @@
 
 using JSON = nlohmann::json;
 
-typedef struct FrameData;
-
 struct frameWindow
 {
     int firstFrameOfWindow;
@@ -54,7 +52,7 @@ struct StunWindow : frameWindow
 
 struct CancellableWindow : frameWindow
 {
-    FrameData *cancelMoves;
+    int cancelMoves;
 };
 
 struct InvincibilityWindow : frameWindow
@@ -75,7 +73,7 @@ struct CounterHitStateWindow : frameWindow
     float hitStunMultiplier = 1.2f;
     float launchMultiplier = 1.2f;
     float pushbackMultiplier = 1.2f;
-    FrameData *counterHitOnlyCancellables;
+    int counterHitOnlyCancellables;
     float Multiplier = 1.2f;
     KnockdownType knockdownTypeOverride = KnockdownType::HARD;
 };
@@ -130,17 +128,232 @@ public:
 
     void frameDataFromJSON(JSON json)
     {
-        // knockdownTypeWindow
-        // knockupKnockbackWindow
-        // launchWindow
-        // pushbackWindow
-        // damageWindow
-        // stunWindow
-        // cancellableWindow
-        // invincibilityWindow
-        // counterHitStateWindow
-        // overheadWindow
-        // propulsionWindow
+        if (json.contains("knockdownTypeWindow"))
+        {
+            if (knockdownTypeWindow != NULL)
+            {
+                delete knockdownTypeWindow;
+            }
+
+            knockdownTypeWindowSize = json["knockdownTypeWindow"].size();
+
+            knockdownTypeWindow = new KnockdownTypeWindow[knockdownTypeWindowSize];
+
+            for (int i = 0; i < knockdownTypeWindowSize; i++)
+            {
+                knockdownTypeWindow[i] = {
+                    json["knockdownTypeWindow"]["knockdownType"].get<KnockdownType>(),
+                };
+            }
+        }
+
+        if (json.contains("knockupKnockbackWindow"))
+        {
+            if (knockupKnockbackWindow != NULL)
+            {
+                delete knockupKnockbackWindow;
+            }
+
+            knockupKnockbackWindowSize = json["knockupKnockbackWindow"].size();
+
+            knockupKnockbackWindow = new KnockupKnockbackWindow[knockupKnockbackWindowSize];
+
+            for (int i = 0; i < knockupKnockbackWindowSize; i++)
+            {
+                knockupKnockbackWindow[i] = {
+                    json["knockupKnockbackWindow"]["knockupValue"].get<int>(),
+                    json["knockupKnockbackWindow"]["knockbackValue"].get<int>(),
+                };
+            }
+        }
+
+        if (json.contains("launchWindow"))
+        {
+            if (launchWindow != NULL)
+            {
+                delete launchWindow;
+            }
+
+            launchWindowSize = json["launchWindow"].size();
+
+            launchWindow = new LaunchWindow[launchWindowSize];
+
+            for (int i = 0; i < launchWindowSize; i++)
+            {
+                launchWindow[i] = {
+                    json["launchWindow"]["launchValue"].get<int>(),
+                };
+            }
+        }
+
+        if (json.contains("pushbackWindow"))
+        {
+            if (pushbackWindow != NULL)
+            {
+                delete pushbackWindow;
+            }
+
+            pushbackWindowSize = json["pushbackWindow"].size();
+
+            pushbackWindow = new PushbackWindow[pushbackWindowSize];
+
+            for (int i = 0; i < pushbackWindowSize; i++)
+            {
+                pushbackWindow[i] = {
+                    json["pushbackWindow"]["pushbackOnHit"].get<int>(),
+                    json["pushbackWindow"]["pushbackOnBlock"].get<int>(),
+                };
+            }
+        }
+
+        if (json.contains("damageWindow"))
+        {
+            if (damageWindow != NULL)
+            {
+                delete damageWindow;
+            }
+
+            damageWindowSize = json["damageWindow"].size();
+
+            damageWindow = new DamageWindow[damageWindowSize];
+
+            for (int i = 0; i < damageWindowSize; i++)
+            {
+                damageWindow[i] = {
+                    json["damageWindow"]["damageOnHit"].get<int>(),
+                    json["damageWindow"]["damageOnBlock"].get<int>(),
+                };
+            }
+        }
+
+        if (json.contains("stunWindow"))
+        {
+            if (stunWindow != NULL)
+            {
+                delete stunWindow;
+            }
+
+            stunWindowSize = json["stunWindow"].size();
+
+            stunWindow = new StunWindow[stunWindowSize];
+
+            for (int i = 0; i < stunWindowSize; i++)
+            {
+                stunWindow[i] = {
+                    json["stunWindow"]["stunValue"].get<int>(),
+                };
+            }
+        }
+
+        if (json.contains("cancellableWindow"))
+        {
+            if (cancellableWindow != NULL)
+            {
+                delete cancellableWindow;
+            }
+
+            cancellableWindowSize = json["cancellableWindow"].size();
+
+            cancellableWindow = new CancellableWindow[cancellableWindowSize];
+
+            for (int i = 0; i < cancellableWindowSize; i++)
+            {
+                cancellableWindow[i] = {
+                    json["cancellableWindow"]["cancelMoves"].get<int>(),
+                };
+            }
+        }
+
+        if (json.contains("invincibilityWindow"))
+        {
+            if (invincibilityWindow != NULL)
+            {
+                delete invincibilityWindow;
+            }
+
+            invincibilityWindowSize = json["invincibilityWindow"].size();
+
+            invincibilityWindow = new InvincibilityWindow[invincibilityWindowSize];
+
+            for (int i = 0; i < invincibilityWindowSize; i++)
+            {
+                invincibilityWindow[i] = {
+                    json["invincibilityWindow"]["hitInvincibility"].get<bool>(),
+                    json["invincibilityWindow"]["grabInvincibility"].get<bool>(),
+                    json["invincibilityWindow"]["exHitInvincibility"].get<bool>(),
+                    json["invincibilityWindow"]["exGrabInvincibility"].get<bool>(),
+                    json["invincibilityWindow"]["superHitInvincibility"].get<bool>(),
+                    json["invincibilityWindow"]["superGrabInvincibility"].get<bool>(),
+                };
+            }
+        }
+
+        if (json.contains("counterHitStateWindow"))
+        {
+            if (counterHitStateWindow != NULL)
+            {
+                delete counterHitStateWindow;
+            }
+
+            counterHitStateWindowSize = json["counterHitStateWindow"].size();
+
+            counterHitStateWindow = new CounterHitStateWindow[counterHitStateWindowSize];
+
+            for (int i = 0; i < counterHitStateWindowSize; i++)
+            {
+                counterHitStateWindow[i] = {
+                    json["counterHitStateWindow"]["isCounterHitable"].get<bool>(),
+                    json["counterHitStateWindow"]["damageMultiplier"].get<float>(),
+                    json["counterHitStateWindow"]["stunMultiplier"].get<float>(),
+                    json["counterHitStateWindow"]["hitStunMultiplier"].get<float>(),
+                    json["counterHitStateWindow"]["launchMultiplier"].get<float>(),
+                    json["counterHitStateWindow"]["pushbackMultiplier"].get<float>(),
+                    json["counterHitStateWindow"]["counterHitOnlyCancellables"].get<int>(),
+                    json["counterHitStateWindow"]["Multiplier"].get<float>(),
+                    json["counterHitStateWindow"]["knockdownTypeOverride"].get<KnockdownType>(),
+                };
+            }
+        }
+
+        if (json.contains("overheadWindow"))
+        {
+            if (overheadWindow != NULL)
+            {
+                delete overheadWindow;
+            }
+
+            overheadWindowSize = json["overheadWindow"].size();
+
+            overheadWindow = new OverheadWindow[overheadWindowSize];
+
+            for (int i = 0; i < overheadWindowSize; i++)
+            {
+                overheadWindow[i] = {
+                    json["overheadWindow"]["isOverhead"].get<bool>(),
+                };
+            }
+        }
+
+        if (json.contains("propulsionWindow"))
+        {
+            if (propulsionWindow != NULL)
+            {
+                delete propulsionWindow;
+            }
+
+            propulsionWindowSize = json["propulsionWindow"].size();
+
+            propulsionWindow = new PropulsionWindow[propulsionWindowSize];
+
+            for (int i = 0; i < propulsionWindowSize; i++)
+            {
+                propulsionWindow[i] = {
+                    json["propulsionWindow"]["hSpeed"].get<int>(),
+                    json["propulsionWindow"]["vSpeed"].get<int>(),
+                };
+            }
+        }
+
         if (json.contains("frameBoxData"))
         {
             if (frameBoxData != NULL)
