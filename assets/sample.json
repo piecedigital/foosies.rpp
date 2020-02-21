@@ -1,9 +1,18 @@
 {
-    "name": "foobar",
-    "age": 20,
-    "owns": {
-        "name": "foobar",
-        "age": 20,
-        "likes": [1,2,3]
+    "name": "Hadouken",
+    "meterCost": 0,
+    "frameData": {
+        "knockdownTypeWindow": [],
+        "knockupKnockbackWindow": [],
+        "launchWindow": [],
+        "pushbackWindow": [],
+        "damageWindow": [],
+        "stunWindow": [],
+        "cancellableWindow": [],
+        "invincibilityWindow": [],
+        "counterHitStateWindow": [],
+        "overheadWindow": [],
+        "propulsionWindow": [],
+        "frameBoxData": []
     }
 }
