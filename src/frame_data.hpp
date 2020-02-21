@@ -74,7 +74,7 @@ struct CounterHitStateWindow : frameWindow
     float launchMultiplier = 1.2f;
     float pushbackMultiplier = 1.2f;
     int counterHitOnlyCancellables;
-    float Multiplier = 1.2f;
+    float multiplier = 1.2f;
     KnockdownType knockdownTypeOverride = KnockdownType::HARD;
 };
 
@@ -142,7 +142,9 @@ public:
             for (int i = 0; i < knockdownTypeWindowSize; i++)
             {
                 knockdownTypeWindow[i] = {
-                    json["knockdownTypeWindow"]["knockdownType"].get<KnockdownType>(),
+                    json["knockdownTypeWindow"][i]["firstFrameOfWindow"].get<int>(),
+                    json["knockdownTypeWindow"][i]["lastFrameOfWindow"].get<int>(),
+                    json["knockdownTypeWindow"][i]["knockdownType"].get<KnockdownType>(),
                 };
             }
         }
@@ -161,8 +163,10 @@ public:
             for (int i = 0; i < knockupKnockbackWindowSize; i++)
             {
                 knockupKnockbackWindow[i] = {
-                    json["knockupKnockbackWindow"]["knockupValue"].get<int>(),
-                    json["knockupKnockbackWindow"]["knockbackValue"].get<int>(),
+                    json["knockupKnockbackWindow"][i]["firstFrameOfWindow"].get<int>(),
+                    json["knockupKnockbackWindow"][i]["lastFrameOfWindow"].get<int>(),
+                    json["knockupKnockbackWindow"][i]["knockupValue"].get<int>(),
+                    json["knockupKnockbackWindow"][i]["knockbackValue"].get<int>(),
                 };
             }
         }
@@ -181,7 +185,9 @@ public:
             for (int i = 0; i < launchWindowSize; i++)
             {
                 launchWindow[i] = {
-                    json["launchWindow"]["launchValue"].get<int>(),
+                    json["launchWindow"][i]["firstFrameOfWindow"].get<int>(),
+                    json["launchWindow"][i]["lastFrameOfWindow"].get<int>(),
+                    json["launchWindow"][i]["launchValue"].get<int>(),
                 };
             }
         }
@@ -200,8 +206,10 @@ public:
             for (int i = 0; i < pushbackWindowSize; i++)
             {
                 pushbackWindow[i] = {
-                    json["pushbackWindow"]["pushbackOnHit"].get<int>(),
-                    json["pushbackWindow"]["pushbackOnBlock"].get<int>(),
+                    json["pushbackWindow"][i]["firstFrameOfWindow"].get<int>(),
+                    json["pushbackWindow"][i]["lastFrameOfWindow"].get<int>(),
+                    json["pushbackWindow"][i]["pushbackOnHit"].get<int>(),
+                    json["pushbackWindow"][i]["pushbackOnBlock"].get<int>(),
                 };
             }
         }
@@ -220,8 +228,10 @@ public:
             for (int i = 0; i < damageWindowSize; i++)
             {
                 damageWindow[i] = {
-                    json["damageWindow"]["damageOnHit"].get<int>(),
-                    json["damageWindow"]["damageOnBlock"].get<int>(),
+                    json["damageWindow"][i]["firstFrameOfWindow"].get<int>(),
+                    json["damageWindow"][i]["lastFrameOfWindow"].get<int>(),
+                    json["damageWindow"][i]["damageOnHit"].get<int>(),
+                    json["damageWindow"][i]["damageOnBlock"].get<int>(),
                 };
             }
         }
@@ -240,7 +250,9 @@ public:
             for (int i = 0; i < stunWindowSize; i++)
             {
                 stunWindow[i] = {
-                    json["stunWindow"]["stunValue"].get<int>(),
+                    json["stunWindow"][i]["firstFrameOfWindow"].get<int>(),
+                    json["stunWindow"][i]["lastFrameOfWindow"].get<int>(),
+                    json["stunWindow"][i]["stunValue"].get<int>(),
                 };
             }
         }
@@ -259,7 +271,9 @@ public:
             for (int i = 0; i < cancellableWindowSize; i++)
             {
                 cancellableWindow[i] = {
-                    json["cancellableWindow"]["cancelMoves"].get<int>(),
+                    json["cancellableWindow"][i]["firstFrameOfWindow"].get<int>(),
+                    json["cancellableWindow"][i]["lastFrameOfWindow"].get<int>(),
+                    json["cancellableWindow"][i]["cancelMoves"].get<int>(),
                 };
             }
         }
@@ -278,12 +292,14 @@ public:
             for (int i = 0; i < invincibilityWindowSize; i++)
             {
                 invincibilityWindow[i] = {
-                    json["invincibilityWindow"]["hitInvincibility"].get<bool>(),
-                    json["invincibilityWindow"]["grabInvincibility"].get<bool>(),
-                    json["invincibilityWindow"]["exHitInvincibility"].get<bool>(),
-                    json["invincibilityWindow"]["exGrabInvincibility"].get<bool>(),
-                    json["invincibilityWindow"]["superHitInvincibility"].get<bool>(),
-                    json["invincibilityWindow"]["superGrabInvincibility"].get<bool>(),
+                    json["invincibilityWindow"][i]["firstFrameOfWindow"].get<int>(),
+                    json["invincibilityWindow"][i]["lastFrameOfWindow"].get<int>(),
+                    json["invincibilityWindow"][i]["hitInvincibility"].get<bool>(),
+                    json["invincibilityWindow"][i]["grabInvincibility"].get<bool>(),
+                    json["invincibilityWindow"][i]["exHitInvincibility"].get<bool>(),
+                    json["invincibilityWindow"][i]["exGrabInvincibility"].get<bool>(),
+                    json["invincibilityWindow"][i]["superHitInvincibility"].get<bool>(),
+                    json["invincibilityWindow"][i]["superGrabInvincibility"].get<bool>(),
                 };
             }
         }
@@ -302,15 +318,17 @@ public:
             for (int i = 0; i < counterHitStateWindowSize; i++)
             {
                 counterHitStateWindow[i] = {
-                    json["counterHitStateWindow"]["isCounterHitable"].get<bool>(),
-                    json["counterHitStateWindow"]["damageMultiplier"].get<float>(),
-                    json["counterHitStateWindow"]["stunMultiplier"].get<float>(),
-                    json["counterHitStateWindow"]["hitStunMultiplier"].get<float>(),
-                    json["counterHitStateWindow"]["launchMultiplier"].get<float>(),
-                    json["counterHitStateWindow"]["pushbackMultiplier"].get<float>(),
-                    json["counterHitStateWindow"]["counterHitOnlyCancellables"].get<int>(),
-                    json["counterHitStateWindow"]["Multiplier"].get<float>(),
-                    json["counterHitStateWindow"]["knockdownTypeOverride"].get<KnockdownType>(),
+                    json["counterHitStateWindow"][i]["firstFrameOfWindow"].get<int>(),
+                    json["counterHitStateWindow"][i]["lastFrameOfWindow"].get<int>(),
+                    json["counterHitStateWindow"][i]["isCounterHitable"].get<bool>(),
+                    json["counterHitStateWindow"][i]["damageMultiplier"].get<float>(),
+                    json["counterHitStateWindow"][i]["stunMultiplier"].get<float>(),
+                    json["counterHitStateWindow"][i]["hitStunMultiplier"].get<float>(),
+                    json["counterHitStateWindow"][i]["launchMultiplier"].get<float>(),
+                    json["counterHitStateWindow"][i]["pushbackMultiplier"].get<float>(),
+                    json["counterHitStateWindow"][i]["counterHitOnlyCancellables"].get<int>(),
+                    json["counterHitStateWindow"][i]["multiplier"].get<float>(),
+                    json["counterHitStateWindow"][i]["knockdownTypeOverride"].get<KnockdownType>(),
                 };
             }
         }
@@ -329,7 +347,9 @@ public:
             for (int i = 0; i < overheadWindowSize; i++)
             {
                 overheadWindow[i] = {
-                    json["overheadWindow"]["isOverhead"].get<bool>(),
+                    json["overheadWindow"][i]["firstFrameOfWindow"].get<int>(),
+                    json["overheadWindow"][i]["lastFrameOfWindow"].get<int>(),
+                    json["overheadWindow"][i]["isOverhead"].get<bool>(),
                 };
             }
         }
@@ -348,8 +368,10 @@ public:
             for (int i = 0; i < propulsionWindowSize; i++)
             {
                 propulsionWindow[i] = {
-                    json["propulsionWindow"]["hSpeed"].get<int>(),
-                    json["propulsionWindow"]["vSpeed"].get<int>(),
+                    json["propulsionWindow"][i]["firstFrameOfWindow"].get<int>(),
+                    json["propulsionWindow"][i]["lastFrameOfWindow"].get<int>(),
+                    json["propulsionWindow"][i]["hSpeed"].get<int>(),
+                    json["propulsionWindow"][i]["vSpeed"].get<int>(),
                 };
             }
         }
@@ -368,10 +390,10 @@ public:
             for (int i = 0; i < frameBoxDataSize; i++)
             {
                 frameBoxData[i] = {
-                    json["frameBoxData"]["xOffset"].get<int>(),
-                    json["frameBoxData"]["yOffset"].get<int>(),
-                    json["frameBoxData"]["width"].get<int>(),
-                    json["frameBoxData"]["height"].get<int>()
+                    json["frameBoxData"][i]["xOffset"].get<int>(),
+                    json["frameBoxData"][i]["yOffset"].get<int>(),
+                    json["frameBoxData"][i]["width"].get<int>(),
+                    json["frameBoxData"][i]["height"].get<int>()
                 };
             }
         }
