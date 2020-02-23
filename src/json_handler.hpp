@@ -19,7 +19,7 @@ namespace JsonHandler
         std::ifstream file;
         file.open(filename);
 
-        std::string data[100];
+        std::string data;
         std::string lineOfData;
         int lineCount = 0;
 
@@ -28,7 +28,7 @@ namespace JsonHandler
             while (!file.eof())
             {
                 std::getline(file,lineOfData);
-                data[lineCount] = lineOfData;
+                data.append(lineOfData);
                 lineCount++;
             }
         }
@@ -39,14 +39,7 @@ namespace JsonHandler
 
         file.close();
 
-        std::string stitchedString;
-
-        for (int i = 0; i < lineCount; i++)
-        {
-            stitchedString.append(data[i]);
-        }
-
-        return parseJsonFile(stitchedString.c_str());
+        return parseJsonFile(data.c_str());
     };
 
     static bool saveJsonFile(const char *filename, JSON data)

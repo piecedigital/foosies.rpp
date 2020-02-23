@@ -34,18 +34,6 @@ bool Actions::checkMove(Move *move, PlayerInput *playerInputHistory)
             {
                 inputsMatched++;
 
-                // std::cout
-                //     << "i: " << i
-                //     << ", Cursor: " << inputCurser
-                //     << " | "
-                //     << playerInputHistory[i]
-                //     << " & "
-                //     << move->commandSequence[(move->sequenceSize - 1) - inputCurser]
-                //     << " = "
-                //     << (playerInputHistory[i] & move->commandSequence[(move->sequenceSize - 1) - inputCurser])
-                //     << " | Match: " << inputsMatched
-                //     << std::endl;
-
                 inputCurser++;
                 spaceTravelled = 0;
             }

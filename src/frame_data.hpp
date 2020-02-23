@@ -100,30 +100,30 @@ struct FrameBoxData
 class FrameData
 {
 public:
-    KnockdownTypeWindow *knockdownTypeWindow;
+    KnockdownTypeWindow *knockdownTypeWindow = NULL;
     int knockdownTypeWindowSize;
-    KnockupKnockbackWindow *knockupKnockbackWindow;
+    KnockupKnockbackWindow *knockupKnockbackWindow = NULL;
     int knockupKnockbackWindowSize;
-    LaunchWindow *launchWindow;
+    LaunchWindow *launchWindow = NULL;
     int launchWindowSize;
-    PushbackWindow *pushbackWindow;
+    PushbackWindow *pushbackWindow = NULL;
     int pushbackWindowSize;
-    DamageWindow *damageWindow;
+    DamageWindow *damageWindow = NULL;
     int damageWindowSize;
-    StunWindow *stunWindow;
+    StunWindow *stunWindow = NULL;
     int stunWindowSize;
-    CancellableWindow *cancellableWindow;
+    CancellableWindow *cancellableWindow = NULL;
     int cancellableWindowSize;
-    InvincibilityWindow *invincibilityWindow;
+    InvincibilityWindow *invincibilityWindow = NULL;
     int invincibilityWindowSize;
-    CounterHitStateWindow *counterHitStateWindow;
+    CounterHitStateWindow *counterHitStateWindow = NULL;
     int counterHitStateWindowSize;
-    OverheadWindow *overheadWindow;
+    OverheadWindow *overheadWindow = NULL;
     int overheadWindowSize;
-    PropulsionWindow *propulsionWindow;
+    PropulsionWindow *propulsionWindow = NULL;
     int propulsionWindowSize;
 
-    FrameBoxData *frameBoxData;
+    FrameBoxData *frameBoxData = NULL;
     int frameBoxDataSize;
 
     void frameDataFromJSON(JSON json)

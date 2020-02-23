@@ -7,7 +7,13 @@
         "launchWindow": [],
         "pushbackWindow": [],
         "damageWindow": [],
-        "stunWindow": [],
+        "stunWindow": [
+            {
+                "firstFrameOfWindow": 0,
+                "lastFrameOfWindow": 0,
+                "stunValue": 10
+            }
+        ],
         "cancellableWindow": [],
         "invincibilityWindow": [],
         "counterHitStateWindow": [],

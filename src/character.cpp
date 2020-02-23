@@ -1,12 +1,22 @@
 #include <vector>
 #include "character.hpp"
 #include "asset_manager.hpp"
+#include "json_handler.hpp"
+#include "frame_data.hpp"
+
+using JSON = nlohmann::json;
 
 Character::Character()
 {
     towardHSpeed = 10;
     backHSpeed = 6;
     accellerationH = 4;
+    JSON json = JsonHandler::loadJsonFile("assets/sample.json");
+
+    std::cout << json.dump() << std::endl;
+    FrameData fd;
+    fd.frameDataFromJSON(json["frameData"]);
+    std::cout << fd.stunWindow[0].stunValue << std::endl;
 
     model = AssetManager::addModel("assets/models/characters/d-func");
     // model = new ModelController;
