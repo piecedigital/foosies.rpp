@@ -15,72 +15,12 @@ Character::Character()
 
     std::cout << json.dump() << std::endl;
     FrameData fd;
-    fd.frameDataFromJSON(json["frameData"]);
+    fd.frameDataFromJSON(json["frameData"][0]);
     std::cout << fd.stunWindow[0].stunValue << std::endl;
 
     model = AssetManager::addModel("assets/models/characters/d-func");
     // model = new ModelController;
     model->init("assets/models/characters/d-func");
-
-    actionList.HCF_Precise = new Action{
-        "HCF_Precise",
-        true,
-        (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
-        Actions::commandsTypes.HCF_Precise,
-        Actions::commandsTypes.DPSize,
-    };
-
-    actionList.HCB_Precise = new Action{
-        "HCB_Precise",
-        true,
-        (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
-        Actions::commandsTypes.HCB_Precise,
-        Actions::commandsTypes.DPSize,
-    };
-
-    actionList.DPF_Precise = new Action{
-        "DPF_Precise",
-        true,
-        (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
-        Actions::commandsTypes.DPF_Precise,
-        Actions::commandsTypes.DPSize,
-    };
-
-    actionList.DPF = &(*actionList.DPF_Precise);
-    actionList.DPF->name = "DPF";
-    actionList.DPF->commandSequence = Actions::commandsTypes.DPF;
-
-    actionList.QCF_Precise = new Action{
-        "QCF_Precise",
-        true,
-        (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
-        Actions::commandsTypes.QCF_Precise,
-        Actions::commandsTypes.QCSize,
-    };
-
-    actionList.QCB_Precise = new Action{
-        "QCB_Precise",
-        true,
-        (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
-        Actions::commandsTypes.QCB_Precise,
-        Actions::commandsTypes.QCSize,
-    };
-
-    actionList.FF = new Action{
-        "FF",
-        true,
-        (PlayerInput)(PlayerInput::DIR_TOWARD),
-        Actions::commandsTypes.FF,
-        Actions::commandsTypes.FFSize,
-    };
-
-    actionList.BB = new Action{
-        "BB",
-        true,
-        (PlayerInput)(PlayerInput::DIR_BACK),
-        Actions::commandsTypes.BB,
-        Actions::commandsTypes.BBSize,
-    };
 }
 Character::~Character()
 {

@@ -1,25 +1,27 @@
-{
-    "name": "Hadouken",
-    "meterCost": 0,
-    "actionIds": ["QCF"],
-    "frameData": {
-        "knockdownTypeWindow": [],
-        "knockupKnockbackWindow": [],
-        "launchWindow": [],
-        "pushbackWindow": [],
-        "damageWindow": [],
-        "stunWindow": [
-            {
-                "firstFrameOfWindow": 0,
-                "lastFrameOfWindow": 0,
-                "stunValue": 10
-            }
-        ],
-        "cancellableWindow": [],
-        "invincibilityWindow": [],
-        "counterHitStateWindow": [],
-        "overheadWindow": [],
-        "propulsionWindow": [],
-        "frameBoxData": []
+[
+    {
+        "name": "Hadouken",
+        "meterCost": 0,
+        "actionIds": ["QCF"],
+        "frameData": {
+            "knockdownTypeWindow": [],
+            "knockupKnockbackWindow": [],
+            "launchWindow": [],
+            "pushbackWindow": [],
+            "damageWindow": [],
+            "stunWindow": [
+                {
+                    "firstFrameOfWindow": 0,
+                    "lastFrameOfWindow": 0,
+                    "stunValue": 10
+                }
+            ],
+            "cancellableWindow": [],
+            "invincibilityWindow": [],
+            "counterHitStateWindow": [],
+            "overheadWindow": [],
+            "propulsionWindow": [],
+            "frameBoxData": []
+        }
     }
-}
+]

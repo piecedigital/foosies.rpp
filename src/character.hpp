@@ -8,6 +8,7 @@
 #include "globals.hpp"
 #include "actions.hpp"
 #include "model.hpp"
+#include "moves.hpp"
 
 class Character
 {
@@ -15,7 +16,7 @@ public:
     ModelController *model;
     PlayerData **playerData;
     PlayerBoxes **playerBoxes;
-    ActionList actionList;
+    MoveList moveList;
     int towardHSpeed;
     int backHSpeed;
     int accellerationH;

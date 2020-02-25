@@ -224,7 +224,7 @@ void PlayerController::processInputs()
 {
     _processMovementInput();
 
-    Actions::detectCommand(inputHistory, &charMan->actionList);
+    Actions::detectCommand(inputHistory, charMan->moveList);
 }
 
 void PlayerController::_processMovementInput()

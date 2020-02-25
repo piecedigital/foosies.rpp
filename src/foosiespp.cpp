@@ -1,4 +1,5 @@
 ﻿#include "foosiespp.hpp"
+#include "actions.hpp"
 
 Game::Game()
 {
@@ -55,6 +56,8 @@ int Game::init()
 #ifdef _DEBUG
     devGui.imguiInit(this);
 #endif
+    Actions::initActions();
+
     while (!WindowShouldClose())
     {
         _pollControllerInputs();

@@ -2,6 +2,7 @@
 #define ACTIONS_H
 
 #include "globals.hpp"
+#include "moves.hpp"
 
 struct CommandTypes
 {
@@ -65,9 +66,12 @@ static CommandTypes commandsTypes = {
     4,
 };
 
-bool checkMove(Action *action, PlayerInput *playerInputHistory);
+bool checkMove(Move move, Action *, PlayerInput *);
 
-Action *detectCommand(PlayerInput *playerInputHistory, ActionList *movelist);
+Action *detectCommand(PlayerInput *, MoveList);
+
+static ActionList actionList;
+void initActions();
 };
 
 #endif
