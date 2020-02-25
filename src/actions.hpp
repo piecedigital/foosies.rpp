@@ -22,26 +22,27 @@ struct CommandTypes
     int BBSize;
 };
 
-struct Move
+struct Action
 {
     const char *name;
+    bool active;
     PlayerInput triggerBtn;
     PlayerInput *commandSequence;
     int sequenceSize;
 };
 
-struct MoveList
+struct ActionList
 {
-    Move *HCF_Precise; // PlayerInput HCF;
-    Move *HCB_Precise; // PlayerInput HCB;
-    Move *DPF_Precise;
-    Move *DPF;
-    Move *DPB_Precise;
-    Move *DPB;
-    Move *QCF_Precise; // PlayerInput QCF;
-    Move *QCB_Precise; // PlayerInput QCB;
-    Move *FF;
-    Move *BB;
+    Action *HCF_Precise; // PlayerInput HCF;
+    Action *HCB_Precise; // PlayerInput HCB;
+    Action *DPF_Precise;
+    Action *DPF;
+    Action *DPB_Precise;
+    Action *DPB;
+    Action *QCF_Precise; // PlayerInput QCF;
+    Action *QCB_Precise; // PlayerInput QCB;
+    Action *FF;
+    Action *BB;
 };
 
 namespace Actions
@@ -64,9 +65,9 @@ static CommandTypes commandsTypes = {
     4,
 };
 
-bool checkMove(Move *move, PlayerInput *playerInputHistory);
+bool checkMove(Action *action, PlayerInput *playerInputHistory);
 
-Move *detectCommand(PlayerInput *playerInputHistory, MoveList *movelist);
+Action *detectCommand(PlayerInput *playerInputHistory, ActionList *movelist);
 };
 
 #endif

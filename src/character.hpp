@@ -15,7 +15,7 @@ public:
     ModelController *model;
     PlayerData **playerData;
     PlayerBoxes **playerBoxes;
-    MoveList moveList;
+    ActionList actionList;
     int towardHSpeed;
     int backHSpeed;
     int accellerationH;

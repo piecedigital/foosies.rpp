@@ -22,32 +22,61 @@ Character::Character()
     // model = new ModelController;
     model->init("assets/models/characters/d-func");
 
-    moveList.DPF_Precise = new Move{
-        "Dragon Punch",
+    actionList.HCF_Precise = new Action{
+        "HCF_Precise",
+        true,
+        (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
+        Actions::commandsTypes.HCF_Precise,
+        Actions::commandsTypes.DPSize,
+    };
+
+    actionList.HCB_Precise = new Action{
+        "HCB_Precise",
+        true,
+        (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
+        Actions::commandsTypes.HCB_Precise,
+        Actions::commandsTypes.DPSize,
+    };
+
+    actionList.DPF_Precise = new Action{
+        "DPF_Precise",
+        true,
         (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
         Actions::commandsTypes.DPF_Precise,
         Actions::commandsTypes.DPSize,
     };
 
-    moveList.DPF = &(*moveList.DPF_Precise);
-    moveList.DPF->commandSequence = Actions::commandsTypes.DPF;
+    actionList.DPF = &(*actionList.DPF_Precise);
+    actionList.DPF->name = "DPF";
+    actionList.DPF->commandSequence = Actions::commandsTypes.DPF;
 
-    moveList.QCF_Precise = new Move{
-        "Hadouken",
+    actionList.QCF_Precise = new Action{
+        "QCF_Precise",
+        true,
         (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
         Actions::commandsTypes.QCF_Precise,
         Actions::commandsTypes.QCSize,
     };
 
-    moveList.FF = new Move{
-        "Forward Dash",
+    actionList.QCB_Precise = new Action{
+        "QCB_Precise",
+        true,
+        (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
+        Actions::commandsTypes.QCB_Precise,
+        Actions::commandsTypes.QCSize,
+    };
+
+    actionList.FF = new Action{
+        "FF",
+        true,
         (PlayerInput)(PlayerInput::DIR_TOWARD),
         Actions::commandsTypes.FF,
         Actions::commandsTypes.FFSize,
     };
 
-    moveList.BB = new Move{
-        "Back Dash",
+    actionList.BB = new Action{
+        "BB",
+        true,
         (PlayerInput)(PlayerInput::DIR_BACK),
         Actions::commandsTypes.BB,
         Actions::commandsTypes.BBSize,

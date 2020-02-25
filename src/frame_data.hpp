@@ -2,6 +2,7 @@
 #define FRAME_DATA_H
 
 #include "deps/nlohmann/json.hpp"
+#include "./box.hpp"
 
 using JSON = nlohmann::json;
 
@@ -95,6 +96,7 @@ struct FrameBoxData
     int yOffset;
     int width;
     int height;
+    BoxType boxType;
 };
 
 class FrameData
@@ -390,10 +392,10 @@ public:
             for (int i = 0; i < frameBoxDataSize; i++)
             {
                 frameBoxData[i] = {
-                    json["frameBoxData"][i]["xOffset"].get<int>(),
-                    json["frameBoxData"][i]["yOffset"].get<int>(),
-                    json["frameBoxData"][i]["width"].get<int>(),
-                    json["frameBoxData"][i]["height"].get<int>()
+                    json["frameBoxData"]["xOffset"].get<int>(),
+                    json["frameBoxData"]["yOffset"].get<int>(),
+                    json["frameBoxData"]["width"].get<int>(),
+                    json["frameBoxData"]["height"].get<int>()
                 };
             }
         }

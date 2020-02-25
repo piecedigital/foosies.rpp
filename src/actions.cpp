@@ -1,8 +1,8 @@
 #include "actions.hpp"
 
-bool Actions::checkMove(Move *move, PlayerInput *playerInputHistory)
+bool Actions::checkMove(Action *action, PlayerInput *playerInputHistory)
 {
-    if (move == NULL)
+    if (action == NULL || !action->active)
         return false;
 
     int inputCurser = 0;
@@ -20,7 +20,7 @@ bool Actions::checkMove(Move *move, PlayerInput *playerInputHistory)
     // check for button press within buffer window
     for (i; i < INPUT_BUFFER_MAX; i++)
     {
-        if (hasFlag(playerInputHistory[i], move->triggerBtn))
+        if (hasFlag(playerInputHistory[i], action->triggerBtn))
         {
             buttonWithinBuffer = true;
         }
@@ -30,7 +30,7 @@ bool Actions::checkMove(Move *move, PlayerInput *playerInputHistory)
     {
         for (i--; i < INPUT_HISTORY_MAX; i++)
         {
-            if (hasFlag(playerInputHistory[i], move->commandSequence[(move->sequenceSize - 1) - inputCurser]))
+            if (hasFlag(playerInputHistory[i], action->commandSequence[(action->sequenceSize - 1) - inputCurser]))
             {
                 inputsMatched++;
 
@@ -46,9 +46,9 @@ bool Actions::checkMove(Move *move, PlayerInput *playerInputHistory)
                 }
             }
 
-            if (inputsMatched == move->sequenceSize)
+            if (inputsMatched == action->sequenceSize)
             {
-                std::cout << "Triggered: " << move->name << std::endl;
+                std::cout << "Triggered: " << action->name << std::endl;
                 return true;
             }
         }
@@ -57,7 +57,7 @@ bool Actions::checkMove(Move *move, PlayerInput *playerInputHistory)
     return false;
 }
 
-Move* Actions::detectCommand(PlayerInput *playerInputHistory, MoveList *movelist)
+Action* Actions::detectCommand(PlayerInput *playerInputHistory, ActionList *movelist)
 {
     if (checkMove(movelist->HCF_Precise, playerInputHistory))
         return movelist->HCF_Precise;
