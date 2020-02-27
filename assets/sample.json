@@ -3,8 +3,8 @@
         "name": "Hadouken",
         "meterCost": 0,
         "actionId": "QCF_Precise",
-        "triggerBtn": 0,
-        "commandSequence": [0],
+        "triggerBtn": 917504,
+        "commandSequence": [16, 1024, 64],
         "frameData": {
             "knockdownTypeWindow": [],
             "knockupKnockbackWindow": [],
