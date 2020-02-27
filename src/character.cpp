@@ -13,10 +13,16 @@ Character::Character()
     accellerationH = 4;
     JSON json = JsonHandler::loadJsonFile("assets/sample.json");
 
-    std::cout << json.dump() << std::endl;
-    FrameData fd;
-    fd.frameDataFromJSON(json["frameData"][0]);
-    std::cout << fd.stunWindow[0].stunValue << std::endl;
+    moveList.movesSize = json.size();
+    moveList.moves = new Move[moveList.movesSize];
+
+    for (int i = 0; i < moveList.movesSize; i++)
+    {
+        moveList.moves[i].name = json[i]["name"].get<std::string>();
+        moveList.moves[i].actionId = json[i]["actionId"].get<std::string>();
+        moveList.moves[i].triggerBtn = (PlayerInput)json[i]["triggerBtn"].get<int>();
+        moveList.moves[i].frameData.frameDataFromJSON(json[i]["frameData"]);
+    }
 
     model = AssetManager::addModel("assets/models/characters/d-func");
     // model = new ModelController;

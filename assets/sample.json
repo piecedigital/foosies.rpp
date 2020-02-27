@@ -2,7 +2,7 @@
     {
         "name": "Hadouken",
         "meterCost": 0,
-        "actionIds": ["QCF"],
+        "actionId": "QCF_Precise",
         "frameData": {
             "knockdownTypeWindow": [],
             "knockupKnockbackWindow": [],

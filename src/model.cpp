@@ -16,7 +16,7 @@ void ModelController::init(const char *folder)
     color = BLACK;
     // model = LoadModel(std::string(folder).append("/model.gltf").c_str());
     model = LoadModel(std::string(folder).append("/model.iqm").c_str());
-    animations = LoadModelAnimations(std::string(folder).append("/model.iqm").c_str(), &animCount);
+    animations = LoadModelAnimations(std::string(folder).append("/model.iqm").c_str(), &animSize);
     Texture baseColor = LoadTexture(std::string(folder).append("/Texture.png").c_str());
     Texture bumpMap = LoadTexture(std::string(folder).append("/Bump.png").c_str());
 
@@ -61,7 +61,7 @@ void ModelController::setAnimation(int animationId)
 {
     currentAnim = animationId;
     currentAnimFrame = 0;
-    currentAnimFrameCount = animations[currentAnim].frameCount;
+    currentAnimFrameSize = animations[currentAnim].frameCount;
     UpdateModelAnimation(model, animations[currentAnim], 0);
 }
 
@@ -74,7 +74,7 @@ void ModelController::setAnimationFrame(int frame)
 void ModelController::setAnimationFrameArray(int *frameArray, int frameCount)
 {
     currentAnimFrameArray = frameArray;
-    currentAnimFrameCount = frameCount;
+    currentAnimFrameSize = frameCount;
 }
 
 void ModelController::setAnimationLoop(bool willLoop)
@@ -85,7 +85,7 @@ void ModelController::setAnimationLoop(bool willLoop)
 void ModelController::render(Vector3 translation, int rotation)
 {
     // SetShaderValue(model.materials[0].shader, GetShaderLocation(model.materials[0].shader, "lightPosition"), lightPos, UNIFORM_VEC3);
-    currentAnimFrameCount = animations[currentAnim].frameCount;
+    currentAnimFrameSize = animations[currentAnim].frameCount;
     UpdateModelAnimation(model, animations[currentAnim], currentAnimFrame);
 
     DrawModelExPlus(model, translation, {0.f, 1.f, 0.f}, {

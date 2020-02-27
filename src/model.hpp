@@ -11,11 +11,11 @@ public:
     float lightPos[3];
     Color color;
     Model model;
-    int animCount;
+    int animSize;
     ModelAnimation *animations;
     int currentAnim;
     int currentAnimFrame;
-    int currentAnimFrameCount;
+    int currentAnimFrameSize;
     int *currentAnimFrameArray;
     bool animationWillLoop;
 

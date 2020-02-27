@@ -9,14 +9,14 @@ namespace AssetManager
 #define CHARACTER_COUNT 1
 
 static ModelController models[CHARACTER_COUNT];
-static int modelsCount = 0;
+static int modelsSize = 0;
 static ModelController * addModel(const char *folder)
 {
     ModelController m = ModelController{};
-    modelsCount++;
-    models[modelsCount - 1] = m;
-    models[modelsCount - 1].init(folder);
-    return &models[modelsCount - 1];
+    modelsSize++;
+    models[modelsSize - 1] = m;
+    models[modelsSize - 1].init(folder);
+    return &models[modelsSize - 1];
 };
 };
 

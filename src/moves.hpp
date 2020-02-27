@@ -5,23 +5,16 @@
 
 struct Move
 {
-    bool available;
-    const char *name;
+    std::string name;
+    std::string actionId;
+    PlayerInput triggerBtn;
     FrameData frameData;
 };
 
 struct MoveList
 {
-    Move HCF_Precise;
-    Move HCB_Precise;
-    Move DPF_Precise;
-    Move DPF;
-    Move DPB_Precise;
-    Move DPB;
-    Move QCF_Precise;
-    Move QCB_Precise;
-    Move FF;
-    Move BB;
+    Move *moves;
+    int movesSize;
 };
 
 #endif

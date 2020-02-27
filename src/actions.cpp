@@ -1,8 +1,8 @@
 #include "actions.hpp"
 
-bool Actions::checkMove(Move move, Action *action, PlayerInput *playerInputHistory)
+bool Actions::checkMove(Action *action, PlayerInput *playerInputHistory)
 {
-    if (action == NULL || !action->active)
+    if (action == NULL)
         return false;
 
     int inputCurser = 0;
@@ -59,25 +59,25 @@ bool Actions::checkMove(Move move, Action *action, PlayerInput *playerInputHisto
 
 Action* Actions::detectCommand(PlayerInput *playerInputHistory, MoveList moveList)
 {
-    if (checkMove(moveList.HCF_Precise, actionList.HCF_Precise, playerInputHistory))
+    if (checkMove(actionList.HCF_Precise, playerInputHistory))
         return actionList.HCF_Precise;
-    if (checkMove(moveList.HCB_Precise, actionList.HCB_Precise, playerInputHistory))
+    if (checkMove(actionList.HCB_Precise, playerInputHistory))
         return actionList.HCB_Precise;
-    if (checkMove(moveList.DPF_Precise, actionList.DPF_Precise, playerInputHistory))
+    if (checkMove(actionList.DPF_Precise, playerInputHistory))
         return actionList.DPF_Precise;
-    if (checkMove(moveList.DPF, actionList.DPF, playerInputHistory))
+    if (checkMove(actionList.DPF, playerInputHistory))
         return actionList.DPF;
-    if (checkMove(moveList.DPB_Precise, actionList.DPB_Precise, playerInputHistory))
+    if (checkMove(actionList.DPB_Precise, playerInputHistory))
         return actionList.DPB_Precise;
-    if (checkMove(moveList.DPB, actionList.DPB, playerInputHistory))
+    if (checkMove(actionList.DPB, playerInputHistory))
         return actionList.DPB;
-    if (checkMove(moveList.QCF_Precise, actionList.QCF_Precise, playerInputHistory))
+    if (checkMove(actionList.QCF_Precise, playerInputHistory))
         return actionList.QCF_Precise;
-    if (checkMove(moveList.QCB_Precise, actionList.QCB_Precise, playerInputHistory))
+    if (checkMove(actionList.QCB_Precise, playerInputHistory))
         return actionList.QCB_Precise;
-    if (checkMove(moveList.FF, actionList.FF, playerInputHistory))
+    if (checkMove(actionList.FF, playerInputHistory))
         return actionList.FF;
-    if (checkMove(moveList.BB, actionList.BB, playerInputHistory))
+    if (checkMove(actionList.BB, playerInputHistory))
         return actionList.BB;
 
     return NULL;
@@ -87,7 +87,6 @@ void Actions::initActions()
 {
     actionList.HCF_Precise = new Action{
         "HCF_Precise",
-        true,
         (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
         Actions::commandsTypes.HCF_Precise,
         Actions::commandsTypes.DPSize,
@@ -95,7 +94,6 @@ void Actions::initActions()
 
     actionList.HCB_Precise = new Action{
         "HCB_Precise",
-        true,
         (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
         Actions::commandsTypes.HCB_Precise,
         Actions::commandsTypes.DPSize,
@@ -103,7 +101,6 @@ void Actions::initActions()
 
     actionList.DPF_Precise = new Action{
         "DPF_Precise",
-        true,
         (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
         Actions::commandsTypes.DPF_Precise,
         Actions::commandsTypes.DPSize,
@@ -115,7 +112,6 @@ void Actions::initActions()
 
     actionList.QCF_Precise = new Action{
         "QCF_Precise",
-        true,
         (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
         Actions::commandsTypes.QCF_Precise,
         Actions::commandsTypes.QCSize,
@@ -123,7 +119,6 @@ void Actions::initActions()
 
     actionList.QCB_Precise = new Action{
         "QCB_Precise",
-        true,
         (PlayerInput)(PlayerInput::BTN_JAB | PlayerInput::BTN_STRONG | PlayerInput::BTN_FIERCE),
         Actions::commandsTypes.QCB_Precise,
         Actions::commandsTypes.QCSize,
@@ -131,7 +126,6 @@ void Actions::initActions()
 
     actionList.FF = new Action{
         "FF",
-        true,
         (PlayerInput)(PlayerInput::DIR_TOWARD),
         Actions::commandsTypes.FF,
         Actions::commandsTypes.FFSize,
@@ -139,7 +133,6 @@ void Actions::initActions()
 
     actionList.BB = new Action{
         "BB",
-        true,
         (PlayerInput)(PlayerInput::DIR_BACK),
         Actions::commandsTypes.BB,
         Actions::commandsTypes.BBSize,

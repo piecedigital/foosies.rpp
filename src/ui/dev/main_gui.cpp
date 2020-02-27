@@ -114,8 +114,8 @@ void DevGui::_displayPlayerTweakers(int playerId)
     // ImGui::SliderFloat("Light X", &game->scene.players[playerId].charMan[0].model->lightPos[0], -10.f, 10.f);
     // ImGui::SliderFloat("Light Y", &game->scene.players[playerId].charMan[0].model->lightPos[1], -10.f, 10.f);
     // ImGui::SliderFloat("Light Z", &game->scene.players[playerId].charMan[0].model->lightPos[2], -10.f, 10.f);
-    ImGui::SliderInt("Animation", &game->scene.players[playerId].charMan[0].model->currentAnim, 0, game->scene.players[playerId].charMan[0].model->animCount-1);
-    ImGui::SliderInt("Animation Frame", &game->scene.players[playerId].charMan[0].model->currentAnimFrame, 0, game->scene.players[playerId].charMan[0].model->currentAnimFrameCount-1);
+    ImGui::SliderInt("Animation", &game->scene.players[playerId].charMan[0].model->currentAnim, 0, game->scene.players[playerId].charMan[0].model->animSize-1);
+    ImGui::SliderInt("Animation Frame", &game->scene.players[playerId].charMan[0].model->currentAnimFrame, 0, game->scene.players[playerId].charMan[0].model->currentAnimFrameSize-1);
 
     ImGui::End();
 }
