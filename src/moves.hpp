@@ -8,6 +8,8 @@ struct Move
     std::string name;
     std::string actionId;
     PlayerInput triggerBtn;
+    PlayerInput *commandSequence;
+    int commandSequenceSize;
     FrameData frameData;
 };
 

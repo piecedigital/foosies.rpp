@@ -4,6 +4,8 @@
 #include "globals.hpp"
 #include "moves.hpp"
 
+namespace Actions
+{
 struct CommandTypes
 {
     PlayerInput HCF_Precise[5]; // PlayerInput HCF[5];
@@ -23,30 +25,6 @@ struct CommandTypes
     int BBSize;
 };
 
-struct Action
-{
-    const char *name;
-    PlayerInput triggerBtn;
-    PlayerInput *commandSequence;
-    int sequenceSize;
-};
-
-struct ActionList
-{
-    Action *HCF_Precise; // PlayerInput HCF;
-    Action *HCB_Precise; // PlayerInput HCB;
-    Action *DPF_Precise;
-    Action *DPF;
-    Action *DPB_Precise;
-    Action *DPB;
-    Action *QCF_Precise; // PlayerInput QCF;
-    Action *QCB_Precise; // PlayerInput QCB;
-    Action *FF;
-    Action *BB;
-};
-
-namespace Actions
-{
 static CommandTypes commandsTypes = {
     {PlayerInput::DIR_BACK, PlayerInput::DIR_DOWNBACK, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNTOWARD, PlayerInput::DIR_TOWARD},
     {PlayerInput::DIR_TOWARD, PlayerInput::DIR_DOWNTOWARD, PlayerInput::DIR_DOWN, PlayerInput::DIR_DOWNBACK, PlayerInput::DIR_BACK},
@@ -65,12 +43,9 @@ static CommandTypes commandsTypes = {
     4,
 };
 
-bool checkMove(Move move, Action *, PlayerInput *);
+bool checkMove(Move move, PlayerInput *);
 
-Action *detectCommand(PlayerInput *, MoveList);
-
-static ActionList actionList;
-void initActions();
+Move *detectCommand(PlayerInput *, MoveList);
 };
 
 #endif

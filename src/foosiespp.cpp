@@ -56,8 +56,6 @@ int Game::init()
 #ifdef _DEBUG
     devGui.imguiInit(this);
 #endif
-    Actions::initActions();
-
     while (!WindowShouldClose())
     {
         _pollControllerInputs();
