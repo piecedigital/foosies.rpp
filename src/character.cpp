@@ -41,6 +41,8 @@ Character::Character()
             moveList.moves[i].commandSequence[j] = (PlayerInput)json[i]["commandSequence"][j].get<int>();
         }
 
+        moveList.moves[i].meterCost = json[i]["meterCost"].get<int>();
+
         moveList.moves[i].frameData.frameDataFromJSON(json[i]["frameData"]);
     }
 

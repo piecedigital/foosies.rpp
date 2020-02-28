@@ -12,6 +12,7 @@ struct Move
     int triggerBtnCombo;
     PlayerInput *commandSequence;
     int commandSequenceSize;
+    int meterCost;
     FrameData frameData;
 };
 
