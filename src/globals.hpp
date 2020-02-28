@@ -53,30 +53,30 @@ struct StatusEffect
 enum PlayerInput
 {
     NONE = 0,
-    NO_DIR = 1 << 1,
-    NO_BTN = 1 << 2,
-    DIR_UP = 1 << 3,
-    DIR_DOWN = 1 << 4,
-    DIR_BACK = 1 << 5,
-    DIR_TOWARD = 1 << 6,
-    DIR_UPBACK = 1 << 7,
-    DIR_UPTOWARD = 1 << 8,
-    DIR_DOWNBACK = 1 << 9,
-    DIR_DOWNTOWARD = 1 << 10,
-    DIR_ANY_UP = 1 << 11,
-    DIR_ANY_DOWN = 1 << 12,
-    DIR_ANY_BACK = 1 << 13,
-    DIR_ANY_TOWARD = 1 << 14,
-    DIR_LEFT = 1 << 15,
-    DIR_RIGHT = 1 << 16,
-    BTN_JAB = 1 << 17,
-    BTN_STRONG = 1 << 18,
-    BTN_FIERCE = 1 << 19,
-    BTN_SHORT = 1 << 20,
-    BTN_FORWARD = 1 << 21,
-    BTN_ROUNDHOUSE = 1 << 22,
-    BTN_MACRO1 = 1 << 23,
-    BTN_MACRO2 = 1 << 24,
+    NO_DIR = 1 << 1, // 2
+    NO_BTN = 1 << 2, // 4
+    DIR_UP = 1 << 3, // 8
+    DIR_DOWN = 1 << 4, // 16
+    DIR_BACK = 1 << 5, // 32
+    DIR_TOWARD = 1 << 6, // 64
+    DIR_UPBACK = 1 << 7, // 128
+    DIR_UPTOWARD = 1 << 8, // 256
+    DIR_DOWNBACK = 1 << 9, // 512
+    DIR_DOWNTOWARD = 1 << 10, // 1024
+    DIR_ANY_UP = 1 << 11, // 2048
+    DIR_ANY_DOWN = 1 << 12, // 4096
+    DIR_ANY_BACK = 1 << 13, // 8192
+    DIR_ANY_TOWARD = 1 << 14, // 16384
+    DIR_LEFT = 1 << 15, // 32768
+    DIR_RIGHT = 1 << 16, // 65536
+    BTN_JAB = 1 << 17, // 131072
+    BTN_STRONG = 1 << 18, // 262144
+    BTN_FIERCE = 1 << 19, // 524288
+    BTN_SHORT = 1 << 20, // 1048576
+    BTN_FORWARD = 1 << 21, // 2097152
+    BTN_ROUNDHOUSE = 1 << 22, // 4194304
+    BTN_MACRO1 = 1 << 23, // 8388608
+    BTN_MACRO2 = 1 << 24, // 16777216
 };
 
 // functions
