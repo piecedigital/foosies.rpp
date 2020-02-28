@@ -19,7 +19,11 @@ Character::Character()
     for (int i = 0; i < moveList.movesSize; i++)
     {
         moveList.moves[i].name = json[i]["name"].get<std::string>();
-        moveList.moves[i].actionId = json[i]["actionId"].get<std::string>();
+
+        if (!json[i]["meterCost"].empty())
+        {
+            moveList.moves[i].meterCost = json[i]["meterCost"].get<int>();
+        }
 
         moveList.moves[i].triggerBtnSize = (PlayerInput)json[i]["triggerBtn"].size();
         moveList.moves[i].triggerBtn = new PlayerInput[moveList.moves[i].triggerBtnSize];
@@ -40,8 +44,6 @@ Character::Character()
         {
             moveList.moves[i].commandSequence[j] = (PlayerInput)json[i]["commandSequence"][j].get<int>();
         }
-
-        moveList.moves[i].meterCost = json[i]["meterCost"].get<int>();
 
         moveList.moves[i].frameData.frameDataFromJSON(json[i]["frameData"]);
     }

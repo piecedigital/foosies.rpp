@@ -6,7 +6,6 @@
 struct Move
 {
     std::string name;
-    std::string actionId;
     PlayerInput *triggerBtn;
     int triggerBtnSize;
     int triggerBtnCombo;

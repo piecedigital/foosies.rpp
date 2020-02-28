@@ -110,6 +110,7 @@ struct PlayerData
     int actionFace = 1;
     int dizzy = 1000;
     int vitality = 1000;
+    int meter;
     PlayerInput input;
     Transform transform;
     Physical physical;

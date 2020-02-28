@@ -1,11 +1,10 @@
 [
     {
         "name": "Hadouken EX",
-        "meterCost": 0,
+        "meterCost": 100,
         "actionId": "QCF_Precise",
         "triggerBtn": [524288, 262144, 131072],
         "triggerBtnCombo": 2,
-        "meterCost": 1,
         "commandSequence": [16, 1024, 64],
         "frameData": {
             "knockdownTypeWindow": [],

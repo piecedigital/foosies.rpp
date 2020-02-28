@@ -64,11 +64,11 @@ bool Actions::checkMove(Move move, PlayerInput *playerInputHistory)
     return false;
 }
 
-Move* Actions::detectCommand(PlayerInput *playerInputHistory, MoveList moveList)
+Move* Actions::detectCommand(PlayerInput *playerInputHistory, MoveList moveList, int meter)
 {
     for (int i = 0; i < moveList.movesSize; i++)
     {
-        if (checkMove(moveList.moves[i], playerInputHistory))
+        if (meter >= moveList.moves[i].meterCost && checkMove(moveList.moves[i], playerInputHistory))
             return &moveList.moves[i];
     }
 

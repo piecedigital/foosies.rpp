@@ -224,7 +224,11 @@ void PlayerController::processInputs()
 {
     _processMovementInput();
 
-    Actions::detectCommand(inputHistory, charMan->moveList);
+    Move *move = Actions::detectCommand(inputHistory, charMan->moveList, playerData->meter);
+    if (move != NULL)
+    {
+        playerData->meter -= move->meterCost;
+    }
 }
 
 void PlayerController::_processMovementInput()

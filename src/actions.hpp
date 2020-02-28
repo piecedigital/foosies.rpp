@@ -8,7 +8,7 @@ namespace Actions
 {
 bool checkMove(Move move, PlayerInput *);
 
-Move *detectCommand(PlayerInput *, MoveList);
+Move *detectCommand(PlayerInput *, MoveList, int);
 };
 
 #endif

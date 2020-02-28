@@ -116,6 +116,7 @@ void DevGui::_displayPlayerTweakers(int playerId)
     // ImGui::SliderFloat("Light Z", &game->scene.players[playerId].charMan[0].model->lightPos[2], -10.f, 10.f);
     ImGui::SliderInt("Animation", &game->scene.players[playerId].charMan[0].model->currentAnim, 0, game->scene.players[playerId].charMan[0].model->animSize-1);
     ImGui::SliderInt("Animation Frame", &game->scene.players[playerId].charMan[0].model->currentAnimFrame, 0, game->scene.players[playerId].charMan[0].model->currentAnimFrameSize-1);
+    ImGui::SliderInt("Meter", &game->gameState.playerData[playerId].meter, 0, 300);
 
     ImGui::End();
 }
