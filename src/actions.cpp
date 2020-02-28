@@ -17,7 +17,17 @@ bool Actions::checkMove(Move move, PlayerInput *playerInputHistory)
     // check for button press within buffer window
     for (i; i < INPUT_BUFFER_MAX; i++)
     {
-        if (hasFlag(playerInputHistory[i], move.triggerBtn))
+        int triggerButtonsFound = 0;
+
+        for (int j = 0; j < move.triggerBtnSize; j++)
+        {
+            if (hasFlag(playerInputHistory[i], move.triggerBtn[j]))
+            {
+                triggerButtonsFound++;
+            }
+        }
+
+        if (triggerButtonsFound >= move.triggerBtnCombo)
         {
             buttonWithinBuffer = true;
         }

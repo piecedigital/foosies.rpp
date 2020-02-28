@@ -7,7 +7,9 @@ struct Move
 {
     std::string name;
     std::string actionId;
-    PlayerInput triggerBtn;
+    PlayerInput *triggerBtn;
+    int triggerBtnSize;
+    int triggerBtnCombo;
     PlayerInput *commandSequence;
     int commandSequenceSize;
     FrameData frameData;
