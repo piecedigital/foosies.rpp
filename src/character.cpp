@@ -22,9 +22,10 @@ Character::Character()
         moveList.moves[i].actionId = json[i]["actionId"].get<std::string>();
         moveList.moves[i].triggerBtn = (PlayerInput)json[i]["triggerBtn"].get<int>();
         moveList.moves[i].commandSequenceSize = json[i]["commandSequence"].size();
-        for (int i = 0; i < moveList.moves[i].commandSequenceSize; i++)
+        moveList.moves[i].commandSequence = new PlayerInput[moveList.moves[i].commandSequenceSize];
+        for (int j = 0; j < moveList.moves[j].commandSequenceSize; j++)
         {
-            moveList.moves[i].commandSequence[i] = (PlayerInput)json[i]["commandSequence"][i].get<int>();
+            moveList.moves[i].commandSequence[j] = (PlayerInput)json[i]["commandSequence"][j].get<int>();
         }
         moveList.moves[i].frameData.frameDataFromJSON(json[i]["frameData"]);
     }
