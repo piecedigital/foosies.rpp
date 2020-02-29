@@ -261,11 +261,11 @@ void PlayerController::_processMovementInput()
 
             if (hasFlag(playerData->input, PlayerInput::DIR_ANY_TOWARD))
             {
-                playerData->physical.HSpeed = charMan->towardHSpeed;
+                playerData->physical.HSpeed = charMan->towardHSpeed * directionSign;
             }
             else if (hasFlag(playerData->input, PlayerInput::DIR_ANY_BACK))
             {
-                playerData->physical.HSpeed = charMan->backHSpeed;
+                playerData->physical.HSpeed = charMan->backHSpeed * directionSign;
             }
             else
             {
