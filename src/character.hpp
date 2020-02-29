@@ -19,7 +19,6 @@ public:
     MoveList moveList;
     int towardHSpeed;
     int backHSpeed;
-    int accellerationH;
 
     Character();
     ~Character();

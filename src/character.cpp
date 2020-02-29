@@ -10,7 +10,6 @@ Character::Character()
 {
     towardHSpeed = 10;
     backHSpeed = 6;
-    accellerationH = 4;
     JSON json = JsonHandler::loadJsonFile("assets/movesets/d-func-moveset.json");
 
     moveList.movesSize = json.size();

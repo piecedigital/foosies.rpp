@@ -259,46 +259,17 @@ void PlayerController::_processMovementInput()
         {
             int directionSign = (hasFlag(playerData->input, PlayerInput::DIR_LEFT) ? -1 : 1);
 
-            bool isAirborn = playerData->physical.VSpeed > 0;
-            int isAirbornDivider = (playerData->physical.VSpeed > 0) ? 2 : 1;
-            int appliedHSpeed = 0;
-            bool noH = false;
-
             if (hasFlag(playerData->input, PlayerInput::DIR_ANY_TOWARD))
             {
-                appliedHSpeed = charMan->towardHSpeed;
+                playerData->physical.HSpeed = charMan->towardHSpeed;
             }
             else if (hasFlag(playerData->input, PlayerInput::DIR_ANY_BACK))
             {
-                appliedHSpeed = charMan->backHSpeed;
+                playerData->physical.HSpeed = charMan->backHSpeed;
             }
             else
             {
-                noH = true;
-            }
-
-            if (!noH)
-            {
-                if (intentionToJump)
-                {
-                    playerData->physical.HSpeed = appliedHSpeed * directionSign;
-                }
-                else
-                {
-                    if (
-                        directionSign < 0 && !playerData->physical.HSpeed < 0 ||
-                        directionSign > 0 && !playerData->physical.HSpeed > 0
-                    )
-                    {
-                        playerData->physical.HSpeed = 0;
-                    }
-
-                    playerData->physical.HSpeed += (charMan->accellerationH / isAirbornDivider) * directionSign;
-                    if (std::abs(playerData->physical.HSpeed) > appliedHSpeed)
-                    {
-                        playerData->physical.HSpeed = (appliedHSpeed) * directionSign;
-                    }
-                }
+                playerData->physical.HSpeed = 0;
             }
         }
     }
@@ -452,7 +423,6 @@ void PlayerController::calcPhysics(PlayerController *otherPlayer, int stageHalfW
 
 void PlayerController::updatePhysics()
 {
-    // std::cout << "(" << controllerId << ")" << "PB: " << playerData->physical.pushback << std::endl;
     if (playerData->physical.pushback != 0)
     {
         int sign = playerData->physical.pushback < 0 ? 1 : -1;
@@ -478,11 +448,19 @@ void PlayerController::updatePhysics()
     {
         if (playerData->physical.HSpeed > 0)
         {
-            playerData->physical.HSpeed -= charMan->accellerationH / 2;
+            playerData->physical.HSpeed -= 4;
+            if (playerData->physical.HSpeed < 0)
+            {
+                playerData->physical.HSpeed = 0;
+            }
         }
         else if (playerData->physical.HSpeed < 0)
         {
-            playerData->physical.HSpeed += charMan->accellerationH / 2;
+            playerData->physical.HSpeed += 4;
+            if (playerData->physical.HSpeed > 0)
+            {
+                playerData->physical.HSpeed = 0;
+            }
         }
         playerData->physical.VSpeed = 0;
     }

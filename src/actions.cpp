@@ -5,7 +5,7 @@ bool Actions::checkMove(Move move, PlayerInput *playerInputHistory)
     int inputCurser = 0;
     bool buttonWithinBuffer = false;
 
-    int maxTravelDistance = 10;
+    int maxTravelDistance = 7;
     int spaceTravelled = 0;
 
     // int discrepencyMax = 2;
