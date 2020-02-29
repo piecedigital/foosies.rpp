@@ -279,7 +279,7 @@ void PlayerController::_processMovementInput()
 
             if (!noH)
             {
-                if (isAirborn)
+                if (intentionToJump)
                 {
                     playerData->physical.HSpeed = appliedHSpeed * directionSign;
                 }

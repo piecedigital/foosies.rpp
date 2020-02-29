@@ -20,6 +20,7 @@ Character::Character()
     {
         moveList.moves[i].name = json[i]["name"].get<std::string>();
 
+        moveList.moves[i].meterCost = 0;
         if (!json[i]["meterCost"].empty())
         {
             moveList.moves[i].meterCost = json[i]["meterCost"].get<int>();

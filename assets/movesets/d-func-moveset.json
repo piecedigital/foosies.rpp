@@ -2,7 +2,6 @@
     {
         "name": "Hadouken EX",
         "meterCost": 100,
-        "actionId": "QCF_Precise",
         "triggerBtn": [524288, 262144, 131072],
         "triggerBtnCombo": 2,
         "commandSequence": [16, 1024, 64],
@@ -26,8 +25,6 @@
         }
     }, {
         "name": "Hadouken Heavy",
-        "meterCost": 0,
-        "actionId": "QCF_Precise",
         "triggerBtn": [524288],
         "commandSequence": [16, 1024, 64],
         "frameData": {
@@ -50,8 +47,6 @@
         }
     }, {
         "name": "Hadouken Medium",
-        "meterCost": 0,
-        "actionId": "QCF_Precise",
         "triggerBtn": [262144],
         "commandSequence": [16, 1024, 64],
         "frameData": {
@@ -74,8 +69,6 @@
         }
     }, {
         "name": "Hadouken Light",
-        "meterCost": 0,
-        "actionId": "QCF_Precise",
         "triggerBtn": [131072],
         "commandSequence": [16, 1024, 64],
         "frameData": {
@@ -89,6 +82,43 @@
                 "lastFrameOfWindow": 0,
                 "stunValue": 10
             }],
+            "cancellableWindow": [],
+            "invincibilityWindow": [],
+            "counterHitStateWindow": [],
+            "overheadWindow": [],
+            "propulsionWindow": [],
+            "frameBoxData": []
+        }
+    }, {
+        "name": "Forward Dash",
+        "triggerBtn": [64],
+        "commandSequence": [2, 64, 2, 64],
+        "frameData": {
+            "knockdownTypeWindow": [],
+            "knockupKnockbackWindow": [],
+            "launchWindow": [],
+            "pushbackWindow": [],
+            "damageWindow": [],
+            "stunWindow": [],
+            "cancellableWindow": [],
+            "invincibilityWindow": [],
+            "counterHitStateWindow": [],
+            "overheadWindow": [],
+            "propulsionWindow": [],
+            "frameBoxData": []
+        }
+    }, {
+        "name": "Back Dash",
+        "triggerBtn": [32],
+        "triggerBtnCombo": 0,
+        "commandSequence": [2, 32, 2, 32],
+        "frameData": {
+            "knockdownTypeWindow": [],
+            "knockupKnockbackWindow": [],
+            "launchWindow": [],
+            "pushbackWindow": [],
+            "damageWindow": [],
+            "stunWindow": [],
             "cancellableWindow": [],
             "invincibilityWindow": [],
             "counterHitStateWindow": [],
