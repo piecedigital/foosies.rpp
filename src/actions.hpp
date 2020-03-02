@@ -9,6 +9,20 @@ namespace Actions
 bool checkMove(Move move, PlayerInput *);
 
 Move *detectCommand(PlayerInput *, MoveList, int);
+
+void handleKnockdownTypeWindow(FrameData);
+void handleKnockupKnockbackWindow(FrameData);
+void handleLaunchWindow(FrameData);
+void handlePushbackWindow(FrameData);
+void handleDamageWindow(FrameData);
+void handleStunWindow(FrameData);
+void handleCancellableWindow(FrameData);
+void handleInvincibilityWindow(FrameData);
+void handleCounterHitStateWindow(FrameData);
+void handleOverheadWindow(FrameData);
+void handlePropulsionWindow(FrameData);
+void handleFrameBoxData(FrameData);
+
 };
 
 #endif

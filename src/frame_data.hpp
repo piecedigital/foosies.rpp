@@ -53,7 +53,8 @@ struct StunWindow : frameWindow
 
 struct CancellableWindow : frameWindow
 {
-    int cancelMoves;
+    int *cancelMoves;
+    int cancelMovesSize;
 };
 
 struct InvincibilityWindow : frameWindow
@@ -275,8 +276,13 @@ public:
                 cancellableWindow[i] = {
                     json["cancellableWindow"][i]["firstFrameOfWindow"].get<int>(),
                     json["cancellableWindow"][i]["lastFrameOfWindow"].get<int>(),
-                    json["cancellableWindow"][i]["cancelMoves"].get<int>(),
                 };
+
+                cancellableWindow[i].cancelMovesSize = json["cancellableWindow"][i]["cancelMoves"].size();
+                for (int i = 0; i < cancellableWindow[i].cancelMovesSize; i++)
+                {
+                    cancellableWindow[i].cancelMoves[i] = json["cancellableWindow"][i]["cancelMoves"][i].get<int>();
+                }
             }
         }
 

@@ -74,3 +74,39 @@ Move* Actions::detectCommand(PlayerInput *playerInputHistory, MoveList moveList,
 
     return NULL;
 }
+
+void handleKnockdownTypeWindow(FrameData)
+{}
+
+void handleKnockupKnockbackWindow(FrameData)
+{}
+
+void handleLaunchWindow(FrameData)
+{}
+
+void handlePushbackWindow(FrameData)
+{}
+
+void handleDamageWindow(FrameData)
+{}
+
+void handleStunWindow(FrameData)
+{}
+
+void handleCancellableWindow(FrameData)
+{}
+
+void handleInvincibilityWindow(FrameData)
+{}
+
+void handleCounterHitStateWindow(FrameData)
+{}
+
+void handleOverheadWindow(FrameData)
+{}
+
+void handlePropulsionWindow(FrameData)
+{}
+
+void handleFrameBoxData(FrameData)
+{}
