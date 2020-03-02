@@ -12,40 +12,49 @@ Character::Character()
     backHSpeed = 6;
     JSON json = JsonHandler::loadJsonFile("assets/movesets/d-func-moveset.json");
 
-    moveList.movesSize = json.size();
-    moveList.moves = new Move[moveList.movesSize];
+    fullMoveList.movesSize = json.size();
+    fullMoveList.moves = new Move[fullMoveList.movesSize];
 
-    for (int i = 0; i < moveList.movesSize; i++)
+    // @TODO: get subset list of basic moves
+    basicMoveList.movesSize = fullMoveList.movesSize;
+    basicMoveList.moves = fullMoveList.moves;
+
+    for (int i = 0; i < fullMoveList.movesSize; i++)
     {
-        moveList.moves[i].name = json[i]["name"].get<std::string>();
+        fullMoveList.moves[i].name = json[i]["name"].get<std::string>();
 
-        moveList.moves[i].meterCost = 0;
+        fullMoveList.moves[i].meterCost = 0;
         if (!json[i]["meterCost"].empty())
         {
-            moveList.moves[i].meterCost = json[i]["meterCost"].get<int>();
+            fullMoveList.moves[i].meterCost = json[i]["meterCost"].get<int>();
         }
 
-        moveList.moves[i].triggerBtnSize = (PlayerInput)json[i]["triggerBtn"].size();
-        moveList.moves[i].triggerBtn = new PlayerInput[moveList.moves[i].triggerBtnSize];
-        for (int j = 0; j < moveList.moves[i].triggerBtnSize; j++)
+        fullMoveList.moves[i].triggerBtnSize = (PlayerInput)json[i]["triggerBtn"].size();
+        fullMoveList.moves[i].triggerBtn = new PlayerInput[fullMoveList.moves[i].triggerBtnSize];
+        for (int j = 0; j < fullMoveList.moves[i].triggerBtnSize; j++)
         {
-            moveList.moves[i].triggerBtn[j] = (PlayerInput)json[i]["triggerBtn"][j].get<int>();
+            fullMoveList.moves[i].triggerBtn[j] = (PlayerInput)json[i]["triggerBtn"][j].get<int>();
         }
 
-        moveList.moves[i].triggerBtnCombo = 1;
+        fullMoveList.moves[i].triggerBtnCombo = 1;
         if (!json[i]["triggerBtnCombo"].empty())
         {
-            moveList.moves[i].triggerBtnCombo = (PlayerInput)json[i]["triggerBtnCombo"].get<int>();
+            fullMoveList.moves[i].triggerBtnCombo = (PlayerInput)json[i]["triggerBtnCombo"].get<int>();
         }
 
-        moveList.moves[i].commandSequenceSize = json[i]["commandSequence"].size();
-        moveList.moves[i].commandSequence = new PlayerInput[moveList.moves[i].commandSequenceSize];
-        for (int j = 0; j < moveList.moves[j].commandSequenceSize; j++)
+        fullMoveList.moves[i].commandSequenceSize = json[i]["commandSequence"].size();
+        fullMoveList.moves[i].commandSequence = new PlayerInput[fullMoveList.moves[i].commandSequenceSize];
+        for (int j = 0; j < fullMoveList.moves[j].commandSequenceSize; j++)
         {
-            moveList.moves[i].commandSequence[j] = (PlayerInput)json[i]["commandSequence"][j].get<int>();
+            fullMoveList.moves[i].commandSequence[j] = (PlayerInput)json[i]["commandSequence"][j].get<int>();
         }
 
-        moveList.moves[i].frameData.frameDataFromJSON(json[i]["frameData"]);
+        fullMoveList.moves[i].frameData.frameDataFromJSON(json[i]["frameData"]);
+
+        if (true)
+        {
+            basicMoveList.moves[i] = fullMoveList.moves[i];
+        }
     }
 
     model = AssetManager::addModel("assets/models/characters/d-func");

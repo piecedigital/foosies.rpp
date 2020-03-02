@@ -75,6 +75,14 @@ Move* Actions::detectCommand(PlayerInput *playerInputHistory, MoveList moveList,
     return NULL;
 }
 
+// MoveList Actions::moveListFromIntArray(int *moves, int movesSize)
+// {
+//     return MoveList{
+//         moves,
+//         movesSize
+//     };
+// }
+
 void handleKnockdownTypeWindow(FrameData)
 {}
 

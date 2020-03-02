@@ -8,7 +8,9 @@ namespace Actions
 {
 bool checkMove(Move move, PlayerInput *);
 
-Move *detectCommand(PlayerInput *, MoveList, int);
+Move *detectCommand(PlayerInput *playerInput, MoveList moveList, int meter);
+
+MoveList moveListFromIntArray(int *moves, int movesSize);
 
 void handleKnockdownTypeWindow(FrameData);
 void handleKnockupKnockbackWindow(FrameData);
