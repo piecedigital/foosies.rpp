@@ -279,6 +279,7 @@ public:
                 };
 
                 cancellableWindow[i].cancelMovesSize = json["cancellableWindow"][i]["cancelMoves"].size();
+                cancellableWindow[i].cancelMoves = new int[cancellableWindow[i].cancelMovesSize];
                 for (int i = 0; i < cancellableWindow[i].cancelMovesSize; i++)
                 {
                     cancellableWindow[i].cancelMoves[i] = json["cancellableWindow"][i]["cancelMoves"][i].get<int>();
