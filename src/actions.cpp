@@ -75,13 +75,37 @@ Move* Actions::detectCommand(PlayerInput *playerInputHistory, MoveList moveList,
     return NULL;
 }
 
-// MoveList Actions::moveListFromIntArray(int *moves, int movesSize)
-// {
-//     return MoveList{
-//         moves,
-//         movesSize
-//     };
-// }
+MoveList Actions::moveListFromMove(Move move, MoveList fullMoveList)
+{
+    MoveList moveList;
+
+    for (int i = 0; i < move.frameData.cancellableWindowSize; i++)
+    {
+        if (
+            move.currentFrame >= move.frameData.cancellableWindow[i].firstFrameOfWindow &&
+            move.currentFrame <= move.frameData.cancellableWindow[i].lastFrameOfWindow)
+        {
+            Move *theMoves = new Move[move.frameData.cancellableWindow[i].cancelMovesSize];
+
+            for (int j = 0; j < move.frameData.cancellableWindow[i].cancelMovesSize; j++)
+            {
+                if (move.frameData.cancellableWindow[i].cancelMoves[j] < fullMoveList.movesSize) {
+                    theMoves[j] = fullMoveList.moves[move.frameData.cancellableWindow[i].cancelMoves[j]];
+                }
+
+            }
+
+            moveList = MoveList{
+                theMoves,
+                move.frameData.cancellableWindow[i].cancelMovesSize
+            };
+
+            break;
+        }
+    }
+
+    return moveList;
+}
 
 void handleKnockdownTypeWindow(FrameData)
 {}

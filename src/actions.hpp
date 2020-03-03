@@ -10,7 +10,7 @@ bool checkMove(Move move, PlayerInput *);
 
 Move *detectCommand(PlayerInput *playerInput, MoveList moveList, int meter);
 
-MoveList moveListFromIntArray(int *moves, int movesSize);
+MoveList moveListFromMove(Move move, MoveList fullMoveList);
 
 void handleKnockdownTypeWindow(FrameData);
 void handleKnockupKnockbackWindow(FrameData);
