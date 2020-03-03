@@ -1,130 +1,139 @@
-[
-    {
-        "name": "Hadouken EX",
-        "meterCost": 100,
-        "triggerBtn": [524288, 262144, 131072],
-        "triggerBtnCombo": 2,
-        "commandSequence": [16, 1024, 64],
-        "frameData": {
-            "knockdownTypeWindow": [],
-            "knockupKnockbackWindow": [],
-            "launchWindow": [],
-            "pushbackWindow": [],
-            "damageWindow": [],
-            "stunWindow": [{
-                "firstFrameOfWindow": 0,
-                "lastFrameOfWindow": 0,
-                "stunValue": 10
-            }],
-            "cancellableWindow": [],
-            "invincibilityWindow": [],
-            "counterHitStateWindow": [],
-            "overheadWindow": [],
-            "propulsionWindow": [],
-            "frameBoxData": []
+{
+    "basicMoveList": [0,1,3,4,5],
+    "fullMoveList":[
+        {
+            "name": "Hadouken EX",
+            "meterCost": 100,
+            "triggerBtn": [524288, 262144, 131072],
+            "triggerBtnCombo": 2,
+            "commandSequence": [16, 1024, 64],
+            "frameData": {
+                "knockdownTypeWindow": [],
+                "knockupKnockbackWindow": [],
+                "launchWindow": [],
+                "pushbackWindow": [],
+                "damageWindow": [],
+                "stunWindow": [{
+                    "firstFrameOfWindow": 0,
+                    "lastFrameOfWindow": 0,
+                    "stunValue": 10
+                }],
+                "cancellableWindow": [],
+                "invincibilityWindow": [],
+                "counterHitStateWindow": [],
+                "overheadWindow": [],
+                "propulsionWindow": [],
+                "frameBoxData": []
+            }
+        }, {
+            "name": "Hadouken Heavy",
+            "triggerBtn": [524288],
+            "commandSequence": [16, 1024, 64],
+            "frameData": {
+                "knockdownTypeWindow": [],
+                "knockupKnockbackWindow": [],
+                "launchWindow": [],
+                "pushbackWindow": [],
+                "damageWindow": [],
+                "stunWindow": [{
+                    "firstFrameOfWindow": 0,
+                    "lastFrameOfWindow": 0,
+                    "stunValue": 10
+                }],
+                "cancellableWindow": [],
+                "invincibilityWindow": [],
+                "counterHitStateWindow": [],
+                "overheadWindow": [],
+                "propulsionWindow": [],
+                "frameBoxData": []
+            }
+        }, {
+            "name": "Hadouken Medium",
+            "triggerBtn": [262144],
+            "commandSequence": [16, 1024, 64],
+            "frameData": {
+                "knockdownTypeWindow": [],
+                "knockupKnockbackWindow": [],
+                "launchWindow": [],
+                "pushbackWindow": [],
+                "damageWindow": [],
+                "stunWindow": [{
+                    "firstFrameOfWindow": 0,
+                    "lastFrameOfWindow": 0,
+                    "stunValue": 10
+                }],
+                "cancellableWindow": [],
+                "invincibilityWindow": [],
+                "counterHitStateWindow": [],
+                "overheadWindow": [],
+                "propulsionWindow": [],
+                "frameBoxData": []
+            }
+        }, {
+            "name": "Hadouken Light",
+            "triggerBtn": [131072],
+            "commandSequence": [16, 1024, 64],
+            "frameData": {
+                "knockdownTypeWindow": [],
+                "knockupKnockbackWindow": [],
+                "launchWindow": [],
+                "pushbackWindow": [],
+                "damageWindow": [],
+                "stunWindow": [{
+                    "firstFrameOfWindow": 0,
+                    "lastFrameOfWindow": 0,
+                    "stunValue": 10
+                }],
+                "cancellableWindow": [
+                    {
+                        "firstFrameOfWindow": 0,
+                        "lastFrameOfWindow": 60,
+                        "cancelMoves": [2]
+                    }
+                ],
+                "invincibilityWindow": [],
+                "counterHitStateWindow": [],
+                "overheadWindow": [],
+                "propulsionWindow": [],
+                "frameBoxData": []
+            }
+        }, {
+            "name": "Forward Dash",
+            "triggerBtn": [64],
+            "commandSequence": [2, 64, 2, 64],
+            "frameData": {
+                "knockdownTypeWindow": [],
+                "knockupKnockbackWindow": [],
+                "launchWindow": [],
+                "pushbackWindow": [],
+                "damageWindow": [],
+                "stunWindow": [],
+                "cancellableWindow": [],
+                "invincibilityWindow": [],
+                "counterHitStateWindow": [],
+                "overheadWindow": [],
+                "propulsionWindow": [],
+                "frameBoxData": []
+            }
+        }, {
+            "name": "Back Dash",
+            "triggerBtn": [32],
+            "triggerBtnCombo": 0,
+            "commandSequence": [2, 32, 2, 32],
+            "frameData": {
+                "knockdownTypeWindow": [],
+                "knockupKnockbackWindow": [],
+                "launchWindow": [],
+                "pushbackWindow": [],
+                "damageWindow": [],
+                "stunWindow": [],
+                "cancellableWindow": [],
+                "invincibilityWindow": [],
+                "counterHitStateWindow": [],
+                "overheadWindow": [],
+                "propulsionWindow": [],
+                "frameBoxData": []
+            }
         }
-    }, {
-        "name": "Hadouken Heavy",
-        "triggerBtn": [524288],
-        "commandSequence": [16, 1024, 64],
-        "frameData": {
-            "knockdownTypeWindow": [],
-            "knockupKnockbackWindow": [],
-            "launchWindow": [],
-            "pushbackWindow": [],
-            "damageWindow": [],
-            "stunWindow": [{
-                "firstFrameOfWindow": 0,
-                "lastFrameOfWindow": 0,
-                "stunValue": 10
-            }],
-            "cancellableWindow": [],
-            "invincibilityWindow": [],
-            "counterHitStateWindow": [],
-            "overheadWindow": [],
-            "propulsionWindow": [],
-            "frameBoxData": []
-        }
-    }, {
-        "name": "Hadouken Medium",
-        "triggerBtn": [262144],
-        "commandSequence": [16, 1024, 64],
-        "frameData": {
-            "knockdownTypeWindow": [],
-            "knockupKnockbackWindow": [],
-            "launchWindow": [],
-            "pushbackWindow": [],
-            "damageWindow": [],
-            "stunWindow": [{
-                "firstFrameOfWindow": 0,
-                "lastFrameOfWindow": 0,
-                "stunValue": 10
-            }],
-            "cancellableWindow": [],
-            "invincibilityWindow": [],
-            "counterHitStateWindow": [],
-            "overheadWindow": [],
-            "propulsionWindow": [],
-            "frameBoxData": []
-        }
-    }, {
-        "name": "Hadouken Light",
-        "triggerBtn": [131072],
-        "commandSequence": [16, 1024, 64],
-        "frameData": {
-            "knockdownTypeWindow": [],
-            "knockupKnockbackWindow": [],
-            "launchWindow": [],
-            "pushbackWindow": [],
-            "damageWindow": [],
-            "stunWindow": [{
-                "firstFrameOfWindow": 0,
-                "lastFrameOfWindow": 0,
-                "stunValue": 10
-            }],
-            "cancellableWindow": [],
-            "invincibilityWindow": [],
-            "counterHitStateWindow": [],
-            "overheadWindow": [],
-            "propulsionWindow": [],
-            "frameBoxData": []
-        }
-    }, {
-        "name": "Forward Dash",
-        "triggerBtn": [64],
-        "commandSequence": [2, 64, 2, 64],
-        "frameData": {
-            "knockdownTypeWindow": [],
-            "knockupKnockbackWindow": [],
-            "launchWindow": [],
-            "pushbackWindow": [],
-            "damageWindow": [],
-            "stunWindow": [],
-            "cancellableWindow": [],
-            "invincibilityWindow": [],
-            "counterHitStateWindow": [],
-            "overheadWindow": [],
-            "propulsionWindow": [],
-            "frameBoxData": []
-        }
-    }, {
-        "name": "Back Dash",
-        "triggerBtn": [32],
-        "triggerBtnCombo": 0,
-        "commandSequence": [2, 32, 2, 32],
-        "frameData": {
-            "knockdownTypeWindow": [],
-            "knockupKnockbackWindow": [],
-            "launchWindow": [],
-            "pushbackWindow": [],
-            "damageWindow": [],
-            "stunWindow": [],
-            "cancellableWindow": [],
-            "invincibilityWindow": [],
-            "counterHitStateWindow": [],
-            "overheadWindow": [],
-            "propulsionWindow": [],
-            "frameBoxData": []
-        }
-    }
-]
+    ]
+}

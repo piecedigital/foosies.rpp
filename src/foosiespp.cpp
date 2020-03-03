@@ -98,6 +98,9 @@ void Game::update()
 
         scene.players[0].checkCollisions(&scene.players[1], scene.stageHalfWidth);
         scene.players[1].checkCollisions(&scene.players[0], scene.stageHalfWidth);
+
+        scene.players[0].advanceLocalFrame();
+        scene.players[1].advanceLocalFrame();
     }
 
     scene.players[0].updateBoxes();

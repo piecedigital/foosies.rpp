@@ -224,17 +224,22 @@ void PlayerController::processInputs()
 {
     _processMovementInput();
 
-    MoveList moveList = charMan->basicMoveList;
-
-    if (charMan->currentMove != NULL)
+    if (currentFrame >= 60)
     {
-        moveList = Actions::moveListFromMove(*charMan->currentMove, charMan->fullMoveList);
+        currentMove = NULL;
     }
 
-    Move *move = Actions::detectCommand(inputHistory, moveList, playerData->meter);
-    if (move != NULL)
+    MoveList moveList = charMan->basicMoveList;
+
+    if (currentMove != NULL)
     {
-        playerData->meter -= move->meterCost;
+        moveList = Actions::moveListFromMove(*currentMove, charMan->fullMoveList, currentFrame);
+    }
+
+    currentMove = Actions::detectCommand(inputHistory, moveList, playerData->meter);
+    if (currentMove != NULL)
+    {
+        playerData->meter -= currentMove->meterCost;
     }
 }
 
@@ -395,6 +400,11 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer, int stageH
             otherPlayer->playerData->physical.x += distanceBack;
         }
     }
+}
+
+void PlayerController::advanceLocalFrame()
+{
+    currentFrame += 1;
 }
 
 void PlayerController::calcPhysics(PlayerController *otherPlayer, int stageHalfWidth)

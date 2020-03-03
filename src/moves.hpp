@@ -13,8 +13,6 @@ struct Move
     int commandSequenceSize;
     int meterCost;
     FrameData frameData;
-    int currentFrame;
-    bool canCancel;
 };
 
 struct MoveList

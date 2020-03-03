@@ -18,7 +18,6 @@ public:
     PlayerBoxes **playerBoxes;
     MoveList fullMoveList;
     MoveList basicMoveList;
-    Move *currentMove;
     int towardHSpeed;
     int backHSpeed;
 

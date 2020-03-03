@@ -22,6 +22,9 @@ public:
     PlayerBoxes *playerBoxes;
     PlayerProjectiles *playerProjectiles;
     Character charMan[1];
+    Move *currentMove;
+    int currentFrame;
+    bool canCancel;
     /**
      * The id of the controller passing inputs to the player
      * -1 is the default, meaning no controller
@@ -41,6 +44,7 @@ public:
     void _processMovementInput();
     void updateBoxes();
     void checkCollisions(PlayerController *otherPlayer, int stageHalfWidth);
+    void advanceLocalFrame();
     void calcPhysics(PlayerController *otherPlayer, int stageHalfWidth);
     void updatePhysics();
 

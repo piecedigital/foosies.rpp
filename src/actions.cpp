@@ -75,15 +75,15 @@ Move* Actions::detectCommand(PlayerInput *playerInputHistory, MoveList moveList,
     return NULL;
 }
 
-MoveList Actions::moveListFromMove(Move move, MoveList fullMoveList)
+MoveList Actions::moveListFromMove(Move move, MoveList fullMoveList, int currentFrame)
 {
     MoveList moveList;
 
     for (int i = 0; i < move.frameData.cancellableWindowSize; i++)
     {
         if (
-            move.currentFrame >= move.frameData.cancellableWindow[i].firstFrameOfWindow &&
-            move.currentFrame <= move.frameData.cancellableWindow[i].lastFrameOfWindow)
+            currentFrame >= move.frameData.cancellableWindow[i].firstFrameOfWindow &&
+            currentFrame <= move.frameData.cancellableWindow[i].lastFrameOfWindow)
         {
             Move *theMoves = new Move[move.frameData.cancellableWindow[i].cancelMovesSize];
 
