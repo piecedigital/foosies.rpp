@@ -23,7 +23,7 @@ public:
     PlayerProjectiles *playerProjectiles;
     Character charMan[1];
     Move *currentMove;
-    int currentFrame;
+    int currentFrame = 0;
     bool canCancel;
     /**
      * The id of the controller passing inputs to the player

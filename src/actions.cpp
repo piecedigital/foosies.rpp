@@ -77,7 +77,7 @@ Move* Actions::detectCommand(PlayerInput *playerInputHistory, MoveList moveList,
 
 MoveList Actions::moveListFromMove(Move move, MoveList fullMoveList, int currentFrame)
 {
-    MoveList moveList;
+    MoveList moveList = MoveList{};
 
     for (int i = 0; i < move.frameData.cancellableWindowSize; i++)
     {

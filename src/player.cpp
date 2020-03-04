@@ -15,6 +15,7 @@ PlayerController::~PlayerController()
 
 void PlayerController::init(PlayerInput *ih, PlayerData *pd, PlayerBoxes *pb, PlayerProjectiles *pp)
 {
+    currentFrame = 0;
     inputHistory = ih;
     playerData = pd;
     playerBoxes = pb;
@@ -236,10 +237,13 @@ void PlayerController::processInputs()
         moveList = Actions::moveListFromMove(*currentMove, charMan->fullMoveList, currentFrame);
     }
 
-    currentMove = Actions::detectCommand(inputHistory, moveList, playerData->meter);
+    Move *move = Actions::detectCommand(inputHistory, moveList, playerData->meter);
+    if (move != NULL)
+        currentMove = move;
     if (currentMove != NULL)
     {
         playerData->meter -= currentMove->meterCost;
+        std::cout << currentMove->name.c_str() << std::endl;
     }
 }
 
@@ -405,6 +409,8 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer, int stageH
 void PlayerController::advanceLocalFrame()
 {
     currentFrame += 1;
+    if (currentFrame > 60)
+        currentFrame = 0;
 }
 
 void PlayerController::calcPhysics(PlayerController *otherPlayer, int stageHalfWidth)
