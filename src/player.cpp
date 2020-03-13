@@ -225,25 +225,36 @@ void PlayerController::processInputs()
 {
     _processMovementInput();
 
-    if (currentFrame >= 60)
-    {
-        currentMove = NULL;
-    }
-
+    int frameCount = 0;
     MoveList moveList = charMan->basicMoveList;
 
     if (currentMove != NULL)
     {
-        moveList = Actions::moveListFromMove(*currentMove, charMan->fullMoveList, currentFrame);
+        frameCount = currentMove->frameData.frameBoxDataSize;
+
+        if (currentFrame >= frameCount)
+        {
+            currentMove = NULL;
+            currentFrame = 0;
+        }
+        else
+        {
+            moveList = Actions::moveListFromMove(*currentMove, charMan->fullMoveList, currentFrame);
+        }
+    }
+    else
+    {
+        if (currentFrame >= frameCount)
+        {
+            currentFrame = 0;
+        }
     }
 
     Move *move = Actions::detectCommand(inputHistory, moveList, playerData->meter);
     if (move != NULL)
-        currentMove = move;
-    if (currentMove != NULL)
     {
-        playerData->meter -= currentMove->meterCost;
-        std::cout << currentMove->name.c_str() << std::endl;
+        currentMove = move;
+        currentFrame = 0;
     }
 }
 
@@ -409,8 +420,6 @@ void PlayerController::checkCollisions(PlayerController *otherPlayer, int stageH
 void PlayerController::advanceLocalFrame()
 {
     currentFrame += 1;
-    if (currentFrame > 60)
-        currentFrame = 0;
 }
 
 void PlayerController::calcPhysics(PlayerController *otherPlayer, int stageHalfWidth)

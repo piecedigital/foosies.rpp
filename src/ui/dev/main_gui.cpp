@@ -99,7 +99,12 @@ void DevGui::_displayPlayerInfo(int playerId)
     ImGui::Text("       Y: %i", game->gameState.playerData[playerId].physical.y);
     ImGui::Text("  HSpeed: %i", game->gameState.playerData[playerId].physical.HSpeed);
     ImGui::Text("  VSpeed: %i", game->gameState.playerData[playerId].physical.VSpeed);
-    ImGui::Text("Current Frame: %i", game->scene.players[playerId].currentFrame);
+    int maxFrames = 0;
+    if (game->scene.players[playerId].currentMove)
+    {
+        maxFrames = game->scene.players[playerId].currentMove->frameData.frameBoxDataSize;
+    }
+        ImGui::Text("Current Frame: %i", game->scene.players[playerId].currentFrame, maxFrames);
     std::string name = "";
     if (game->scene.players[playerId].currentMove != NULL)
         name = game->scene.players[playerId].currentMove->name;

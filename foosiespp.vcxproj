@@ -68,6 +68,7 @@
     <ClInclude Include="src\foosiespp.hpp" />
     <ClInclude Include="src\globals.hpp" />
     <ClInclude Include="src\model.hpp" />
+    <ClInclude Include="src\moves.hpp" />
     <ClInclude Include="src\player.hpp" />
     <ClInclude Include="src\session.hpp" />
     <ClInclude Include="src\ui\dev\main_gui.hpp" />
