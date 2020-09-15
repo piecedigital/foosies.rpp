@@ -2,6 +2,7 @@
 
 void FrameData::frameDataFromJSON(JSON json)
 {
+    // std::cout << "BEFORE: knockdownTypeWindow" << std::endl;
     if (json.contains("knockdownTypeWindow"))
     {
         if (knockdownTypeWindow != NULL)
@@ -23,6 +24,7 @@ void FrameData::frameDataFromJSON(JSON json)
         }
     }
 
+    // std::cout << "BEFORE: knockupKnockbackWindow" << std::endl;
     if (json.contains("knockupKnockbackWindow"))
     {
         if (knockupKnockbackWindow != NULL)
@@ -45,6 +47,7 @@ void FrameData::frameDataFromJSON(JSON json)
         }
     }
 
+    // std::cout << "BEFORE: launchWindow" << std::endl;
     if (json.contains("launchWindow"))
     {
         if (launchWindow != NULL)
@@ -66,6 +69,7 @@ void FrameData::frameDataFromJSON(JSON json)
         }
     }
 
+    // std::cout << "BEFORE: pushbackWindow" << std::endl;
     if (json.contains("pushbackWindow"))
     {
         if (pushbackWindow != NULL)
@@ -88,6 +92,7 @@ void FrameData::frameDataFromJSON(JSON json)
         }
     }
 
+    // std::cout << "BEFORE: damageWindow" << std::endl;
     if (json.contains("damageWindow"))
     {
         if (damageWindow != NULL)
@@ -110,6 +115,7 @@ void FrameData::frameDataFromJSON(JSON json)
         }
     }
 
+    // std::cout << "BEFORE: stunWindow" << std::endl;
     if (json.contains("stunWindow"))
     {
         if (stunWindow != NULL)
@@ -131,6 +137,7 @@ void FrameData::frameDataFromJSON(JSON json)
         }
     }
 
+    // std::cout << "BEFORE: cancellableWindow" << std::endl;
     if (json.contains("cancellableWindow"))
     {
         if (cancellableWindow != NULL)
@@ -144,11 +151,7 @@ void FrameData::frameDataFromJSON(JSON json)
 
         for (int i = 0; i < cancellableWindowSize; i++)
         {
-            cancellableWindow[i] = {
-                json["cancellableWindow"][i]["firstFrameOfWindow"].get<int>(),
-                json["cancellableWindow"][i]["lastFrameOfWindow"].get<int>(),
-            };
-
+            cancellableWindow[i].firstFrameOfWindow = json["cancellableWindow"][i]["firstFrameOfWindow"].get<int>();
             cancellableWindow[i].cancelMovesSize = json["cancellableWindow"][i]["cancelMoves"].size();
             cancellableWindow[i].cancelMoves = new int[cancellableWindow[i].cancelMovesSize];
             for (int i = 0; i < cancellableWindow[i].cancelMovesSize; i++)
@@ -158,6 +161,7 @@ void FrameData::frameDataFromJSON(JSON json)
         }
     }
 
+    // std::cout << "BEFORE: invincibilityWindow" << std::endl;
     if (json.contains("invincibilityWindow"))
     {
         if (invincibilityWindow != NULL)
@@ -184,6 +188,7 @@ void FrameData::frameDataFromJSON(JSON json)
         }
     }
 
+    // std::cout << "BEFORE: counterHitStateWindow" << std::endl;
     if (json.contains("counterHitStateWindow"))
     {
         if (counterHitStateWindow != NULL)
@@ -213,6 +218,7 @@ void FrameData::frameDataFromJSON(JSON json)
         }
     }
 
+    // std::cout << "BEFORE: overheadWindow" << std::endl;
     if (json.contains("overheadWindow"))
     {
         if (overheadWindow != NULL)
@@ -234,6 +240,7 @@ void FrameData::frameDataFromJSON(JSON json)
         }
     }
 
+    // std::cout << "BEFORE: propulsionWindow" << std::endl;
     if (json.contains("propulsionWindow"))
     {
         if (propulsionWindow != NULL)
@@ -256,6 +263,7 @@ void FrameData::frameDataFromJSON(JSON json)
         }
     }
 
+    // std::cout << "BEFORE: frameBoxData" << std::endl;
     if (json.contains("frameBoxData"))
     {
         if (frameBoxData != NULL)

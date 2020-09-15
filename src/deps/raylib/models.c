@@ -2418,12 +2418,13 @@ void DrawModelEx(Model model, Vector3 position, Vector3 rotationAxis, float rota
     }
 }
 
-// Draw a model with extended parameters
+// CUSTOM: Draw a model with extended parameters
 void DrawModelExPlus(Model model, Vector3 position, Vector3 rotationAxis, Vector3 rotationAngles, Vector3 scale, Color tint)
 {
     // Calculate transformation matrix from function parameters
     // Get transform matrix (rotation -> scale -> translation)
     Matrix matScale = MatrixScale(scale.x, scale.y, scale.z);
+    // CUSTOM: didn't like how it was handling rotations
     Matrix matRotation = MatrixRotateXYZ((Vector3){
         rotationAngles.x * DEG2RAD,
         rotationAngles.y * DEG2RAD,

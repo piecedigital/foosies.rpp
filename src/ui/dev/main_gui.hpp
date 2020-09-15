@@ -24,6 +24,8 @@ public:
     Session *session;
     Controller controllers[MAX_KEYBOARDS + MAX_GAMEPADS];
     Controller keyboard;
+    int gsLen;
+    unsigned char *gsBuffer;
 };
 
 class DevGui
@@ -44,8 +46,6 @@ public:
     };
 
 private:
-    int gsLen;
-    unsigned char *gsBuffer;
     dgGame *game;
 
     void _displayPlayerInfo(int playerId);

@@ -2,9 +2,10 @@
 
 GameState *gs;
 
-Session::Session()
+Session::Session(GameState *gameState)
 {
-    // gs = game;
+    gs = gameState;
+
     /* fill in all callback functions */
     cb.begin_game = beginGameCallback;
     cb.save_game_state = saveGameStateCallback;
@@ -45,13 +46,15 @@ GGPOErrorCode Session::addPlayer(PlayerController *player, GGPOPlayerType type)
 
     if (type == GGPO_PLAYERTYPE_REMOTE)
     {
+        player->ggpoPlayer.player_num = 2;
         handleId = 1;
         Session::player2 = player;
         strcpy_s(player->ggpoPlayer.u.remote.ip_address, "127.0.0.1");
-        player->ggpoPlayer.u.remote.port = 8002;
+        player->ggpoPlayer.u.remote.port = 8888;
     }
     else
     {
+        player->ggpoPlayer.player_num = 1;
         Session::player1 = player;
     }
 
@@ -69,7 +72,7 @@ GGPOErrorCode Session::start()
         (char *)"test_app", // application name
         2,                  // 2 players
         sizeof(int),        // size of an input packet
-        8001);              // our local udp port
+        8888);              // our local udp port
 }
 
 GGPOErrorCode Session::synchronizeInputs()
@@ -80,16 +83,14 @@ GGPOErrorCode Session::synchronizeInputs()
 
     GGPOErrorCode result;
 
-    for (size_t i = 0; i < inputs.size(); i++)
-    {
-        /* notify ggpo of the local player's inputs */
-        result = ggpo_add_local_input(
-            ggpo,               // the session object
-            playerHandles[i],   // handle for p1
-            &inputs[i],         // p1's inputs
-            sizeof(inputs[i])); // size of p1's inputs
-    }
+    /* notify ggpo of the local player's inputs */
+    result = ggpo_add_local_input(
+        ggpo,               // the session object
+        playerHandles[0],   // handle for p1
+        &inputs[0],         // p1's inputs
+        sizeof(inputs[0])); // size of p1's inputs
 
+    std::cout << "Results of ggpo_add_local_input: " << result << std::endl;
     int flag;
 
     /* synchronize the local and remote inputs */
@@ -100,6 +101,7 @@ GGPOErrorCode Session::synchronizeInputs()
             &inputs,          // array of inputs
             sizeof(inputs),
             &flag); // size of all inputs
+        std::cout << "Inputs: P1(" << inputs[0] << "), P2(" << inputs[0] << ")" << std::endl;
     }
 
     return result;

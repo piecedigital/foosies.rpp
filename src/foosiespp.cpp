@@ -34,7 +34,7 @@ Game::~Game()
 #endif
 }
 
-int Game::init()
+int Game::init(ConnectionInfo ci)
 {
     scene.targetFPS = 60;
 
@@ -56,6 +56,7 @@ int Game::init()
 #ifdef _DEBUG
     devGui.imguiInit(this);
 #endif
+    createMultiplayerSession(ci);
     while (!WindowShouldClose())
     {
         _pollControllerInputs();
@@ -86,6 +87,8 @@ void Game::update()
 
         _dispatchNormalizedInputs(scene.players[0]);
         _dispatchNormalizedInputs(scene.players[1]);
+
+        session->synchronizeInputs();
 
         scene.players[0].processInputs();
         scene.players[1].processInputs();
@@ -132,13 +135,24 @@ void Game::render()
     EndDrawing();
 }
 
-void Game::createMultiplayerSession()
+void Game::createMultiplayerSession(ConnectionInfo ci)
 {
     deleteSession();
-    session = new Session();
+    session = new Session(&gameState);
 
     /* Start a new session */
     GGPOErrorCode result = session->start();
+
+    if (ci.local)
+    {
+        session->addPlayer(&scene.players[0], GGPO_PLAYERTYPE_LOCAL);
+        session->addPlayer(&scene.players[1], GGPO_PLAYERTYPE_REMOTE);
+    }
+    else
+    {
+        session->addPlayer(&scene.players[1], GGPO_PLAYERTYPE_LOCAL);
+        session->addPlayer(&scene.players[0], GGPO_PLAYERTYPE_REMOTE);
+    }
 }
 
 void Game::deleteSession()
@@ -149,6 +163,48 @@ void Game::deleteSession()
         session = NULL;
     }
 }
+
+void Game::saveGameState()
+{
+    std::cout << "Clicked: Save State" << std::endl;
+    gsLen = sizeof(gameState);
+    gsBuffer = (unsigned char *)malloc(gsLen);
+    if (!*gsBuffer)
+    {
+        return;
+    }
+    memcpy(gsBuffer, &gameState, gsLen);
+    gameState.playerData[0].vitality -= 10;
+    // std::ofstream file;
+    // file.open("buffer.txt", std::ofstream::out | std::ofstream::binary);
+    // file << (void *)*gsBuffer;
+    // file.close();
+}
+
+void Game::loadGameState()
+{
+    std::cout << "Clicked: Load State" << std::endl;
+
+    std::ifstream file;
+    // file.open("buffer.txt", std::ofstream::in | std::ofstream::binary);
+    // int dataSize = file.tellg();
+    // char *data = new char[dataSize];
+    // file.read(data, dataSize);
+    // file.close();
+    memcpy(&gameState, gsBuffer, gsLen);
+}
+
+void Game::toggleUpdate()
+{
+    scene.willStep = !scene.willStep;
+}
+
+void Game::stepUpdate(int allowance)
+{
+    scene.willStep = false;
+    scene.stepAllowance = allowance;
+}
+
 
 void Game::_pollControllerInputs()
 {

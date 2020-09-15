@@ -13,7 +13,7 @@
 class Character
 {
 public:
-    ModelController *model;
+    ModelController *asset;
     PlayerData **playerData;
     PlayerBoxes **playerBoxes;
     MoveList fullMoveList;

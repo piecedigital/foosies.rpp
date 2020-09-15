@@ -117,13 +117,13 @@ void DevGui::_displayPlayerTweakers(int playerId)
 {
     ImGui::Begin(std::string("Player ").append(std::to_string(playerId)).append(" Tweaker").c_str());
 
-    ImGui::SliderInt("Body Width", &game->scene.players[playerId].charMan[0].model->bodyWidth, 100, 200);
-    ImGui::SliderInt("Body Height", &game->scene.players[playerId].charMan[0].model->bodyHeight, 100, 400);
+    ImGui::SliderInt("Body Width", &game->scene.players[playerId].charMan[0].asset->bodyWidth, 100, 200);
+    ImGui::SliderInt("Body Height", &game->scene.players[playerId].charMan[0].asset->bodyHeight, 100, 400);
     // ImGui::SliderFloat("Light X", &game->scene.players[playerId].charMan[0].model->lightPos[0], -10.f, 10.f);
     // ImGui::SliderFloat("Light Y", &game->scene.players[playerId].charMan[0].model->lightPos[1], -10.f, 10.f);
     // ImGui::SliderFloat("Light Z", &game->scene.players[playerId].charMan[0].model->lightPos[2], -10.f, 10.f);
-    ImGui::SliderInt("Animation", &game->scene.players[playerId].charMan[0].model->currentAnim, 0, game->scene.players[playerId].charMan[0].model->animSize-1);
-    ImGui::SliderInt("Animation Frame", &game->scene.players[playerId].charMan[0].model->currentAnimFrame, 0, game->scene.players[playerId].charMan[0].model->currentAnimFrameSize-1);
+    ImGui::SliderInt("Animation", &game->scene.players[playerId].charMan[0].asset->currentAnim, 0, game->scene.players[playerId].charMan[0].asset->animSize-1);
+    ImGui::SliderInt("Animation Frame", &game->scene.players[playerId].charMan[0].asset->currentAnimFrame, 0, game->scene.players[playerId].charMan[0].asset->currentAnimFrameSize-1);
     ImGui::SliderInt("Meter", &game->gameState.playerData[playerId].meter, 0, 300);
 
     ImGui::End();
@@ -148,14 +148,14 @@ void DevGui::_displayStateManipButtons()
 
     ImGui::NextColumn();
 
-    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Button, game->scene.willStep ? xGREEN : xRED);
-    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ButtonHovered, game->scene.willStep ? xGREENHover : xREDHover);
-    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Text, game->scene.willStep ? xBLACK : xWHITE);
+    // ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Button, game->scene.willStep ? xGREEN : xRED);
+    // ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ButtonHovered, game->scene.willStep ? xGREENHover : xREDHover);
+    // ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Text, game->scene.willStep ? xBLACK : xWHITE);
     if (ImGui::Button("Toggle Update") || IsKeyPressed(KEY_C))
     {
         _toggleUpdate();
     }
-    ImGui::PopStyleColor(3);
+    // ImGui::PopStyleColor(3);
 
     ImGui::NextColumn();
 
@@ -166,25 +166,25 @@ void DevGui::_displayStateManipButtons()
 
     ImGui::NextColumn();
 
-    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Button, isRecording ? xGREEN : xRED);
-    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ButtonHovered, isRecording ? xGREENHover : xREDHover);
-    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Text, isRecording ? xBLACK : xWHITE);
+    // ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Button, isRecording ? xGREEN : xRED);
+    // ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ButtonHovered, isRecording ? xGREENHover : xREDHover);
+    // ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Text, isRecording ? xBLACK : xWHITE);
     if (ImGui::Button("Toggle Record") || IsKeyPressed(KEY_R))
     {
         _toggleRecording();
     }
-    ImGui::PopStyleColor(3);
+    // ImGui::PopStyleColor(3);
 
     ImGui::NextColumn();
 
-    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Button, isPlaying ? xGREEN : xRED);
-    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ButtonHovered, isPlaying ? xGREENHover : xREDHover);
-    ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Text, isPlaying ? xBLACK : xWHITE);
+    // ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Button, isPlaying ? xGREEN : xRED);
+    // ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ButtonHovered, isPlaying ? xGREENHover : xREDHover);
+    // ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_Text, isPlaying ? xBLACK : xWHITE);
     if (ImGui::Button("Toggle Playback") || IsKeyPressed(KEY_F))
     {
         _togglePlayback();
     }
-    ImGui::PopStyleColor(3);
+    // ImGui::PopStyleColor(3);
 
     ImGui::End();
 }
@@ -262,14 +262,14 @@ void DevGui::_displayRenderWindow()
 
 void DevGui::_saveGameState()
 {
-    std::cout << "Clicked: Save State" << std::endl;
-    gsLen = sizeof(game->gameState);
-    gsBuffer = (unsigned char *)malloc(gsLen);
-    if (!*gsBuffer)
+    std::cout << "Save State" << std::endl;
+    game->gsLen = sizeof(game->gameState);
+    game->gsBuffer = (unsigned char *)malloc(game->gsLen);
+    if (!*game->gsBuffer)
     {
         return;
     }
-    memcpy(gsBuffer, &game->gameState, gsLen);
+    memcpy(game->gsBuffer, &game->gameState, game->gsLen);
     game->gameState.playerData[0].vitality -= 10;
     // std::ofstream file;
     // file.open("buffer.txt", std::ofstream::out | std::ofstream::binary);
@@ -279,7 +279,7 @@ void DevGui::_saveGameState()
 
 void DevGui::_loadGameState()
 {
-    std::cout << "Clicked: Load State" << std::endl;
+    std::cout << "Load State" << std::endl;
 
     std::ifstream file;
     // file.open("buffer.txt", std::ofstream::in | std::ofstream::binary);
@@ -287,7 +287,7 @@ void DevGui::_loadGameState()
     // char *data = new char[dataSize];
     // file.read(data, dataSize);
     // file.close();
-    memcpy(&game->gameState, gsBuffer, gsLen);
+    memcpy(&game->gameState, game->gsBuffer, game->gsLen);
 }
 
 void DevGui::_toggleUpdate()
@@ -372,15 +372,15 @@ void DevGui::_startPlayback()
 
 void DevGui::_play()
 {
-    game->scene.players[1].setInputs(p2Recording[recordingSize - 1 - playbackCursorReverse]);
-    playbackCursorReverse++;
-    if (playbackCursorReverse > recordingSize)
-        playbackCursorReverse = 0;
+    // game->scene.players[1].setInputs(p2Recording[recordingSize - 1 - playbackCursorReverse]);
+    // playbackCursorReverse++;
+    // if (playbackCursorReverse > recordingSize)
+    //     playbackCursorReverse = 0;
 }
 
 void DevGui::_stopPlayback()
 {
-    isPlaying = false;
-    playbackCursorReverse = 0;
-    game->scene.players[1].setInputs((PlayerInput)0);
+    // isPlaying = false;
+    // playbackCursorReverse = 0;
+    // game->scene.players[1].setInputs((PlayerInput)0);
 }

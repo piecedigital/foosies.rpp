@@ -53,7 +53,7 @@ Character::Character()
 
         fullMoveList.moves[i].commandSequenceSize = moveListJson[i]["commandSequence"].size();
         fullMoveList.moves[i].commandSequence = new PlayerInput[fullMoveList.moves[i].commandSequenceSize];
-        for (int j = 0; j < fullMoveList.moves[j].commandSequenceSize; j++)
+        for (int j = 0; j < fullMoveList.moves[i].commandSequenceSize; j++)
         {
             fullMoveList.moves[i].commandSequence[j] = (PlayerInput)moveListJson[i]["commandSequence"][j].get<int>();
         }
@@ -68,8 +68,8 @@ Character::Character()
         }
     }
 
-    model = AssetManager::addModel("assets/models/characters/d-func");
-    model->init("assets/models/characters/d-func");
+    asset = AssetManager::addModel("assets/models/characters/d-func");
+    asset->init("assets/models/characters/d-func");
 }
 Character::~Character()
 {
@@ -82,7 +82,7 @@ void Character::render()
     {
         _convertTranslation();
 
-        model->render((*playerData)->transform.translation, (*playerData)->actionFace);
+        asset->render((*playerData)->transform.translation, (*playerData)->actionFace);
     }
 
     if (playerBoxes != NULL && *playerBoxes != NULL)

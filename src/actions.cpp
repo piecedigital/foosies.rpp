@@ -68,8 +68,13 @@ Move* Actions::detectCommand(PlayerInput *playerInputHistory, MoveList moveList,
 {
     for (int i = 0; i < moveList.movesSize; i++)
     {
-        if (meter >= moveList.moves[i].meterCost && checkMove(moveList.moves[i], playerInputHistory))
+        if (
+            meter >= moveList.moves[i].meterCost &&
+            checkMove(moveList.moves[i], playerInputHistory))
+        {
+            std::cout << "Checking " << moveList.moves[i].name << std::endl;
             return &moveList.moves[i];
+        }
     }
 
     return NULL;

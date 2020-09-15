@@ -2,8 +2,10 @@
 #define JSON_HANDLE_H
 
 #include "deps/nlohmann/json.hpp"
+#include "deps/raylib/raylib.h"
 #include <fstream>
 #include <iostream>
+#include <string>
 
 using JSON = nlohmann::json;
 

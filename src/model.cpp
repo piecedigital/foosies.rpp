@@ -85,14 +85,14 @@ void ModelController::setAnimationLoop(bool willLoop)
 void ModelController::render(Vector3 translation, int rotation)
 {
     // SetShaderValue(model.materials[0].shader, GetShaderLocation(model.materials[0].shader, "lightPosition"), lightPos, UNIFORM_VEC3);
-    currentAnimFrameSize = animations[currentAnim].frameCount;
-    UpdateModelAnimation(model, animations[currentAnim], currentAnimFrame);
+    // currentAnimFrameSize = animations[currentAnim].frameCount;
+    // UpdateModelAnimation(model, animations[currentAnim], currentAnimFrame);
 
-    DrawModelExPlus(model, translation, {0.f, 1.f, 0.f}, {
-        90.f,
-        (90.f * rotation * -1),
-        0,
-    }, {1.f, 1.f, 1.f}, WHITE);
+    // DrawModelExPlus(model, translation, {0.f, 1.f, 0.f}, {
+    //     90.f,
+    //     (90.f * rotation * -1),
+    //     0,
+    // }, {1.f, 1.f, 1.f}, WHITE);
 }
 
 void ModelController::unload()

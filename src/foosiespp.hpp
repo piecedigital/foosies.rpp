@@ -11,6 +11,7 @@
 #include "controller.hpp"
 #include "player.hpp"
 #include "session.hpp"
+#include <fstream>
 
 #ifdef _DEBUG
 #include "ui/dev/main_gui.hpp"
@@ -34,17 +35,25 @@ public:
     // std::vector<Controller> controllers;
     Controller controllers[MAX_KEYBOARDS + MAX_GAMEPADS];
     Controller keyboard;
+    int gsLen;
+    unsigned char *gsBuffer;
 
     Game();
     ~Game();
-    int init();
+    int init(ConnectionInfo ci);
     void update();
     void render();
-    void createMultiplayerSession();
+    void createMultiplayerSession(ConnectionInfo ci);
     void deleteSession();
 
+    void saveGameState();
+    void loadGameState();
+
+    void toggleUpdate();
+    void stepUpdate(int allowance);
+
 private:
-    void _pollControllerInputs();
+        void _pollControllerInputs();
     void _insureControllerAssignment(PlayerController &player1, PlayerController &player2);
     void _dispatchNormalizedInputs(PlayerController &player);
     void _updateCamera();
@@ -58,11 +67,5 @@ private:
     void _drawDevUI();
 #endif
 };
-
-void _saveGameState();
-void _loadGameState();
-
-void _toggleUpdate();
-void _stepOne();
 
 #endif

@@ -7,6 +7,13 @@
 #include "../bin/ggponet.h"
 #include "player.hpp"
 
+struct ConnectionInfo
+{
+    bool local;
+    std::string address;
+    std::string port;
+};
+
 class Session
 {
 public:
@@ -17,7 +24,7 @@ public:
     PlayerController *player1, *player2;
     GGPOPlayerHandle playerHandles[2];
 
-    Session();
+    Session(GameState *gs);
     ~Session();
 
     GGPOErrorCode start();
